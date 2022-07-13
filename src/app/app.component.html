@@ -1,0 +1,27 @@
+<app-notifier></app-notifier>
+<!--<h1>{{appStore.getData() | json}}</h1>-->
+<ng-container *ngIf="!appStore.isInitialized() || !appStore.getData().sessionExists">
+  <router-outlet></router-outlet>
+</ng-container>
+<ng-container *ngIf="appStore.getData().sessionExists">
+  <div class="page-layout">
+    <ps-navbar
+      [navItems]="menuItems"
+      [menuState]="menuState"
+      (menuSelected)="getTitle($event)"
+    ></ps-navbar>
+    <div class="page-content">
+      <ps-toolbar
+        [toolbarTitle]="currentTitle"
+        [userAvatar]="appStore.getData().userAvatar"
+        [username]="appStore.getData().userName"
+        [userRole]="appStore.getData().userRole"
+        (search)="onSearch($event)"
+        (handleMenu)="onMenuHandled($event)"
+        (handleLogout)="logout()"
+      ></ps-toolbar>
+      <router-outlet></router-outlet>
+      <ps-version [name]="appStore?.getData()?.appName" [version]="appStore?.getData()?.appVersion"></ps-version>
+    </div>
+  </div>
+</ng-container>

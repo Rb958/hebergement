@@ -1,0 +1,27 @@
+<div [ngClass]="canMinimize() ? 'ps-navbar' : 'ps-navbar-mini'">
+  <div class="navbar-title">
+    <div class="logo">
+      <img src="../../../../../assets/images/logo/lsd-logo.png" alt="">
+    </div>
+  </div>
+  <ul>
+    <li *ngFor="let item of navItems" >
+      <div class="ps-nav-link" [routerLink]="item?.link" routerLinkActive="active" (click)="onMenuSelected(item)" >
+        <span class="ps-link-item">
+          <i [className]="item?.icon"></i>
+          <span class="ps-link-name">{{item.title | translate}}</span>
+        </span>
+        <span class="ps-badge" *ngIf="item?.hasBadge">{{item?.badgeValue}}</span>
+        <i class="ps-arrow fa fa-angle-right" *ngIf="item?.subItem?.length != 0" (click)="toggleMenu($event)"></i>
+      </div>
+      <ul *ngIf="item?.subItem" class="ps-nav-sub-menu">
+        <li *ngFor="let subItem of item?.subItem" >
+          <div class="ps-sub-menu-link" (click)="onMenuSelected(subItem)" [routerLink]="subItem?.link">
+            <span class="ps-link-name">{{subItem.title | translate}}</span>
+          </div>
+          <span class="ps-badge" *ngIf="subItem?.hasBadge">{{subItem?.badgeValue}}</span>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

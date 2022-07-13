@@ -1,0 +1,111 @@
+<h3 *ngIf="!isEdition" mat-dialog-title>{{'new_locataire_part'|translate}}</h3>
+<h3 *ngIf="isEdition" mat-dialog-title>{{'edit_locataire_part'|translate}}</h3>
+<form [formGroup]="locatairePartForm" (ngSubmit)="sumbitForm()" enctype="multipart/form-data">
+  <div mat-dialog-content >
+    <div class="form-content">
+      <div class="form-item">
+        <label for="nom">{{'nom' | translate}}</label>
+        <div class="input-control" [class.error]="locatairePartForm?.get('nom')?.touched && locatairePartForm?.get('nom')?.hasError('required')" >
+          <input type="text" id="nom" formControlName="nom" name="nom" >
+          <span class="input-error-image" *ngIf="locatairePartForm?.get('nom')?.touched && locatairePartForm?.get('nom')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="locatairePartForm?.get('nom')?.touched && locatairePartForm?.get('nom')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="prenom">{{'prenom' | translate}}</label>
+        <div class="input-control" [class.error]="locatairePartForm?.get('prenom')?.touched && locatairePartForm?.get('prenom')?.hasError('required')" >
+          <input type="text" id="prenom" formControlName="prenom" name="prenom" >
+          <span class="input-error-image" *ngIf="locatairePartForm?.get('prenom')?.touched && locatairePartForm?.get('prenom')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="locatairePartForm?.get('prenom')?.touched && locatairePartForm?.get('prenom')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="telephone">{{'telephone' | translate}}</label>
+        <div class="input-control" [class.error]="locatairePartForm?.get('telephone')?.touched && locatairePartForm?.get('telephone')?.hasError('required')" >
+          <input type="text" id="telephone" formControlName="telephone" name="telephone" >
+          <span class="input-error-image" *ngIf="locatairePartForm?.get('telephone')?.touched && locatairePartForm?.get('telephone')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="locatairePartForm?.get('telephone')?.touched && locatairePartForm?.get('telephone')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="lieuTravail">{{'lieuTravail' | translate}}</label>
+        <div class="input-control" [class.error]="locatairePartForm?.get('lieuTravail')?.touched && locatairePartForm?.get('lieuTravail')?.hasError('required')" >
+          <input type="text" id="lieuTravail" formControlName="lieuTravail" name="lieuTravail" >
+          <span class="input-error-image" *ngIf="locatairePartForm?.get('lieuTravail')?.touched && locatairePartForm?.get('lieuTravail')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="locatairePartForm?.get('lieuTravail')?.touched && locatairePartForm?.get('lieuTravail')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="cni">{{'cni' | translate}}</label>
+        <div class="input-control" [class.error]="locatairePartForm?.get('cni')?.touched && locatairePartForm?.get('cni')?.hasError('required')" >
+          <input type="text" id="cni" formControlName="cni" name="cni" >
+          <span class="input-error-image" *ngIf="locatairePartForm?.get('cni')?.touched && locatairePartForm?.get('cni')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="locatairePartForm?.get('cni')?.touched && locatairePartForm?.get('cni')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="pjCni">{{'pjCni' | translate}}</label>
+        <div class="input-control" [class.error]="locatairePartForm?.get('pjCni')?.touched && locatairePartForm?.get('pjCni')?.hasError('required')" >
+          <input type="file" id="pjCni" formControlName="pjCni" name="pjCni" >
+          <span class="input-error-image" *ngIf="locatairePartForm?.get('pjCni')?.touched && locatairePartForm?.get('pjCni')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="locatairePartForm?.get('pjCni')?.touched && locatairePartForm?.get('pjCni')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="persContact">{{'persContact' | translate}}</label>
+        <div class="input-control" [class.error]="locatairePartForm?.get('persContact')?.touched && locatairePartForm?.get('persContact')?.hasError('required')" >
+          <input type="text" id="persContact" formControlName="persContact" name="persContact" >
+          <span class="input-error-image" *ngIf="locatairePartForm?.get('persContact')?.touched && locatairePartForm?.get('persContact')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="locatairePartForm?.get('persContact')?.touched && locatairePartForm?.get('persContact')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="persTelephone">{{'persTelephone' | translate}}</label>
+        <div class="input-control" [class.error]="locatairePartForm?.get('persTelephone')?.touched && locatairePartForm?.get('persTelephone')?.hasError('required')" >
+          <input type="text" id="persTelephone" formControlName="persTelephone" name="persTelephone" >
+          <span class="input-error-image" *ngIf="locatairePartForm?.get('persTelephone')?.touched && locatairePartForm?.get('persTelephone')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="locatairePartForm?.get('persTelephone')?.touched && locatairePartForm?.get('persTelephone')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="pjContrat">{{'pjContrat' | translate}}</label>
+        <div class="input-control" [class.error]="locatairePartForm?.get('pjContrat')?.touched && locatairePartForm?.get('pjContrat')?.hasError('required')" >
+          <input type="file" id="pjContrat" formControlName="pjContrat" name="pjContrat" >
+          <span class="input-error-image" *ngIf="locatairePartForm?.get('pjContrat')?.touched && locatairePartForm?.get('pjContrat')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="locatairePartForm?.get('pjContrat')?.touched && locatairePartForm?.get('pjContrat')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+    </div>
+    <div mat-dialog-actions class="dialog-actions">
+      <button class="btn btn-default" [mat-dialog-close]="false">{{'cancel'|translate}}</button>
+      <button class="btn btn-primary" type="submit">{{'save'|translate}}</button>
+    </div>
+  </div>
+</form>

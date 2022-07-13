@@ -1,0 +1,80 @@
+<script
+  src="../../../../../../../../../../Afrikpay/NYLSTECH/Digital champions app-web custome/src/app/setting/setting/views/setting.component.ts"></script>
+<div class="table-tools">
+  <button class="btn btn-primary" (click)="onOpenDialogNew()">
+    <i class="fa fa-plus"></i>
+    {{'new_parameter' | translate}}
+  </button>
+</div>
+<div class="ps-card">
+  <div class="ps-card-body">
+    <ng-container *ngIf="(parameters$ | async) as result" [ngSwitch]="result?.dataState">
+      <ng-container *ngSwitchCase="0">
+        <div class="loader-spinner">
+          <img src="../../../../../assets/images/Spin-Preloader.gif" alt="Loading..." class="loading">
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchCase="1">
+        <div class="table-content">
+          <table>
+            <thead>
+            <th>{{'name'| translate}}</th>
+            <th>{{'key'| translate}}</th>
+            <th>{{'value'| translate}}</th>
+            <th>{{'description'| translate}}</th>
+            <th></th>
+            </thead>
+            <tbody>
+            <tr *ngFor="let parameter of result?.data?.content">
+              <td>Create School API</td>
+              <td>create_school_api</td>
+              <td>http://127.0.0.1:8083/account/create/school/v1/</td>
+              <td>Api de creation d'une ecole</td>
+              <td class="actions">
+                <div class="dropdown">
+                  <button class="btn btn-table-action" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-ellipsis-v"></i>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li class="ps-dropdwn-item" (click)="onEditParameter(parameter)">
+                      <i class="fa fa-edit"></i>
+                      <span>{{'edit'|translate}}</span>
+                    </li>
+                    <li class="ps-dropdwn-item" (click)="deleteParameter(parameter)">
+                      <i class="fa fa-trash"></i>
+                      <span>{{'delete'|translate}}</span>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Create School API</td>
+              <td>create_school_api</td>
+              <td>http://127.0.0.1:8083/account/create/school/v1/</td>
+              <td>Api de creation d'une ecole</td>
+              <td class="actions">
+                <div class="dropdown">
+                  <button class="btn btn-table-action" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-ellipsis-v"></i>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <mat-paginator></mat-paginator>
+      </ng-container>
+      <ng-container>
+        error
+        <!-- // TODO Show Error Illustration here-->
+      </ng-container>
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+.table-tools{
+ height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 20px 0;
+}
+.table-content{
+  max-height: calc(100vh - 266px);
+  height: calc(100vh - 266px);
+  overflow: auto;
+}

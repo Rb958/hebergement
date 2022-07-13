@@ -1,0 +1,8 @@
+<h3 mat-dialog-title>{{ 'cancel_booking' | translate }}</h3>
+<p mat-dialog-content>
+  {{ 'cancel_booking_content' | translate }}
+</p>
+<div mat-dialog-actions class="dialog-actions">
+  <button class="btn btn-default" [mat-dialog-close]="false">{{ 'no' | translate }}</button>
+  <button class="btn btn-primary" (click)="performAction()">{{ 'yes' | translate }}</button>
+</div>

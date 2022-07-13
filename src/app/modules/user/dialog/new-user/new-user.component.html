@@ -1,0 +1,55 @@
+<h3 mat-dialog-title>{{'new_user'|translate}}</h3>
+<form [formGroup]="userForm" (ngSubmit)="sumbitForm()">
+  <div mat-dialog-content >
+    <div class="form-content">
+      <div class="form-item">
+        <label for="firstname">{{'firstname' | translate}}</label>
+        <div class="input-control" [class.error]="userForm?.get('firstname')?.touched && userForm?.get('firstname')?.hasError('required')" >
+          <input type="text" id="firstname" formControlName="firstname" name="firstname" >
+          <span class="input-error-image" *ngIf="userForm?.get('firstname')?.touched && userForm?.get('firstname')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="userForm?.get('firstname')?.touched && userForm?.get('firstname')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="lastname">{{'lastname' | translate}}</label>
+        <div class="input-control" [class.error]="userForm?.get('lastname')?.touched && userForm?.get('lastname')?.hasError('required')" >
+          <input type="text" id="lastname" formControlName="lastname" name="lastname" >
+          <span class="input-error-image" *ngIf="userForm?.get('lastname')?.touched && userForm?.get('lastname')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="userForm?.get('lastname')?.touched && userForm?.get('lastname')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="phone">{{'phone' | translate}}</label>
+        <div class="input-control" [class.error]="userForm?.get('phone')?.touched && userForm?.get('phone')?.hasError('required')" >
+          <input type="text" id="phone" formControlName="phone" name="phone" >
+          <span class="input-error-image" *ngIf="userForm?.get('phone')?.touched && userForm?.get('phone')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="userForm?.get('phone')?.touched && userForm?.get('phone')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="username">{{'username' | translate}}</label>
+        <div class="input-control" [class.error]="userForm?.get('username')?.touched && userForm?.get('username')?.hasError('required')" >
+          <input type="text" id="username" formControlName="username" name="username" >
+          <span class="input-error-image" *ngIf="userForm?.get('username')?.touched && userForm?.get('username')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="userForm?.get('username')?.touched && userForm?.get('username')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="dialog-actions">
+    <button class="btn btn-default" [mat-dialog-close]="false">{{'cancel'|translate}}</button>
+    <button class="btn btn-primary" type="submit">{{'save'|translate}}</button>
+  </div>
+</form>

@@ -1,0 +1,25 @@
+.page-layout{
+  display: flex;
+  flex-direction: row;
+  max-height: 100vh;
+}
+.page-content{
+  width: 100%;
+  padding: 15px 30px;
+  position: relative;
+  overflow: auto;
+}
+
+ps-version{
+  position: absolute;
+  bottom: 10px;
+  text-align: center;
+  left: 50%;
+}
+
+@media screen and (max-device-width: 500px){
+  .page-layout{
+    display: block;
+    flex-direction: column;
+  }
+}

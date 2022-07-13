@@ -1,0 +1,48 @@
+<h3 mat-dialog-title>{{'new_parameter'|translate}}</h3>
+<form [formGroup]="paramaterForm" >
+  <div mat-dialog-content >
+    <div class="form-content">
+      <div class="form-item">
+        <label for="name">{{'name' | translate}}</label>
+        <div class="input-control" [class.error]="paramaterForm?.get('name')?.touched && paramaterForm?.get('name')?.hasError('required')" >
+          <input type="text" id="name" formControlName="name" name="name" >
+          <span class="input-error-image" *ngIf="paramaterForm?.get('name')?.touched && paramaterForm?.get('name')?.hasError('required')">
+        <i class="fa fa-ban" aria-hidden="true"></i>
+      </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="paramaterForm?.get('name')?.touched && paramaterForm?.get('name')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="key">{{'key' | translate}}</label>
+        <div class="input-control" [class.error]="paramaterForm?.get('key')?.touched && paramaterForm?.get('key')?.hasError('required')" >
+          <input type="text" id="key" formControlName="key" name="key" >
+          <span class="input-error-image" *ngIf="paramaterForm?.get('key')?.touched && paramaterForm?.get('key')?.hasError('required')">
+        <i class="fa fa-ban" aria-hidden="true"></i>
+      </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="paramaterForm?.get('key')?.touched && paramaterForm?.get('key')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="value">{{'value' | translate}}</label>
+        <div class="input-control" [class.error]="paramaterForm?.get('value')?.touched && paramaterForm?.get('value')?.hasError('required')" >
+          <input type="text" id="value" formControlName="value" name="value" >
+          <span class="input-error-image" *ngIf="paramaterForm?.get('value')?.touched && paramaterForm?.get('value')?.hasError('required')">
+        <i class="fa fa-ban" aria-hidden="true"></i>
+      </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="paramaterForm?.get('value')?.touched && paramaterForm?.get('value')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="description">{{'description' | translate}}</label>
+        <textarea type="text" id="description" formControlName="description" name="description"></textarea>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="dialog-actions">
+    <button class="btn btn-default" [mat-dialog-close]="false">{{'cancel'|translate}}</button>
+    <button class="btn btn-primary" type="submit">{{'save'|translate}}</button>
+  </div>
+</form>

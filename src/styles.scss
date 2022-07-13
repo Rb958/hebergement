@@ -1,0 +1,288 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "themes/partials/buttons";
+@import "themes/partials/card";
+@import "themes/partials/chip";
+
+@font-face {
+  font-family: 'poppin';
+  src: url("assets/fonts/Poppins-Regular.ttf");
+}
+*{
+  box-sizing: border-box;
+}
+
+body, html{
+  margin: 0!important;
+  height: 100vh;
+  font-size: 13px;
+  background-color: #e1e2e2;
+  font-family: poppin, sans-serif;
+}
+
+a{
+  text-decoration: none;
+  color: #4d90e1;
+}
+
+.app-loader{
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background-color: white;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+table{
+  width: 100%;
+  padding-bottom: 10px;
+  thead{
+    height: 50px;
+    color: #434343;
+
+    th{
+      border-color: #707070;
+      font-weight: 600;
+      font-size: 14px!important;
+      text-transform: capitalize;
+      padding-left: 20px;
+      border-bottom: 1px solid #e1e2e2;
+    }
+  }
+  tr:hover{
+    background-color: rgba(0,0,0,0.02);
+  }
+  td{
+    font-size: 12px;
+    height: 50px;
+    border-color: #e1e2e2;
+    padding-left: 20px;
+    color: #606060;
+    border-bottom: 1px solid #e1e2e2;
+
+    &.actions{
+      padding-left: 0!important;
+      text-align: center;
+      .btn-table-action{
+        display: inline-block;
+      }
+    }
+  }
+
+}
+.mat-paginator{
+  background-color: transparent!important;
+}
+
+.ps-dropdwn-item{
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  i{
+    margin-right: 10px;
+  }
+
+  &:hover{
+    background-color: #25598a;
+    color: #e1e2e2;
+    cursor: pointer;
+  }
+}
+
+.form-item{
+  margin-bottom: 20px;
+  label{
+    font-size: 14px;
+    font-weight: 400;
+    display: block;
+    margin-bottom: 6px;
+    color: #434343;
+  }
+
+  .hint{
+    font-size: 10px;
+    position: relative;
+    display: block;
+    top: 0;
+  }
+
+  .hint.error{
+    color: #c61c1c;
+  }
+}
+
+
+textarea{
+  border: 1px solid #e5e5e5;
+  padding: 0 10px 0 10px;
+  border-radius: 5px;
+  min-height: 90px;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  color: #434343;
+  background-color: #ffffff;
+}
+
+.input-control{
+  border: 1px solid #e5e5e5;
+  padding: 0 10px 0 10px;
+  border-radius: 5px;
+  height: 35px;
+  overflow: hidden;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  color: #434343;
+  background-color: #ffffff;
+
+  .input-image{
+    margin-right: 5px;
+    color: inherit;
+  }
+
+  .input-error-image{
+    color: #c61c1c;
+  }
+
+  &.error{
+    border-color: #c61c1c;
+    box-shadow: 0 0 2px rgba(198, 28, 28, 0.30);
+    color: #c61c1c;
+  }
+
+  input, select{
+    width: 100%;
+    height: 33px;
+    border: 1px solid transparent;
+    outline: none;
+    background-color: transparent;
+
+    &:focus + .label{
+      border-color: blue;
+    }
+    //&:-internal-autofill-selected{
+    //  background-color: transparent!important;
+    //  appearance: none;
+    //}
+  }
+}
+
+
+$primary : #25598a;
+$secondary: #FFC24B;
+$grey1 : #EFEDED;
+$grey2 : #E2DDDD;
+$black: #464242;
+
+.question-item{
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  font-size: 15px;
+  color: $black;
+
+  .response_label{
+    display: block;
+  }
+}
+
+.question-radio{
+  padding: 10px;
+  .fa{
+    font-size: 25px;
+  }
+  input[type='radio']{
+    display: none;
+  }
+  .check-label{
+    display: block;
+    border: 1px solid silver;
+    width: 30px;
+    height: 30px;
+    background-color: $grey1;
+    box-shadow: 0 0 7px rgba(0,0,0,0.16) inset;
+    border-radius: 30px;
+    position: relative;
+  }
+  .check-label:hover + label.check-label:after{
+    content: "";
+    border-radius: 14px;
+    box-shadow: -1px 1px 2px rgba(0,0,0,0.24);
+    transform: rotate(-45deg);
+    left: calc(50% - 14px / 2);
+    top: calc(50% - 14px / 2);
+    background-color: $primary;
+    height: 14px;
+    width: 14px;
+    position: absolute;
+  }
+
+  input:checked + label.check-label:after{
+    content: "";
+    border-radius: 14px;
+    box-shadow: -1px 1px 2px rgba(0,0,0,0.24);
+    transform: rotate(-45deg);
+    left: calc(50% - 14px / 2);
+    top: calc(50% - 14px / 2);
+    background-color: $primary;
+    height: 14px;
+    width: 14px;
+    position: absolute;
+  }
+}
+
+.question-check{
+  label{
+    margin: 0!important;
+  }
+  padding: 10px;
+  .fa{
+    font-size: 25px;
+  }
+  input[type='checkbox']{
+    display: none;
+  }
+  .check-label{
+    display: block;
+    border: 1px solid silver;
+    width: 30px;
+    height: 30px;
+    background-color: $grey1;
+    box-shadow: 0 0 7px rgba(0,0,0,0.25) inset;
+    border-radius: 5px;
+    position: relative;
+  }
+  .check-label:hover{
+    background-color: $grey2;
+  }
+
+  input:checked + label.check-label:after{
+    content: "";
+    border-left: 5px solid $primary;
+    border-bottom: 5px solid $primary;
+    border-radius: 3px;
+    box-shadow: -1px 1px 2px rgba(0,0,0,0.24);
+    transform: rotate(-45deg);
+    left: calc(50% - 15px / 2);
+    top: calc(50% - 10px / 2);
+    background-color: transparent;
+    height: 8px;
+    width: 14px;
+    position: absolute;
+  }
+}
+
+.ps-v-spacer{
+  padding: 10px;
+}
+
+.dialog-actions{
+  display: flex;
+  justify-content: space-around;
+}

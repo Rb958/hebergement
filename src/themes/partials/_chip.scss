@@ -1,0 +1,31 @@
+@import "../mixins/linear-gradient";
+.ps-chip{
+  display: inline-block;
+  font-weight: 700;
+  line-height: 1.5;
+  font-size: .8rem;
+  border-radius: 1.25rem;
+  padding: .6rem .9rem;
+  border: 1px solid transparent;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &.chip-primary{
+    background-color: #c6c6c6;
+  }
+
+  &.chip-success{
+    background-color: #e3f9e9;
+    color: #2BC155;
+  }
+  &.chip-danger{
+    background-color: #fde5e8;
+    color: #c12b3d;
+  }
+  &.chip-warning{
+    background-color: #fcf8e3;
+    color: #c1ad2b;
+  }
+}

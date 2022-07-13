@@ -1,0 +1,30 @@
+<div class="tab-tools">
+  <span class="tab-tools-title">{{'select_one_local' | translate}}</span>
+</div>
+<div class="page-wrapper row">
+  <ng-container *ngIf="(locals$ | async) as result" [ngSwitch]="result?.dataState">
+    <ng-container *ngSwitchCase="0">
+      <div class="loader-spinner">
+        <img src="../../../../../assets/images/Spin-Preloader.gif" alt="Loading..." class="loading">
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="1">
+      <div class="col-md-3" *ngFor="let local of result?.data?.content">
+        <div class="object-wrapper" (click)="selectLocal(local)">
+          <div class="number">{{ local?.numeroLocal }}</div>
+          <div class="title">{{ local?.nomLocal }}</div>
+          <div class="book">{{'book_now' | translate}}</div>
+        </div>
+      </div>
+      <mat-paginator
+        [pageIndex] = "currentPageIndex"
+        [length] = "currentPageElementSize"
+        [pageSizeOptions] = "pagesElementSize"
+      ></mat-paginator>
+    </ng-container>
+    <ng-container *ngSwitchCase = "2">
+      error
+      <!-- // TODO Show Error Illustration here-->
+    </ng-container>
+  </ng-container>
+</div>

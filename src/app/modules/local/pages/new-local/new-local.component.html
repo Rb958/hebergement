@@ -1,0 +1,363 @@
+<div class="tab-tools">
+  <span class="tab-tools-title">{{'new_locals' | translate}}</span>
+</div>
+<div class="ps-card">
+  <div class="ps-card-body">
+    <mat-horizontal-stepper linear #stepper>
+      <mat-step [stepControl]="onglet1Form" label="Informations Générales" optional>
+        <div [formGroup]="onglet1Form" class="row">
+          <div class="col-md-6">
+            <div class="form-item">
+              <label class="form-label">Ville</label>
+              <div class="input-control">
+                <input type="text" placeholder="Douala" formControlName="ville"/>
+                <span class="input-error-image" *ngIf="onglet1Form?.get('ville')?.touched && onglet1Form?.get('ville')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="onglet1Form?.get('ville')?.touched && onglet1Form?.get('ville')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+            <div class="form-item">
+              <label class="form-label">Pays</label>
+              <div class="input-control">
+                <input type="text" placeholder="Cameroun" formControlName="pays"/>
+                <span class="input-error-image" *ngIf="onglet1Form?.get('pays')?.touched && onglet1Form?.get('pays')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="onglet1Form?.get('pays')?.touched && onglet1Form?.get('pays')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+            <div class="form-item">
+              <label class="form-label">Quartier</label>
+              <div class="input-control">
+                <input type="text" placeholder="Bonapriso" formControlName="quartier"/>
+                <span class="input-error-image" *ngIf="onglet1Form?.get('quartier')?.touched && onglet1Form?.get('quartier')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="onglet1Form?.get('quartier')?.touched && onglet1Form?.get('quartier')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+            <div class="form-item">
+              <label class="form-label">Nom de l'immeuble</label>
+              <div class="input-control">
+                <input type="text" placeholder="Immeuble TKC" formControlName="immeuble"/>
+                <span class="input-error-image" *ngIf="onglet1Form?.get('immeuble')?.touched && onglet1Form?.get('immeuble')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="onglet1Form?.get('immeuble')?.touched && onglet1Form?.get('immeuble')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+            <div class="form-item">
+              <label class="form-label">Type de local</label>
+              <div class="input-control">
+                <select formControlName="typeLocal">
+                  <option value="">Selectionner le type de locale</option>
+                  <option value="APPARTEMENT">Appartement</option>
+                  <option value="STUDIO">Studio</option>
+                  <option value="CHAMBRE">Chambre</option>
+                  <option value="SUITE">Suite</option>
+                  <option value="BOUTIQUE">Boutique</option>
+                  <option value="MAGASIN">Magasin</option>
+                  <option value="BUREAU">Bureau</option>
+                </select>
+                <span class="input-error-image" *ngIf="onglet1Form?.get('immeuble')?.touched && onglet1Form?.get('immeuble')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="onglet1Form?.get('immeuble')?.touched && onglet1Form?.get('immeuble')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-item">
+              <label class="form-label">Nom du local</label>
+              <div class="input-control">
+                <input type="text" placeholder="Chambre 25" formControlName="nomLocal"/>
+                <span class="input-error-image" *ngIf="onglet1Form?.get('nomLocal')?.touched && onglet1Form?.get('nomLocal')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="onglet1Form?.get('nomLocal')?.touched && onglet1Form?.get('nomLocal')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+            <div class="form-item">
+              <label class="form-label">Numero du local</label>
+              <div class="input-control">
+                <input type="text" placeholder="KCN830" formControlName="numeroLocal"/>
+                <span class="input-error-image" *ngIf="onglet1Form?.get('numeroLocal')?.touched && onglet1Form?.get('numeroLocal')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="onglet1Form?.get('numeroLocal')?.touched && onglet1Form?.get('numeroLocal')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+            <div class="form-item">
+              <label class="form-label">Etage</label>
+              <div class="input-control">
+                <select formControlName="etage">
+                  <option value="">Selectionner l'étage</option>
+                  <option value="REZ_DE_CHAUSSEE">Rez_de_chaussée</option>
+                  <option value="SOUS_SOL">Sous_sol</option>
+                  <option value="NIVEAU_1">Niveau_1</option>
+                  <option value="NIVEAU_2">Niveau_2</option>
+                  <option value="NIVEAU_3">Niveau_3</option>
+                  <option value="NIVEAU_4">Niveau_4</option>
+                  <option value="NIVEAU_5">Niveau_5</option>
+                  <option value="NIVEAU_6">Niveau_6</option>
+                  <option value="NIVEAU_7">Niveau_7</option>
+                  <option value="NIVEAU_8">Niveau_8</option>
+                  <option value="NIVEAU_9">Niveau_9</option>
+                  <option value="NIVEAU_10">Niveau_10</option>
+                  <option value="NIVEAU_11">Niveau_11</option>
+                  <option value="NIVEAU_12">Niveau_12</option>
+                  <option value="NIVEAU_13">Niveau_13</option>
+                  <option value="NIVEAU_14">Niveau_14</option>
+                  <option value="NIVEAU_15">Niveau_15</option>
+                  <option value="NIVEAU_16">Niveau_16</option>
+                  <option value="NIVEAU_17">Niveau_17</option>
+                  <option value="NIVEAU_18">Niveau_18</option>
+                  <option value="NIVEAU_19">Niveau_19</option>
+                  <option value="NIVEAU_20">Niveau_20</option>
+                </select>
+                <span class="input-error-image" *ngIf="onglet1Form?.get('immeuble')?.touched && onglet1Form?.get('immeuble')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="onglet1Form?.get('immeuble')?.touched && onglet1Form?.get('immeuble')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+            <div class="form-item">
+              <label class="form-label">Localisation</label>
+              <div class="input-control">
+                <input type="text" placeholder="Rue de la paix N150" formControlName="localisation"/>
+                <span class="input-error-image" *ngIf="onglet1Form?.get('localisation')?.touched && onglet1Form?.get('localisation')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="onglet1Form?.get('localisation')?.touched && onglet1Form?.get('localisation')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+            <div class="form-item">
+              <label class="form-label">Catéorie</label>
+              <div class="input-control">
+                <select formControlName="categorie">
+                  <option value="">Selectionner la catéorie du locale</option>
+                  <option value="MEUBLÉ">MEUBLÉ</option>
+                  <option value="NON_MEUBLÉ">NON MEUBLÉ</option>
+                </select>
+                <span class="input-error-image" *ngIf="onglet1Form?.get('categorie')?.touched && onglet1Form?.get('categorie')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="onglet1Form?.get('categorie')?.touched && onglet1Form?.get('categorie')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button matStepperNext class="btn btn-primary" [disabled]="onglet1Form.invalid">
+              <span>Suivant</span>
+            </button>
+          </div>
+        </div>
+      </mat-step>
+      <mat-step [stepControl]="onglet2Form" label="Informations complémentaires" optional>
+        <div class="row" [formGroup]="onglet2Form">
+          <div class="col-md-6">
+            <div class="form-item">
+              <div class="question-item" >
+                <div class="question-check">
+                  <input type="checkbox" formControlName="fumeur" name="fumeur" id="fumeur">
+                  <label for="fumeur" class="check-label"></label>
+                </div>
+                <span class="response_label">Fumeurs acceptés</span>
+              </div>
+            </div>
+            <div class="form-item">
+              <div class="question-item" >
+                <div class="question-check">
+                  <input type="checkbox" formControlName="clim" name="clim" id="clim">
+                  <label for="clim" class="check-label"></label>
+                </div>
+                <span class="response_label">Climatisé</span>
+              </div>
+            </div>
+            <div class="form-item">
+              <div class="question-item" >
+                <div class="question-check">
+                  <input type="checkbox" formControlName="piscine" name="piscine" id="piscine">
+                  <label for="piscine" class="check-label"></label>
+                </div>
+                <span class="response_label">Piscine commune</span>
+              </div>
+            </div>
+            <div class="form-item">
+              <div class="question-item" >
+                <div class="question-check">
+                  <input type="checkbox" formControlName="wifi" name="wifi" id="wifi">
+                  <label for="wifi" class="check-label"></label>
+                </div>
+                <span class="response_label">Wifi gratuit</span>
+              </div>
+            </div>
+            <div class="form-item">
+              <div class="question-item" >
+                <div class="question-check">
+                  <input type="checkbox" formControlName="animaux" name="animaux" id="animaux">
+                  <label for="animaux" class="check-label"></label>
+                </div>
+                <span class="response_label">Animaux acceptés</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-item">
+              <div class="question-item" >
+                <div class="question-check">
+                  <input type="checkbox" formControlName="chauffage" name="chauffage" id="chauffage">
+                  <label for="chauffage" class="check-label"></label>
+                </div>
+                <span class="response_label">Chauffage</span>
+              </div>
+            </div>
+            <div class="form-item">
+              <div class="question-item" >
+                <div class="question-check">
+                  <input type="checkbox" formControlName="parkingIn" name="parkingIn" id="parkingIn">
+                  <label for="parkingIn" class="check-label"></label>
+                </div>
+                <span class="response_label">Parking intérieur</span>
+              </div>
+            </div>
+            <div class="form-item">
+              <div class="question-item" >
+                <div class="question-check">
+                  <input type="checkbox" formControlName="gadienJour" name="gadienJour" id="gadienJour">
+                  <label for="gadienJour" class="check-label"></label>
+                </div>
+                <span class="response_label">Gardien de jour</span>
+              </div>
+            </div>
+            <div class="form-item">
+              <div class="question-item" >
+                <div class="question-check">
+                  <input type="checkbox" formControlName="gardientNuit" name="gardientNuit" id="gardientNuit">
+                  <label for="gardientNuit" class="check-label"></label>
+                </div>
+                <span class="response_label">Gardien de nuit</span>
+              </div>
+            </div>
+            <div class="form-item">
+              <div class="question-item" >
+                <div class="question-check">
+                  <input type="checkbox" formControlName="groupeElect" name="groupeElect" id="groupeElect">
+                  <label for="groupeElect" class="check-label"></label>
+                </div>
+                <span class="response_label">Groupe Electrogène</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button matStepperPrevious class="btn btn-outline-secondary mr-2">
+            <span>Précédent</span>
+          </button>
+          <button matStepperNext class="btn btn-primary" [disabled]="onglet2Form.invalid">
+            <span>Suivant</span>
+          </button>
+        </div>
+      </mat-step>
+      <mat-step [stepControl]="onglet3Form" label="Descriptions">
+        <form class="row" [formGroup]="onglet3Form" (ngSubmit)="submit()">
+          <div class="col-md-6">
+            <div class="form-item">
+              <label class="form-label">Nombre de chambres</label>
+              <div class="input-control">
+                <input type="number" placeholder="03" formControlName="nbrChambre"/>
+                <span class="input-error-image" *ngIf="onglet3Form?.get('nbrChambre')?.touched && onglet3Form?.get('nbrChambre')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="onglet3Form?.get('nbrChambre')?.touched && onglet3Form?.get('nbrChambre')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+            <div class="form-item">
+              <label class="form-label">Nombre de douches</label>
+              <div class="input-control">
+                <input type="number" placeholder="02" formControlName="nbrDouche"/>
+                <span class="input-error-image" *ngIf="onglet3Form?.get('nbrDouche')?.touched && onglet3Form?.get('nbrDouche')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="onglet3Form?.get('nbrDouche')?.touched && onglet3Form?.get('nbrDouche')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+            <div class="form-item">
+              <label class="form-label">Prix</label>
+              <div class="input-control">
+                <input type="number" placeholder="50000" formControlName="prix"/>
+                <span class="input-error-image" *ngIf="onglet3Form?.get('prix')?.touched && onglet3Form?.get('prix')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="onglet3Form?.get('prix')?.touched && onglet3Form?.get('prix')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+            <div class="form-item">
+              <label class="form-label">Frequence de paiement</label>
+              <div class="input-control">
+                <select formControlName="typePrix">
+                  <option value="">Selectionner une frequence de paiement</option>
+                  <option value="HEURE">Heure</option>
+                  <option value="JOURS">Jours</option>
+                  <option value="MOIS">Mois</option>
+                  <option value="ANNEE">Année</option>
+                </select>
+                <span class="input-error-image" *ngIf="onglet1Form?.get('typePrix')?.touched && onglet1Form?.get('typePrix')?.hasError('required')">
+                  <i class="fa fa-ban" aria-hidden="true"></i>
+                </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="onglet1Form?.get('typePrix')?.touched && onglet1Form?.get('typePrix')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+            <div class="form-item">
+              <label class="form-label">Chiffre d'affaire</label>
+              <div class="input-control">
+                <input type="number" placeholder="120000" formControlName="ca"/>
+                <span class="input-error-image" *ngIf="onglet3Form?.get('ca')?.touched && onglet3Form?.get('ca')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="onglet3Form?.get('ca')?.touched && onglet3Form?.get('ca')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-item">
+              <label class="form-label">Contrat</label>
+              <div class="input-control">
+                <input type="file" placeholder="contrat" formControlName="contrat"/>
+                <span class="input-error-image" *ngIf="onglet3Form?.get('contrat')?.touched && onglet3Form?.get('contrat')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="onglet3Form?.get('contrat')?.touched && onglet3Form?.get('contrat')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+          </div>
+        </form>
+        <div class="d-flex justify-content-end">
+          <button matStepperPrevious class="btn btn-outline-secondary mr-2">
+            <span>Précédent</span>
+          </button>
+          <button class="btn btn-primary" [disabled]="onglet3Form.invalid" (click)="submit()" >
+            <span>Suivant</span>
+          </button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+</div>

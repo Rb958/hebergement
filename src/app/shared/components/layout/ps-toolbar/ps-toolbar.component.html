@@ -1,0 +1,58 @@
+<div class="ps-toolbar">
+  <div class="ps-toolbar-title">
+    <div class="ps-menu-icon" (click)="menuClicked()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+    <span class="toolbar-title">{{toolbarTitle | translate}}</span>
+  </div>
+  <div class="ps-toolbar-search-bar">
+    <div>
+      <div class="search-control">
+        <input type="text" [(ngModel)]="searchValue" placeholder="Rechercher exp: Apparement BTE-5632S" (keyup.enter)="enterPressed()" >
+        <i class="fa fa-search"></i>
+      </div>
+    </div>
+  </div>
+  <div class="ps-toolbar-actions" >
+    <div class="action-item">
+      <div class="badge" *ngIf="badgeValue">
+        <span>{{badgeValue}}</span>
+      </div>
+      <i class="fa fa-bell-o"></i>
+    </div>
+    <div class="action-item" matTooltip="Paramètres">
+      <i class="fa fa-cogs"></i>
+    </div>
+    <div class="avatar dropdown show" (click)="logout()" matTooltip="Déconnexion">
+      <a id="triggerId">
+        <i *ngIf="!userAvatar" class="fa fa-sign-out"></i>
+        <img *ngIf="userAvatar" [src]="avatarSanitized" width="35px" alt="">
+      </a>
+      <div class="dropdown-menu" aria-labelledby="triggerId">
+        <button class="dropdown-item">
+          <span class="d-inline-flex">
+            <!-- <i class="fa fa-user-o"></i> -->
+            <span>Profile</span>
+          </span>
+        </button>
+        <div class="dropdown-divider"></div>
+        <button class="dropdown-item"  >
+          <span>
+            <!-- <i class="fa fa-lock"></i> -->
+            <span>{{'logout' | translate}}</span>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div class="profile">
+      <span class="profile_user">{{username || 'username'}}</span>
+      <span class="profile_role">
+        <span *ngFor="let role of userRole">
+          {{ role || 'user' | translate}}
+        </span>
+      </span>
+    </div>
+  </div>
+</div>

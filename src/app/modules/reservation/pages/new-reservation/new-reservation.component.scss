@@ -1,0 +1,43 @@
+.page-wrapper{
+  padding: 20px;
+}
+.object-wrapper{
+  position: relative;
+  border-radius: 5px;
+  background-color: #25598a;
+  color: #c6c6c6;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 20px;
+
+  .number{
+    font-weight: bold;
+    font-size: 18px;
+  }
+  .title{
+    line-height: 25px;
+  }
+  .book{
+    position: absolute;
+    width: 100px;
+    line-height: 25px;
+    background-color: #0e9934;
+    color: #f2f2f2;
+    border-radius: 10px;
+    left: calc(50% - 50px);
+    top: -13px;
+    display: none;
+    transition: ease-out;
+  }
+  &:hover{
+    color: white;
+    cursor: pointer;
+    background-color: darken(#25598a, 10);
+    .book{
+      display: block;
+      transition: ease-in;
+    }
+  }
+}

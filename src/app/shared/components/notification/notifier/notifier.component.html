@@ -1,0 +1,46 @@
+<div class="notifier-container" *ngIf="notifier">
+  <ng-container *ngFor="let notification of notifier.notifications.reverse()">
+    <div class="notif" [ngClass]="notification.style" [@notify]="'show'">
+      <div class="notif-content">
+        <div class="notif-item">
+          <div class="notif-icon">
+            <div>
+              <ng-container [ngSwitch]="notification.type">
+                <ng-container *ngSwitchCase="0">
+                  <i class="fa fa-info-circle"></i>
+                </ng-container>
+                <ng-container *ngSwitchCase="1">
+                  <i class="fa fa-check-circle-o"></i>
+                </ng-container>
+                <ng-container *ngSwitchCase="2">
+                  <i class="fa fa-warning"></i>
+                </ng-container>
+                <ng-container *ngSwitchCase="3">
+                  <i class="fa fa-ban"></i>
+                </ng-container>
+                <ng-container *ngSwitchCase="4">
+                  <i class="fa fa-lightbulb-o"></i>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div class="notif-item">
+          <div class="notif-msg">
+            <div class="notif-header">
+              <span>
+                {{ notification.header }}
+              </span>
+              <button class="close-notif" (click)="notifier.destroy(notification)">
+                <i class="fa fa-close"></i>
+              </button>
+            </div>
+            <p>
+              {{ notification.message }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

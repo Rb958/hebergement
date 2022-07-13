@@ -1,0 +1,145 @@
+:host{
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.page-bg{
+  background-image: url('../../../../../assets/images/background/bg-01.jpg');
+  background-attachment: fixed;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+}
+
+.blur-layer{
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  //backdrop-filter: blur(2px);
+  width: 100%;
+  height: 100%;
+  background-color: rgba(242, 242, 242, 0.3);
+}
+
+.login_widget{
+  border: 1px solid rgba(242, 242, 242, 0.2);
+  backdrop-filter: blur(15px);
+  border-radius: 5px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.16);
+  width: 450px;
+  margin: auto;
+  padding: 35px;
+  background-color: rgba(242, 242, 242, 0.7);
+
+  form {
+    height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+}
+
+.form-item{
+  margin-bottom: 10px;
+  label{
+    font-size: 12px;
+    display: block;
+    margin-bottom: 6px;
+    color: #434343;
+  }
+
+  .hint{
+    font-size: 10px;
+    position: relative;
+    display: block;
+    top: 0;
+  }
+
+  .hint.error{
+    color: #c61c1c;
+  }
+}
+
+.input-control{
+  border: 1px solid #e5e5e5;
+  padding: 0 10px 0 10px;
+  border-radius: 5px;
+  height: 35px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  color: #434343;
+  background-color: #ffffff;
+
+  .input-image{
+    margin-right: 5px;
+    color: inherit;
+  }
+
+  .input-error-image{
+    color: #c61c1c;
+  }
+
+  &.error{
+    border-color: #c61c1c;
+    box-shadow: 0 0 2px rgba(198, 28, 28, 0.30);
+    color: #c61c1c;
+  }
+
+  input{
+    width: 100%;
+    height: 33px;
+    border: 1px solid transparent;
+    outline: none;
+    font-size: 12px;
+
+    &:focus + .label{
+      border-color: blue;
+    }
+    //&:-internal-autofill-selected{
+    //  background-color: transparent!important;
+    //  appearance: none;
+    //}
+  }
+}
+
+.login-actions{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .btn{
+    width: 150px;
+    height: 35px;
+  }
+}
+
+@media screen and (max-width: 500px){
+  :host{
+    background-color: #f2f2f2!important;
+  }
+
+  .login-actions{
+    height: 70px;
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  .login_widget{
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+  }
+
+  ps-version{
+    position: absolute!important;
+    bottom: 10px!important;
+    width: calc(100% - 60px);
+  }
+}

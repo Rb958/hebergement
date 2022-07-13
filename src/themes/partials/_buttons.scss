@@ -1,0 +1,29 @@
+.btn{
+  border: 1px solid transparent;
+  padding: 0.375rem 0.74rem;
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 5px;
+  background-color: transparent;
+  font-size: 1rem;
+}
+
+.btn-primary{
+  background-color: #4d90e1;
+  border: 1px solid #4d90e1;
+}
+
+.btn-default{
+  background-color: #e0ecfa;
+  border: 1px solid #e0ecfa;
+  box-shadow: 0 2px 3px rgba(0,0,0,0.54);
+}
+
+.btn-table-action{
+  background-color: transparent;
+  font-size: 18px;
+  color: #5a5757;
+}
+
+

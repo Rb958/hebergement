@@ -1,0 +1,44 @@
+:host{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  & > label{
+    margin: 0!important;
+  }
+}
+
+.switch{
+  border: 1px solid #e5e5e5;
+  height: 25px;
+  border-radius: 15px;
+  background-color: #f8f8f8;
+  width: 50px;
+  position: relative;
+  transition: 0.5s;
+}
+input{
+ display: none;
+}
+
+.switch:after{
+  content: "";
+  position: absolute;
+  height: 23px;
+  width: 23px;
+  border: 1px solid silver;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 1px 0 2px rgba(0,0,0,0.10);
+  transition: 0.2s;
+}
+input:checked + .switch{
+  transition: 0.5s;
+  background-color: #4d90e1;
+  border-color: #4d90e1;
+}
+
+input:checked + .switch:after{
+  transition: 0.2s;
+  transform: translateX(25px);
+  border-color: #4d90e1;
+}

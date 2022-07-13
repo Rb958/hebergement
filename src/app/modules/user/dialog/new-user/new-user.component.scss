@@ -1,0 +1,37 @@
+:host{
+  display: flex;
+  flex-direction: column;
+}
+.login_widget{
+  border: 1px solid #f2f2f2;
+  border-radius: 5px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.16);
+  width: 400px;
+  margin: auto;
+  padding: 30px;
+  background-color: #f2f2f2;
+
+  //form {
+  //  height: 360px;
+  //  display: flex;
+  //  flex-direction: column;
+  //  justify-content: space-evenly;
+  //}
+
+  .form-content{
+    height: 460px!important;
+    display: flex!important;
+    flex-direction: column!important;
+    justify-content: space-evenly!important;
+  }
+}
+
+.login-actions{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .btn{
+    width: 150px;
+    height: 35px;
+  }
+}

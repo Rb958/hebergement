@@ -1,0 +1,142 @@
+.ps-toolbar{
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .ps-toolbar-title{
+    font-size: 1.3rem;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: fit-content;
+  }
+
+  .ps-menu-icon{
+    border: 1px solid transparent;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    &:hover{
+      cursor: pointer;
+      transition: ease-in .1s;
+      .bar:nth-of-type(1), .bar:nth-of-type(3){
+        transform: translateX(5px);
+      }
+      .bar:nth-of-type(2){
+        transform: translateX(0);
+      }
+    }
+
+    .bar{
+      display: block;
+      border: 1px solid #383838;
+      border-radius: 2px;
+      height: 2px;
+      background-color: #383838;
+      transition: .2s ease-out;
+      &:nth-of-type(2){
+        transform: translateX(5px);
+      }
+    }
+  }
+
+  .toolbar-title{
+    margin-left: 25px;
+  }
+
+  .search-control{
+    width: 400px;
+    border: 1px solid transparent;
+    height: 35px;
+    background-color: #e8e8e8;
+    border-radius: 25px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    i{
+      color: #787878;
+    }
+    input{
+      background-color: transparent;
+      border: 1px solid transparent;
+      height: inherit;
+      color: #383838;
+      width: 100%;
+      &:focus{
+        outline: none;
+      }
+    }
+  }
+
+  .ps-toolbar-actions{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 230px;
+
+    .action-item{
+      border: 1px solid transparent;
+      background-color: #f2f2f2;
+      height: 35px;
+      width: 35px;
+      border-radius: 35px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 1px 2px 6px rgba(0,0,0,0.12);
+
+      &:hover{
+        cursor: pointer;
+      }
+
+      i{
+        display: block;
+        font-size: 18px;
+        text-align: center;
+      }
+
+      .badge{
+        position: absolute;
+        display: flex;
+        top: -10px;
+        right: -10px;
+        background-color: #c61c1c;
+        color: #e1e2e2;
+        width: 25px;
+        height: 25px;
+        border-radius: 25px;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    .avatar{
+      @extend .action-item;
+      //background-color: transparent;
+      overflow: hidden;
+    }
+
+    .profile{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: default;
+      .profile_user{
+        font-size: 1.15rem;
+        font-weight: 400;
+      }
+      .profile_role{
+        font-size: 0.8rem;
+        color: #5a5757;
+      }
+    }
+  }
+}

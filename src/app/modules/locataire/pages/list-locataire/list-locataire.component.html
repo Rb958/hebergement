@@ -1,0 +1,84 @@
+<div class="tab-tools">
+  <span class="tab-tools-title">{{'list_of_locataire_societe' | translate}}</span>
+  <div class="tab-export-tools">
+    <button class="btn btn-default">
+      <i class="fa fa-print"></i>
+    </button>
+    <button class="btn btn-default">
+      <i class="fa fa-download"></i>
+    </button>
+  </div>
+  <div>
+    <button class="btn btn-primary" (click)="newLocataire()">
+      <i class="fa fa-plus"></i>
+      {{'new_locataire_societe' | translate}}
+    </button>
+  </div>
+</div>
+
+<div class="ps-card">
+  <div class="ps-card-body">
+    <ng-container *ngIf="(locataireSociete$ | async) as result" [ngSwitch]="result?.dataState">
+      <ng-container *ngSwitchCase="0">
+        <div class="loader-spinner">
+          <img src="../../../../../assets/images/Spin-Preloader.gif" alt="Loading..." class="loading">
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchCase="1">
+        <div class="table-content">
+          <table>
+            <thead>
+            <th>Id</th>
+            <th>{{'raisonSociale' | translate}}</th>
+            <th>{{'niu' | translate}}</th>
+            <th>{{'nom_gerant' | translate}}</th>
+            <th>{{'profession' | translate}}</th>
+            <th>Actions</th>
+            </thead>
+            <tbody>
+            <tr *ngFor="let locataire of result?.data?.content">
+              <td>#{{ locataire?.id }}</td>
+              <td>{{ locataire?.raisonSociale }}</td>
+              <td>{{ locataire?.niu }}</td>
+              <td>{{ locataire?.nomGerant }}</td>
+              <td>{{ locataire?.profession }}</td>
+              <td class="actions">
+                <div class="dropdown">
+                  <button class="btn btn-table-action" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-ellipsis-v"></i>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li (click)="update(locataire)">
+                      <a class="dropdown-item">
+                        <i class="fa fa-trash"></i>
+                        &nbsp;
+                        {{'update' | translate}}
+                      </a>
+                    </li>
+                    <li (click)="delete(locataire)">
+                      <a class="dropdown-item">
+                        <i class="fa fa-trash"></i>
+                        &nbsp;
+                        {{'delete' | translate}}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <mat-paginator
+          [pageIndex]="currentPageIndex"
+          [length]="currentPageElementSize"
+          [pageSizeOptions]="pagesElementSize"
+        ></mat-paginator>
+      </ng-container>
+      <ng-container *ngSwitchCase="2">
+        error
+        <!-- // TODO Show Error Illustration here-->
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
