@@ -1,10 +1,10 @@
 <div class="tab-tools">
-  <span class="tab-tools-title">{{'new_locals' | translate}}</span>
+  <span class="tab-tools-title">{{'new_local' | translate}}</span>
 </div>
 <div class="ps-card">
   <div class="ps-card-body">
     <mat-horizontal-stepper linear #stepper>
-      <mat-step [stepControl]="onglet1Form" label="Informations Générales" optional>
+      <mat-step [stepControl]="onglet1Form" label="Informations Générales">
         <div [formGroup]="onglet1Form" class="row">
           <div class="col-md-6">
             <div class="form-item">
@@ -144,7 +144,7 @@
             <div class="form-item">
               <label class="form-label">Catéorie</label>
               <div class="input-control">
-                <select formControlName="categorie">
+                <select formControlName="categorie" #caterorie>
                   <option value="">Selectionner la catéorie du locale</option>
                   <option value="MEUBLÉ">MEUBLÉ</option>
                   <option value="NON_MEUBLÉ">NON MEUBLÉ</option>
@@ -164,7 +164,7 @@
           </div>
         </div>
       </mat-step>
-      <mat-step [stepControl]="onglet2Form" label="Informations complémentaires" optional>
+      <mat-step [stepControl]="onglet2Form" label="Informations complémentaires">
         <div class="row" [formGroup]="onglet2Form">
           <div class="col-md-6">
             <div class="form-item">
@@ -271,89 +271,129 @@
         </div>
       </mat-step>
       <mat-step [stepControl]="onglet3Form" label="Descriptions">
-        <form class="row" [formGroup]="onglet3Form" (ngSubmit)="submit()">
+        <div class="row">
           <div class="col-md-6">
-            <div class="form-item">
-              <label class="form-label">Nombre de chambres</label>
-              <div class="input-control">
-                <input type="number" placeholder="03" formControlName="nbrChambre"/>
-                <span class="input-error-image" *ngIf="onglet3Form?.get('nbrChambre')?.touched && onglet3Form?.get('nbrChambre')?.hasError('required')">
+            <form class="row" [formGroup]="onglet3Form" (ngSubmit)="submit()">
+              <div class="form-item">
+                <label class="form-label">Nombre de chambres</label>
+                <div class="input-control">
+                  <input type="number" placeholder="03" formControlName="nbrChambre"/>
+                  <span class="input-error-image" *ngIf="onglet3Form?.get('nbrChambre')?.touched && onglet3Form?.get('nbrChambre')?.hasError('required')">
                 <i class="fa fa-ban" aria-hidden="true"></i>
               </span>
+                </div>
+                <span class="hint"></span>
+                <span class="hint error" *ngIf="onglet3Form?.get('nbrChambre')?.touched && onglet3Form?.get('nbrChambre')?.hasError('required')">{{'required_field' | translate}}</span>
               </div>
-              <span class="hint"></span>
-              <span class="hint error" *ngIf="onglet3Form?.get('nbrChambre')?.touched && onglet3Form?.get('nbrChambre')?.hasError('required')">{{'required_field' | translate}}</span>
-            </div>
-            <div class="form-item">
-              <label class="form-label">Nombre de douches</label>
-              <div class="input-control">
-                <input type="number" placeholder="02" formControlName="nbrDouche"/>
-                <span class="input-error-image" *ngIf="onglet3Form?.get('nbrDouche')?.touched && onglet3Form?.get('nbrDouche')?.hasError('required')">
+              <div class="form-item">
+                <label class="form-label">Nombre de douches</label>
+                <div class="input-control">
+                  <input type="number" placeholder="02" formControlName="nbrDouche"/>
+                  <span class="input-error-image" *ngIf="onglet3Form?.get('nbrDouche')?.touched && onglet3Form?.get('nbrDouche')?.hasError('required')">
+                    <i class="fa fa-ban" aria-hidden="true"></i>
+                  </span>
+                </div>
+                <span class="hint"></span>
+                <span class="hint error" *ngIf="onglet3Form?.get('nbrDouche')?.touched && onglet3Form?.get('nbrDouche')?.hasError('required')">{{'required_field' | translate}}</span>
+              </div>
+              <div class="form-item">
+                <label class="form-label">Prix</label>
+                <div class="input-control">
+                  <input type="number" placeholder="50000" formControlName="prix"/>
+                  <span class="input-error-image" *ngIf="onglet3Form?.get('prix')?.touched && onglet3Form?.get('prix')?.hasError('required')">
+                    <i class="fa fa-ban" aria-hidden="true"></i>
+                  </span>
+                </div>
+                <span class="hint"></span>
+                <span class="hint error" *ngIf="onglet3Form?.get('prix')?.touched && onglet3Form?.get('prix')?.hasError('required')">{{'required_field' | translate}}</span>
+              </div>
+              <!-- <div class="form-item">
+                <label class="form-label">Contrat</label>
+                <div class="input-control">
+                  <input type="file" placeholder="contrat" formControlName="contrat"/>
+                  <span class="input-error-image" *ngIf="onglet3Form?.get('contrat')?.touched && onglet3Form?.get('contrat')?.hasError('required')">
                 <i class="fa fa-ban" aria-hidden="true"></i>
-              </span>
-              </div>
-              <span class="hint"></span>
-              <span class="hint error" *ngIf="onglet3Form?.get('nbrDouche')?.touched && onglet3Form?.get('nbrDouche')?.hasError('required')">{{'required_field' | translate}}</span>
-            </div>
-            <div class="form-item">
-              <label class="form-label">Prix</label>
-              <div class="input-control">
-                <input type="number" placeholder="50000" formControlName="prix"/>
-                <span class="input-error-image" *ngIf="onglet3Form?.get('prix')?.touched && onglet3Form?.get('prix')?.hasError('required')">
-                <i class="fa fa-ban" aria-hidden="true"></i>
-              </span>
-              </div>
-              <span class="hint"></span>
-              <span class="hint error" *ngIf="onglet3Form?.get('prix')?.touched && onglet3Form?.get('prix')?.hasError('required')">{{'required_field' | translate}}</span>
-            </div>
-            <div class="form-item">
-              <label class="form-label">Frequence de paiement</label>
-              <div class="input-control">
-                <select formControlName="typePrix">
-                  <option value="">Selectionner une frequence de paiement</option>
-                  <option value="HEURE">Heure</option>
-                  <option value="JOURS">Jours</option>
-                  <option value="MOIS">Mois</option>
-                  <option value="ANNEE">Année</option>
-                </select>
-                <span class="input-error-image" *ngIf="onglet1Form?.get('typePrix')?.touched && onglet1Form?.get('typePrix')?.hasError('required')">
-                  <i class="fa fa-ban" aria-hidden="true"></i>
                 </span>
-              </div>
-              <span class="hint"></span>
-              <span class="hint error" *ngIf="onglet1Form?.get('typePrix')?.touched && onglet1Form?.get('typePrix')?.hasError('required')">{{'required_field' | translate}}</span>
-            </div>
-            <div class="form-item">
-              <label class="form-label">Chiffre d'affaire</label>
-              <div class="input-control">
-                <input type="number" placeholder="120000" formControlName="ca"/>
-                <span class="input-error-image" *ngIf="onglet3Form?.get('ca')?.touched && onglet3Form?.get('ca')?.hasError('required')">
+                  </div>
+                  <span class="hint"></span>
+                <span class="hint error" *ngIf="onglet3Form?.get('contrat')?.touched && onglet3Form?.get('contrat')?.hasError('required')">{{'required_field' | translate}}</span>
+              </div> -->
+            </form>
+            <div [formGroup]="immoFrom" *ngIf="caterorie.value == 'MEUBLÉ'">
+              <div class="form-item">
+                <label class="form-label">Désignation</label>
+                <div class="input-control">
+                  <input type="text" placeholder="Télévision" formControlName="designation"/>
+                  <span class="input-error-image" *ngIf="immoFrom?.get('designation')?.touched && immoFrom?.get('designation')?.hasError('required')">
                 <i class="fa fa-ban" aria-hidden="true"></i>
               </span>
+                </div>
+                <span class="hint"></span>
+                <span class="hint error" *ngIf="immoFrom?.get('designation')?.touched && immoFrom?.get('designation')?.hasError('required')">{{'required_field' | translate}}</span>
               </div>
-              <span class="hint"></span>
-              <span class="hint error" *ngIf="onglet3Form?.get('ca')?.touched && onglet3Form?.get('ca')?.hasError('required')">{{'required_field' | translate}}</span>
+              <div class="form-item">
+                <label class="form-label">Quantité</label>
+                <div class="input-control">
+                  <input type="number" placeholder="01" formControlName="qte"/>
+                  <span class="input-error-image" *ngIf="immoFrom?.get('qte')?.touched && immoFrom?.get('qte')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+                </div>
+                <span class="hint"></span>
+                <span class="hint error" *ngIf="immoFrom?.get('qte')?.touched && immoFrom?.get('qte')?.hasError('required')">{{'required_field' | translate}}</span>
+              </div>
+              <div class="form-item">
+                <label class="form-label">Prix Unitaire</label>
+                <div class="input-control">
+                  <input type="number" placeholder="120 000" formControlName="prix"/>
+                  <span class="input-error-image" *ngIf="immoFrom?.get('prix')?.touched && immoFrom?.get('prix')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+                </div>
+                <span class="hint"></span>
+                <span class="hint error" *ngIf="immoFrom?.get('prix')?.touched && immoFrom?.get('prix')?.hasError('required')">{{'required_field' | translate}}</span>
+              </div>
+              <div class="form-item">
+                <label class="form-label">Description</label>
+                <textarea name="" id="" cols="30" rows="8" formControlName="description"></textarea>
+              </div>
+              <div class="form-item">
+                <button class="btn btn-primary" (click)="addImmo()">
+                  <i class="fa fa-plus"></i>
+                  Ajouter
+                </button>
+              </div>
             </div>
           </div>
           <div class="col-md-6">
-            <div class="form-item">
-              <label class="form-label">Contrat</label>
-              <div class="input-control">
-                <input type="file" placeholder="contrat" formControlName="contrat"/>
-                <span class="input-error-image" *ngIf="onglet3Form?.get('contrat')?.touched && onglet3Form?.get('contrat')?.hasError('required')">
-                <i class="fa fa-ban" aria-hidden="true"></i>
-              </span>
-              </div>
-              <span class="hint"></span>
-              <span class="hint error" *ngIf="onglet3Form?.get('contrat')?.touched && onglet3Form?.get('contrat')?.hasError('required')">{{'required_field' | translate}}</span>
-            </div>
+            <table class="table"*ngIf="caterorie.value == 'MEUBLÉ'">
+              <thead>
+                <th>Designation</th>
+                <th>Quantité</th>
+                <th>Prix</th>
+                <th>Actions</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let immo of immbilisations">
+                  <td>{{ immo.designation }}</td>
+                  <td>{{ immo.qte }}</td>
+                  <td>{{ immo.prix }}</td>
+                  <td>
+                    <button>
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </form>
+        </div>
         <div class="d-flex justify-content-end">
           <button matStepperPrevious class="btn btn-outline-secondary mr-2">
             <span>Précédent</span>
           </button>
-          <button class="btn btn-primary" [disabled]="onglet3Form.invalid" (click)="submit()" >
+          <button rbButton [loading]="formLoading" class="btn btn-primary" [disabled]="onglet3Form.invalid" (click)="submit()" >
+            <i class="fa fa-save"></i>&nbsp;&nbsp;
             <span>Suivant</span>
           </button>
         </div>

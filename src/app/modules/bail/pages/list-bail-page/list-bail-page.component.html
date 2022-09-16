@@ -1,0 +1,161 @@
+<div class="tab-tools">
+  <span class="tab-tools-title">{{'liste_des_bails' | translate}}</span>
+  <div class="tab-export-tools">
+    <button class="btn btn-default">
+      <i class="fa fa-print"></i>
+    </button>
+    <button class="btn btn-default">
+      <i class="fa fa-download"></i>
+    </button>
+  </div>
+  <div>
+    <button class="btn btn-primary" (click)="newBail()">
+      <i class="fa fa-plus"></i>
+      {{'new_Bail' | translate}}
+    </button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="ps-card">
+      <div class="ps-card-body">
+        <ng-container *ngIf="(bails$ | async) as result" [ngSwitch]="result?.dataState">
+          <ng-container *ngSwitchCase="0">
+            <div class="loader-spinner">
+              <img src="../../../../../assets/images/Spin-Preloader.gif" alt="Loading..." class="loading">
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="1">
+            <div class="table-content">
+              <table>
+                <thead>
+                <th>Id</th>
+                <th>{{'locataire' | translate}}</th>
+                <th>{{'startDate' | translate }}</th>
+                <th>{{'endDate' | translate}}</th>
+                <th>{{'status' | translate}}</th>
+                <th>{{'payement' | translate}}</th>
+                <th>Actions</th>
+                </thead>
+                <tbody>
+                <tr *ngFor="let bail of result?.data?.content">
+                  <td>#{{ bail?.id }}</td>
+                  <td>
+                    <ng-container *ngIf="bail.locataireSociete || bail.locataireParticulier">
+                      <ng-container *ngIf="bail.locataireParticulier">
+                        {{bail?.locataireParticulier?.prenom}} {{bail?.locataireParticulier?.nom}}
+                      </ng-container>
+                      <ng-container *ngIf="bail.locataireSociete">
+                        {{bail?.locataireSociete?.nomGerant}}
+                      </ng-container>
+                    </ng-container>
+                  </td>
+                  <td>{{ bail?.dateEntre | date : 'dd/MM/yyyy' }}</td>
+                  <td>{{ bail?.validite | date : 'dd/MM/yyyy' }}</td>
+                  <td>
+                    <ng-container [ngSwitch]="bail.statut">
+                      <ng-container *ngSwitchCase="'CONFIRME'">
+                        <span class="ps-chip chip-success">{{ bail?.statut }}</span>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'ANNULE'">
+                        <span class="ps-chip chip-danger">{{ bail?.statut }}</span>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'CLOTURER'">
+                        <span class="ps-chip chip-primary">{{ bail?.statut }}</span>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'RESERVE'">
+                        <span class="ps-chip chip-secondary">{{ bail?.statut }}</span>
+                      </ng-container>
+                    </ng-container>
+                  </td>
+                  <td>
+                    <ng-container [ngSwitch]="bail.paymentStatus">
+                      <ng-container *ngSwitchCase="'PAYE'">
+                        <span class="ps-chip chip-success">{{ bail?.paymentStatus }}</span>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'IMPAYE'">
+                        <span class="ps-chip chip-danger">{{ bail?.paymentStatus }}</span>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'PARTIELLE'">
+                        <span class="ps-chip chip-warning">{{ bail?.paymentStatus }}</span>
+                      </ng-container>
+                    </ng-container>
+                  </td>
+                  <td class="actions">
+                    <div class="dropdown">
+                      <button class="btn btn-table-action" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-ellipsis-v"></i>
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li class="dropdown-item" (click)="showBail(bail)">
+                          <i class="bx bx-detail"></i>
+                          &nbsp;
+                          {{'details' | translate}}
+                        </li>
+                        <ng-container *ngIf="bail?.statut != 'ANNULE' && bail?.statut != 'CLOTURER' ">
+                          <li class="dropdown-item" (click)="cancelBail(bail)">
+                            <i class="fa fa-ban"></i>
+                            &nbsp;
+                            {{'cancel' | translate}}
+                          </li>
+                        </ng-container>
+                        <ng-container *ngIf="bail?.paymentStatus != 'PAYE' && bail?.statut != 'ANNULE' && bail?.statut != 'CLOTURER'">
+                          <li class="dropdown-item" (click)="newPayment(bail)">
+                            <i class="bx bx-wallet-alt"></i>
+                            &nbsp;
+                            {{'new_payment' | translate}}
+                          </li>
+                        </ng-container>
+                        <ng-container *ngIf="bail.statut != 'CLOTURER' && bail.statut != 'ANNULE'">
+                          <li class="dropdown-item" (click)="updateBail(bail)">
+                            <i class="fa fa-edit"></i>
+                            &nbsp;
+                            {{'update' | translate}}
+                          </li>
+                        </ng-container>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <mat-paginator
+              [pageIndex]="currentPageIndex"
+              [length]="numberOfElement"
+              [pageSize]="currentPageElementSize"
+              [pageSizeOptions]="pagesElementSize"
+            ></mat-paginator>
+          </ng-container>
+          <ng-container *ngSwitchCase="2">
+            error
+            <!-- // TODO Show Error Illustration here-->
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="ps-card">
+      <div class="ps-card-body">
+        <div class="counter-widget-wrapper">
+          <div class="counter">
+            <span class="counter-text">{{ pad(numberOfElement) }}</span>
+          </div>
+          <span class="counter-title">Reservations</span>
+        </div>
+      </div>
+    </div>
+    <div class="ps-v-spacer"></div>
+    <div class="ps-card">
+      <div class="ps-card-body">
+        <canvas baseChart
+                [data]="doughnutChartData"
+                [labels]="doughnutChartLabels"
+                [type]="doughnutChartType">
+        </canvas>
+      </div>
+    </div>
+  </div>
+</div>

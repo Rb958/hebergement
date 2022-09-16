@@ -9,7 +9,6 @@ import {ReservationService} from "../../../../shared/services/services/reservati
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteReservationComponent} from "../../delete-reservation/delete-reservation.component";
 import {NotifierService} from "../../../../shared/components/notification/notifier.service";
-import {NotificationType} from "../../../../shared/components/notification/notification-type";
 import {ChartData, ChartType} from "chart.js";
 
 @Component({
@@ -23,22 +22,10 @@ export class ReservationListComponent implements OnInit {
   currentPageElementSize = 32;
   pagesElementSize = [32, 64, 128, 256];
   reservation$: Observable<DataStateProcessing<PageModel<ReservationModel>>> = {} as Observable<DataStateProcessing<PageModel<ReservationModel>>>;
-
+  stats = {};
   // Chart
-  public doughnutChartLabels: string[] = [ '', 'Libre', 'Hors service' ];
-  public doughnutChartData: ChartData<'doughnut'> = {
-    labels: this.doughnutChartLabels,
-    datasets: [
-      {
-        data: [ 350, 450, 100 ],
-        backgroundColor: [
-          'rgb(255,0,38)',
-          'rgb(30,159,51)',
-          'rgb(86,91,97)'
-        ],
-      },
-    ],
-  };
+  public doughnutChartLabels: string[] = [ 'Annulés', 'Confirmé', 'Cloturé' ];
+  public doughnutChartData: ChartData<'doughnut'>;
   public doughnutChartType: ChartType = 'doughnut';
 
   constructor(
@@ -47,10 +34,16 @@ export class ReservationListComponent implements OnInit {
     private reservationService: ReservationService,
     private dialog: MatDialog,
     private notifierService: NotifierService
-  ) { }
+  ) {
+    this.doughnutChartData = {
+      labels: this.doughnutChartLabels,
+      datasets: []
+    };
+  }
 
   ngOnInit(): void {
     this.loadData();
+    this.getStats();
   }
 
   cancelBooking(reservation: ReservationModel) {
@@ -67,6 +60,10 @@ export class ReservationListComponent implements OnInit {
         }
       }
     );
+  }
+
+  onOpenDetails(reservation: ReservationModel) {
+    this.router.navigate(['../details', reservation.id], {relativeTo: this.route})
   }
 
   private loadData(queryParam?: any){
@@ -94,5 +91,37 @@ export class ReservationListComponent implements OnInit {
 
   updateBooking(reservation: ReservationModel) {
 
+  }
+
+  pad(number: number) {
+    return String(number).padStart(3,'0');
+  }
+
+  getStats(){
+    this.reservationService.getStats().subscribe(
+      apiResponse => {
+        if (apiResponse.code == 200){
+          this.stats = apiResponse.result;
+          this.doughnutChartData = {
+            labels: this.doughnutChartLabels,
+            datasets: [{
+              data: [
+                apiResponse.result.canceled,
+                apiResponse.result.confirmed,
+                apiResponse.result.closed,
+                // apiResponse.result.canceled,
+              ],
+              backgroundColor: [
+                'rgb(255,0,38)',
+                'rgb(30,159,51)',
+                'rgb(86,91,97)'
+              ],
+            }
+
+            ]
+          }
+        }
+      }
+    );
   }
 }

@@ -1,0 +1,99 @@
+<h3 mat-dialog-title *ngIf="!isEdition">{{ 'new_depense' | translate }}</h3>
+<h3 mat-dialog-title *ngIf="isEdition">{{ 'update_depense' | translate }}</h3>
+<form [formGroup]="depenseForm" (ngSubmit)="saveDepense()">
+  <div mat-dialog-content>
+    <div class="form-content">
+      <div class="form-item" formGroupName="local">
+        <label for="local">{{'local' | translate}}</label>
+        <div class="input-control" [class.error]="depenseForm?.get('local')?.touched && depenseForm?.get('local')?.hasError('required')" >
+          <select name="local" id="local" formControlName="id">
+            <option value="">Selectionner un local</option>
+            <option [value]="local.id" *ngFor="let local of locals">{{local.nomLocal}} {{local.numeroLocal}}</option>
+          </select>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="depenseForm?.get('local')?.touched && depenseForm?.get('local')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="type">{{'type' | translate}}</label>
+        <div class="input-control" [class.error]="depenseForm?.get('type')?.touched && depenseForm?.get('type')?.hasError('required')" >
+          <select id="type" formControlName="type" name="type" #type>
+            <option value="">Selectionner un type</option>
+            <option value="Opérationnelles">Opérationnelles</option>
+            <option value="Non opérationnelles">Non opérationnelles</option>
+          </select>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="depenseForm?.get('type')?.touched && depenseForm?.get('type')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="demandeur">{{'demandeur' | translate}}</label>
+        <div class="input-control" [class.error]="depenseForm?.get('demandeur')?.touched && depenseForm?.get('demandeur')?.hasError('required')" >
+          <input type="text" id="demandeur" formControlName="demandeur" name="demandeur" >
+          <span class="input-error-image" *ngIf="depenseForm?.get('demandeur')?.touched && depenseForm?.get('demandeur')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="depenseForm?.get('demandeur')?.touched && depenseForm?.get('demandeur')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="categorie">{{'categorie' | translate}}</label>
+        <div class="input-control" [class.error]="depenseForm?.get('categorie')?.touched && depenseForm?.get('categorie')?.hasError('required')" >
+          <select id="categorie" formControlName="categorie" name="categorie">
+            <option value="">Selectionner une categorie</option>
+            <ng-container *ngIf="type.value == 'Opérationnelles'">
+              <option value="Plomberie">Plomberie</option>
+              <option value="Menuiserie">Menuiserie</option>
+              <option value="Electricité">Electricité</option>
+            </ng-container>
+            <ng-container *ngIf="type.value != 'Opérationnelles'">
+              <option value="Frais de mission">Frais de mission</option>
+              <option value="Carburation">Carburation</option>
+              <option value="Réparation">Réparation</option>
+            </ng-container>
+          </select>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="depenseForm?.get('categorie')?.touched && depenseForm?.get('categorie')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="montant">{{'montant' | translate}}</label>
+        <div class="input-control" [class.error]="depenseForm?.get('montant')?.touched && depenseForm?.get('montant')?.hasError('required')" >
+          <input type="text" id="montant" formControlName="montant" name="montant" >
+          <span class="input-error-image" *ngIf="depenseForm?.get('montant')?.touched && depenseForm?.get('montant')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="depenseForm?.get('montant')?.touched && depenseForm?.get('montant')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="commentaire">{{'commentaire' | translate}}</label>
+        <div class="input-control" [class.error]="depenseForm?.get('commentaire')?.touched && depenseForm?.get('commentaire')?.hasError('required')" >
+          <textarea id="commentaire" formControlName="commentaire" name="commentaire" > </textarea>
+          <span class="input-error-image" *ngIf="depenseForm?.get('commentaire')?.touched && depenseForm?.get('commentaire')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="depenseForm?.get('commentaire')?.touched && depenseForm?.get('commentaire')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="pieceJointe">{{'pieceJointe' | translate}}</label>
+        <div class="input-control" [class.error]="depenseForm?.get('pieceJointe')?.touched && depenseForm?.get('pieceJointe')?.hasError('required')" >
+          <input type="file" id="pieceJointe" formControlName="pieceJointe" name="pieceJointe" >
+          <span class="input-error-image" *ngIf="depenseForm?.get('pieceJointe')?.touched && depenseForm?.get('pieceJointe')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="depenseForm?.get('pieceJointe')?.touched && depenseForm?.get('pieceJointe')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="dialog-actions">
+    <button class="btn btn-default" [mat-dialog-close]="false" type="button">{{ 'cancel' | translate }}</button>
+    <button class="btn btn-primary" type="submit">{{ 'save' | translate }}</button>
+  </div>
+</form>

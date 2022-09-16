@@ -1,12 +1,13 @@
 export class EmployeModel{
+  public id: number;
   public nom: string;
   public prenom: string;
   public telephone: string;
   public fonction: string;
-  public salaire: number;
+  public salaireMois: number;
   public cni: string;
   public pjCni: string;
-  public SM: string;
+  public stMarital: string;
   public persContact: string;
   public telephonePers: string;
   public createdAt: Date;
@@ -14,14 +15,15 @@ export class EmployeModel{
 
 
   constructor() {
+    this.id = 0;
     this.nom = '';
     this.telephone = '';
     this.prenom = '';
     this.fonction = '';
-    this.salaire = 0;
+    this.salaireMois = 0;
     this.cni = '';
     this.pjCni = '';
-    this.SM = '';
+    this.stMarital = '';
     this.persContact = '';
     this.telephonePers = '';
     this.createdAt = new Date();

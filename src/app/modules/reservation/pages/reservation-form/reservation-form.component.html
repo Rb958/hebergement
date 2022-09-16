@@ -4,7 +4,7 @@
     <div class="form-content">
       <div class="row">
         <div class="col-md-7">
-          <div class="form-item">
+          <!-- <div class="form-item">
             <div class="question-item" >
               <div class="question-check">
                 <input type="checkbox" id="isLocataire" [(ngModel)]="isLocataire" (change)="initAnonymousForm()" [ngModelOptions]="{standalone: true}">
@@ -12,15 +12,15 @@
               </div>
               <span class="response_label">Le demandeur n'est pas un client</span>
             </div>
-          </div>
-          <ng-container *ngIf="isLocataire">
+          </div> -->
+          <!-- <ng-container *ngIf="isLocataire"> -->
             <div class="form-item">
               <label for="nom">{{'nom' | translate}}</label>
               <div class="input-control" [class.error]="reservationForm?.get('nom')?.touched && reservationForm?.get('nom')?.hasError('required')" >
                 <input type="text" id="nom" placeholder="KEUMO" formControlName="nom" name="firstname" >
                 <span class="input-error-image" *ngIf="reservationForm?.get('nom')?.touched && reservationForm?.get('nom')?.hasError('required')">
-            <i class="fa fa-ban" aria-hidden="true"></i>
-          </span>
+                  <i class="fa fa-ban" aria-hidden="true"></i>
+                </span>
               </div>
               <span class="hint"></span>
               <span class="hint error" *ngIf="reservationForm?.get('nom')?.touched && reservationForm?.get('nom')?.hasError('required')">{{'required_field' | translate}}</span>
@@ -47,8 +47,8 @@
               <span class="hint"></span>
               <span class="hint error" *ngIf="reservationForm?.get('telephone')?.touched && reservationForm?.get('telephone')?.hasError('required')">{{'required_field' | translate}}</span>
             </div>
-          </ng-container>
-          <ng-container *ngIf="!isLocataire">
+          <!-- </ng-container> -->
+          <!-- <ng-container *ngIf="!isLocataire">
             <div class="form-item">
               <div class="question-item" >
                 <div class="question-check">
@@ -81,7 +81,7 @@
                 <span class="hint error" *ngIf="reservationForm?.get('locataireParticulier')?.touched && reservationForm?.get('locataireParticulier')?.hasError('required')">{{'required_field' | translate}}</span>
               </div>
             </div>
-          </ng-container>
+          </ng-container> -->
           <div class="form-item">
             <label>{{'preriodUnit' | translate}}</label>
             <div class="input-control">
@@ -91,25 +91,32 @@
             <span class="hint error" *ngIf="reservationForm?.get('preriodUnit')?.touched && reservationForm?.get('preriodUnit')?.hasError('required')">{{'required_field' | translate}}</span>
           </div>
           <div class="form-item">
-            <label for="sejour">{{'sejour' | translate}}</label>
-            <div class="input-control"  [class.error]="reservationForm?.get('sejour')?.touched && reservationForm?.get('sejour')?.hasError('required')" >
-              <input type="number" placeholder="2" id="sejour" #sejourInput formControlName="sejour" name="sejour" >
-              <span class="input-error-image" *ngIf="reservationForm?.get('sejour')?.touched && reservationForm?.get('sejour')?.hasError('required')">
+            <label for="dateReservation">{{'dateReservation' | translate}}</label>
+            <div class="input-control"  [class.error]="reservationForm?.get('dateReservation')?.touched && reservationForm?.get('dateReservation')?.hasError('required')" >
+              <input type="date" placeholder="2" id="dateReservation" #dateReservationInput formControlName="dateReservation" name="dateReservation" >
+              <span class="input-error-image" *ngIf="reservationForm?.get('dateReservation')?.touched && reservationForm?.get('dateReservation')?.hasError('required')">
                 <i class="fa fa-ban" aria-hidden="true"></i>
               </span>
             </div>
             <span class="hint"></span>
-            <span class="hint error" *ngIf="reservationForm?.get('sejour')?.touched && reservationForm?.get('sejour')?.hasError('required')">{{'required_field' | translate}}</span>
+            <span class="hint error" *ngIf="reservationForm?.get('dateReservation')?.touched && reservationForm?.get('dateReservation')?.hasError('required')">{{'required_field' | translate}}</span>
+          </div>
+          <div class="form-item">
+            <label for="validite">{{'validite' | translate}}</label>
+            <div class="input-control"  [class.error]="reservationForm?.get('validite')?.touched && reservationForm?.get('validite')?.hasError('required')" >
+              <input type="date" placeholder="2" id="validite" #validiteInput formControlName="validite" name="validite" >
+              <span class="input-error-image" *ngIf="reservationForm?.get('validite')?.touched && reservationForm?.get('validite')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+            </div>
+            <span class="hint"></span>
+            <span class="hint error" *ngIf="reservationForm?.get('validite')?.touched && reservationForm?.get('validite')?.hasError('required')">{{'required_field' | translate}}</span>
           </div>
         </div>
         <div class="col-md-5" [formGroup]="paymentForm">
           <div class="form-item">
             <label>{{'local_price' | translate}}</label>
             <span class="price">{{ currentLocal.prix || 0 }} FCFA</span>
-          </div>
-          <div class="form-item">
-            <label>{{'amount_to_pay' | translate}}</label>
-            <span class="total-amount">{{computeTotalPrice(sejourInput.value) || 0 }} FCFA</span>
           </div>
           <div class="form-item">
             <label for="paymentMethod">{{'paymentMethod' | translate}}</label>
@@ -125,6 +132,25 @@
             </div>
             <span class="hint"></span>
             <span class="hint error" *ngIf="paymentForm?.get('paymentMethod')?.touched && paymentForm?.get('paymentMethod')?.hasError('required')">{{'required_field' | translate}}</span>
+          </div>
+          <div class="form-item">
+            <label for="discount">{{'discount' | translate}} (%)</label>
+            <div class="input-control" [class.error]="paymentForm?.get('discount')?.touched && paymentForm?.get('discount')?.hasError('required')" >
+              <input type="number" id="discount" min="0" max="100"  #discount placeholder="10%" formControlName="discount" name="discount" >
+              <span class="input-error-image" *ngIf="paymentForm?.get('discount')?.touched && paymentForm?.get('discount')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+            </div>
+            <span class="hint"></span>
+            <span class="hint error" *ngIf="paymentForm?.get('discount')?.touched && paymentForm?.get('discount')?.hasError('required')">{{'required_field' | translate}}</span>
+          </div>
+          <div class="form-item">
+            <label>{{ 'discount' | translate }} : {{ discount.value }}%</label>
+            <span class="rest">{{ computeDiscount(discount.value) || 0 }} FCFA</span>
+          </div>
+          <div class="form-item">
+            <label>{{'amount_to_pay' | translate}}</label>
+            <span class="total-amount">{{ totalPrice || 0 }} FCFA</span>
           </div>
           <div class="form-item">
             <label for="amount">{{'amount' | translate}}</label>
@@ -147,6 +173,6 @@
   </div>
   <div mat-dialog-actions class="dialog-actions">
     <button class="btn btn-default" [mat-dialog-close]="false">{{'cancel'|translate}}</button>
-    <button class="btn btn-primary" type="submit">{{'save'|translate}}</button>
+    <button class="btn btn-primary" rbButton [loading]="loading" type="submit">{{'save'|translate}}</button>
   </div>
 </form>

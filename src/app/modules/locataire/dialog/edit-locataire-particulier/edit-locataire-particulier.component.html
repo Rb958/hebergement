@@ -60,12 +60,7 @@
       </div>
       <div class="form-item">
         <label for="pjCni">{{'pjCni' | translate}}</label>
-        <div class="input-control" [class.error]="locatairePartForm?.get('pjCni')?.touched && locatairePartForm?.get('pjCni')?.hasError('required')" >
-          <input type="file" id="pjCni" formControlName="pjCni" name="pjCni" >
-          <span class="input-error-image" *ngIf="locatairePartForm?.get('pjCni')?.touched && locatairePartForm?.get('pjCni')?.hasError('required')">
-            <i class="fa fa-ban" aria-hidden="true"></i>
-          </span>
-        </div>
+        <rb-file-uploader (onError)="handleError($event)" (onFinish)="processFinished($event)"></rb-file-uploader>
         <span class="hint"></span>
         <span class="hint error" *ngIf="locatairePartForm?.get('pjCni')?.touched && locatairePartForm?.get('pjCni')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>

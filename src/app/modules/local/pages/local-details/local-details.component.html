@@ -1,1 +1,148 @@
-<p>local-details works!</p>
+<ng-container *ngIf="(currentLocal$ | async) as data" [ngSwitch]="data?.dataState">
+    <ng-container *ngSwitchCase="0">
+        <div class="loader-spinner">
+            <img src="../../../../../assets/images/Spin-Preloader.gif" alt="Loading..." class="loading">
+        </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="1">
+        <div class="ps-card">
+            <div class="ps-card-header">
+                <span class="ps-card-title">{{ data.data?.nomLocal }}</span>
+            </div>
+            <div class="ps-card-body">
+                <span class="local-info">Informations générales</span>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'num_local' | translate }} : </span>
+                            <span class="value">{{ data.data?.numeroLocal }}</span>
+                        </div>
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'category' | translate }} : </span>
+                            <span class="value">{{ data.data?.categorie }}</span>
+                        </div>
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'type' | translate }} : </span>
+                            <span class="value">{{ data.data?.typeLocal }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'country' | translate }} : </span>
+                            <span class="value">{{ data.data?.pays }}</span>
+                        </div>
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'city' | translate }} : </span>
+                            <span class="value">{{ data.data?.ville }}</span>
+                        </div>
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'quater' | translate }} : </span>
+                            <span class="value">{{ data.data?.quartier }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'localization' | translate }} : </span>
+                            <span class="value">{{ data.data?.localisation }}</span>
+                        </div>
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'building' | translate }} : </span>
+                            <span class="value">{{ data.data?.immeuble }}</span>
+                        </div>
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'etage' | translate }} : </span>
+                            <span class="value">{{ data.data?.etage }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'nbr_chambre' | translate }} : </span>
+                            <span class="value">{{ data.data?.nbrChambre }}</span>
+                        </div>
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'nbr_douche' | translate }} : </span>
+                            <span class="value">{{ data.data?.nbrDouche }}</span>
+                        </div>
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'prix' | translate }} : </span>
+                            <span class="value">{{ data.data?.prix | hundredSeparator }} FCFA</span>
+                        </div>
+                    </div>
+                </div>
+                <span class="local-info mt-4">Informations complémentaires</span>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'fumeur' | translate }} : </span>
+                            <span [ngClass]="data.data?.fumeur ? 'badge-success' : 'badge-danger'">{{ (data.data?.fumeur ? 'yes' : 'no') | translate }}</span>
+                        </div>
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'clim' | translate }} : </span>
+                            <span [ngClass]="data.data?.clim ? 'badge-success' : 'badge-danger'">{{ (data.data?.clim ? 'yes' : 'no') | translate }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'piscine' | translate }} : </span>
+                            <span [ngClass]="data.data?.piscine ? 'badge-success' : 'badge-danger'">{{ (data.data?.piscine ? 'yes' : 'no') | translate }}</span>
+                        </div>
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'wifi' | translate }} : </span>
+                            <span [ngClass]="data.data?.wifi ? 'badge-success' : 'badge-danger'">{{ (data.data?.wifi ? 'yes' : 'no') | translate }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'animaux' | translate }} : </span>
+                            <span [ngClass]="data.data?.animaux ? 'badge-success' : 'badge-danger'">{{ (data.data?.animaux ? 'yes' : 'no') | translate }}</span>
+                        </div>
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'chauffage' | translate }} : </span>
+                            <span [ngClass]="data.data?.chauffage ? 'badge-success' : 'badge-danger'">{{ (data.data?.chauffage ? 'yes' : 'no') | translate }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'parking' | translate }} : </span>
+                            <span [ngClass]="data.data?.parkingIn ? 'badge-success' : 'badge-danger'">{{ (data.data?.parkingIn ? 'yes' : 'no') | translate }}</span>
+                        </div>
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'gardien_jour' | translate }} : </span>
+                            <span [ngClass]="data.data?.gadienJour ? 'badge-success' : 'badge-danger'">{{ (data.data?.gadienJour ? 'yes' : 'no') | translate }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'gardien_nuit' | translate }} : </span>
+                            <span [ngClass]="data.data?.gardientNuit ? 'badge-success' : 'badge-danger'">{{ (data.data?.gardientNuit ? 'yes' : 'no') | translate }}</span>
+                        </div>
+                        <div class="details-item-wrapper">
+                            <span class="title">{{ 'groupe' | translate }} : </span>
+                            <span [ngClass]="data.data?.groupeElect ? 'badge-success' : 'badge-danger'">{{ (data.data?.groupeElect ? 'yes' : 'no') | translate }}</span>
+                        </div>
+                    </div>
+                </div>
+                <span class="local-info mt-4">Imobilisations du local</span>
+                <div class="row table-content">
+                    <table>
+                        <thead>
+                          <th>Designation</th>
+                          <th>Quantité</th>
+                          <th>Prix</th>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let immo of data.data?.immobilisations">
+                            <td>{{ immo.designation }}</td>
+                            <td>{{ immo.qte }}</td>
+                            <td>{{ immo.prix }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="2">
+        Error
+    </ng-container>
+</ng-container>

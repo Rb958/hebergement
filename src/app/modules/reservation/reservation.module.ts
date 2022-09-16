@@ -11,6 +11,11 @@ import { DeleteReservationComponent } from './delete-reservation/delete-reservat
 import {MatDialogModule} from "@angular/material/dialog";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgChartsModule} from "ng2-charts";
+import { NewPaymentsComponent } from './pages/new-payments/new-payments.component';
+import { BookingCalendarComponent } from './pages/booking-calendar/booking-calendar.component';
+import { CalendrierReservationComponent } from './pages/calendrier-reservation/calendrier-reservation.component';
+import {ButtonLoaderModule} from "../../shared/components/button-loader/button-loader.module";
+import { ReservationDetailsComponent } from './pages/reservation-details/reservation-details.component';
 
 
 @NgModule({
@@ -18,7 +23,11 @@ import {NgChartsModule} from "ng2-charts";
     NewReservationComponent,
     ReservationListComponent,
     ReservationFormComponent,
-    DeleteReservationComponent
+    DeleteReservationComponent,
+    NewPaymentsComponent,
+    BookingCalendarComponent,
+    CalendrierReservationComponent,
+    ReservationDetailsComponent
   ],
     imports: [
         CommonModule,
@@ -28,7 +37,8 @@ import {NgChartsModule} from "ng2-charts";
         ReactiveFormsModule,
         MatDialogModule,
         MatPaginatorModule,
-        NgChartsModule
+        NgChartsModule,
+        ButtonLoaderModule
     ]
 })
 export class ReservationModule { }

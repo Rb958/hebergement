@@ -1,0 +1,23 @@
+<h3 mat-dialog-title *ngIf="!isEdition">{{ 'new_article' | translate }}</h3>
+<h3 mat-dialog-title *ngIf="isEdition">{{ 'update_article' | translate }}</h3>
+<form [formGroup]="articleForm" (ngSubmit)="saveArticle()">
+  <div mat-dialog-content>
+    <div class="form-content">
+      <div class="form-item">
+        <label for="designation">{{'designation' | translate}}</label>
+        <div class="input-control" [class.error]="articleForm?.get('designation')?.touched && articleForm?.get('designation')?.hasError('required')" >
+          <input type="text" id="designation" formControlName="designation" name="designation" >
+          <span class="input-error-image" *ngIf="articleForm?.get('designation')?.touched && articleForm?.get('designation')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="articleForm?.get('designation')?.touched && articleForm?.get('designation')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="dialog-actions">
+    <button class="btn btn-default" [mat-dialog-close]="false" type="button">{{ 'cancel' | translate }}</button>
+    <button class="btn btn-primary" type="submit">{{ 'save' | translate }}</button>
+  </div>
+</form>

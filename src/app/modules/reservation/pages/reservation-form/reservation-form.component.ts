@@ -1,3 +1,4 @@
+import { LocalData, AppStore } from 'src/app/shared/utils/app-store';
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {LocalModel} from "../../../../shared/models/entity/local.model";
@@ -9,6 +10,7 @@ import {LocataireService} from "../../../../shared/services/services/locataire.s
 import {NotificationType} from "../../../../shared/components/notification/notification-type";
 import {PayementsModel} from "../../../../shared/models/entity/payements.model";
 import {ReservationModel} from "../../../../shared/models/entity/reservation.model";
+import * as moment from "moment";
 
 @Component({
   selector: 'app-reservation-form',
@@ -24,7 +26,10 @@ export class ReservationFormComponent implements OnInit {
   isLocataire: boolean = true;
   isParticulier: boolean = true;
   totalPrice : number = 0;
+  discountAmount : number = 0;
   rest: number = 0;
+  loading = false;
+  localData: LocalData = {} as LocalData;
 
   constructor(
     private dialogRef: MatDialogRef<ReservationFormComponent>,
@@ -32,49 +37,47 @@ export class ReservationFormComponent implements OnInit {
     private reservationService: ReservationService,
     private fb: FormBuilder,
     private notifier: NotifierService,
-    private locataireservice: LocataireService
+    private appStore: AppStore
   ) { }
 
   ngOnInit(): void {
+    this.localData = this.appStore.getData();
     this.currentLocal = this.local.local;
+    this.totalPrice = this.computeTotalPrice(this.local.startDate, this.local.endDate);
     this.initForm();
-    this.loadLocataires();
   }
 
   private initForm() {
     this.reservationForm = this.fb.group({
-      dateReservation: [''],
-      initiateur: [''],
-      nom: [''],
+      dateReservation: [this.local.startDate],
+      initiateur: [],
+      nom: ['', Validators.required],
       prenom: [''],
-      telephone: [''],
-      sejour: ['', Validators.required],
+      telephone: ['', Validators.required],
+      validite: [this.local.endDate, Validators.required],
       preriodUnit: [this.currentLocal.typePrix, Validators.required],
-      locataireSociete: this.fb.group({
-        id: ['']
-      }),
-      locataireParticulier: this.fb.group({
-        id: ['']
-      })
     });
 
     this.paymentForm = this.fb.group({
-      amount: ['', [Validators.pattern('^[0-9]+$')]],
-      paymentMethod: ['']
+      amount: [0, [Validators.pattern('^[0-9]+$'),Validators.required]],
+      discount: [0, Validators.required],
+      paymentMethod: ['', Validators.required]
     });
   }
 
   sumbitForm() {
+    this.loading = true;
     this.reservationForm.value.local = this.currentLocal;
     const payment = new PayementsModel();
     if (this.paymentForm.valid){
       payment.amount = this.paymentForm.value.amount;
       payment.rest = this.computeRest(String(payment.amount));
+      payment.paymentMethod = this.paymentForm.value.paymentMethod;
       this.reservationForm.value.payements = payment;
     }
     if (this.reservationForm.valid){
       const booking = this.initBooking(this.reservationForm);
-      this.reservationService.create(booking).subscribe(
+      this.reservationService.create(booking, this.localData.userDetails?.userId).subscribe(
         apiResponse => {
           if (apiResponse.code == 200){
             this.notifier.notify(
@@ -82,8 +85,10 @@ export class ReservationFormComponent implements OnInit {
               'Notification',
               NotificationType.SUCCESS
             );
+            this.loading = false;
             this.dialogRef.close(apiResponse.result);
           }else{
+            this.loading = false;
             this.notifier.notify(
               'Erreur lors de la creation de la reservation. Veuiller rééssayer',
               'Notification',
@@ -92,6 +97,7 @@ export class ReservationFormComponent implements OnInit {
           }
         },
         error => {
+          this.loading = false;
           this.notifier.notify(
             'Probleme de communication avec le serveur',
             'Notification',
@@ -100,57 +106,36 @@ export class ReservationFormComponent implements OnInit {
         }
       );
     }else{
+      this.loading = false;
       this.notifier.notify(
-        'Le formulaire de reservation est invalide veuiller verifier les diferents champs',
-        'Notification',
+        'Veuiller renseigner tous les champs obligatoire',
+        'Formulaire invalide',
         NotificationType.WARNING
       );
     }
   }
 
   initLocataire() {
-    if (!this.isLocataire){
-      this.reservationForm.get('nom')?.reset('');
-      this.reservationForm.get('prenom')?.reset('');
-      this.reservationForm.get('telephone')?.reset('');
-    } else{
-      this.reservationForm.get('locataireSociete')?.get('id')?.reset('');
-      this.reservationForm.get('locataireParticulier')?.get('id')?.reset('');
-
-    }
-  }
-
-  initAnonymousForm() {
-    if (this.isParticulier){
-      this.reservationForm.get('locataireParticulier')?.get('id')?.reset('');
-    }else{
-      this.reservationForm.get('locataireSociete')?.get('id')?.reset('');
-    }
-  }
-
-  private loadLocataires() {
-    this.locataireservice.getListLocataireSociete().subscribe(
-      apiResponse => {
-        if (apiResponse.code == 200){
-          this.locatairesSociete = apiResponse.result;
-        }
-      }
-    );
-    this.locataireservice.getListLocatairePart().subscribe(
-      apiResponse => {
-        if (apiResponse.code == 200){
-          this.locataireParticulier = apiResponse.result;
-        }
-      }
-    );
+    this.reservationForm.get('nom')?.reset('');
+    this.reservationForm.get('prenom')?.reset('');
+    this.reservationForm.get('telephone')?.reset('');
   }
 
   computeRest(value: string) : number{
-    return this.totalPrice - parseInt(value);
+    return this.totalPrice - parseInt(value) - this.discountAmount;
   }
 
-  computeTotalPrice(value: string) {
-    return this.totalPrice = this.currentLocal.prix * parseInt(value)
+  computeTotalPrice(startDate: string, endDate: string) {
+    const start = moment(startDate);
+    const end = moment(endDate);
+    const days = end.diff(start, 'days', true) + 1;
+    this.totalPrice = this.currentLocal.prix * Math.abs(Math.ceil(days));
+    return this.totalPrice;
+  }
+
+  computeDiscount(discount: string) {
+    this.discountAmount = Math.ceil((this.totalPrice * parseInt(discount)) / 100);
+    return this.discountAmount;
   }
 
   private initBooking(reservationForm: FormGroup) {
@@ -159,17 +144,17 @@ export class ReservationFormComponent implements OnInit {
     booking.prenom = reservationForm.value.prenom;
     booking.telephone = reservationForm.value.telephone;
     booking.sejour = reservationForm.value.sejour;
+    booking.dateReservation = reservationForm.value.dateReservation;
+    booking.validite = reservationForm.value.validite;
     booking.preriodUnit = reservationForm.value.preriodUnit;
     const local = Object.create(null);
     local.id = reservationForm.value.local.id;
     booking.local = local;
-    booking.locataireSociete = (reservationForm.value.locataireSociete?.id) ? reservationForm.value.locataireSociete : null;
-    booking.locataireParticulier = (reservationForm.value.locataireParticulier?.id) ? reservationForm.value.locataireParticulier : null;
 
     const payments = new PayementsModel();
     payments.rest = reservationForm.value.payements.rest;
     payments.amount = reservationForm.value.payements.amount;
-
+    payments.paymentMethod = reservationForm.value.payements.paymentMethod;
     booking.payements = [payments];
     return booking;
   }

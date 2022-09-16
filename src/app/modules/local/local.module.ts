@@ -1,3 +1,4 @@
+import { CustomPipeModule } from './../../shared/custom-pipe/custom-pipe.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -13,6 +14,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatStepperModule} from "@angular/material/stepper";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgChartsModule} from "ng2-charts";
+import {ButtonLoaderModule} from "../../shared/components/button-loader/button-loader.module";
 
 
 @NgModule({
@@ -21,18 +23,20 @@ import {NgChartsModule} from "ng2-charts";
     NewLocalComponent,
     DeleteLocalComponent,
     EnableLocalComponent,
-    LocalDetailsComponent
+    LocalDetailsComponent,
   ],
-  imports: [
-    CommonModule,
-    LocalRoutingModule,
-    TranslateModule,
-    FormsModule,
-    NgChartsModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatPaginatorModule,
-    MatStepperModule
-  ]
+    imports: [
+        CommonModule,
+        CustomPipeModule,
+        LocalRoutingModule,
+        TranslateModule,
+        FormsModule,
+        NgChartsModule,
+        ReactiveFormsModule,
+        MatDialogModule,
+        MatPaginatorModule,
+        MatStepperModule,
+        ButtonLoaderModule
+    ]
 })
 export class LocalModule { }

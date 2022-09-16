@@ -91,7 +91,7 @@
                         <i class="fa fa-ellipsis-v"></i>
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li class="dropdown-item" (click)="cancelBooking(reservation)">
+                        <li class="dropdown-item" (click)="onOpenDetails(reservation)">
                           <i class="bx bx-detail"></i>
                           &nbsp;
                           {{'details' | translate}}
@@ -110,13 +110,13 @@
                             {{'new_payment' | translate}}
                           </li>
                         </ng-container>
-                        <ng-container *ngIf="reservation.statut != 'CLOTURER' && reservation.statut != 'ANNULE'">
+                        <!-- <ng-container *ngIf="reservation.statut != 'CLOTURER' && reservation.statut != 'ANNULE'">
                           <li class="dropdown-item" (click)="updateBooking(reservation)">
                             <i class="fa fa-edit"></i>
                             &nbsp;
                             {{'update' | translate}}
                           </li>
-                        </ng-container>
+                        </ng-container> -->
                       </ul>
                     </div>
                   </td>
@@ -144,7 +144,7 @@
       <div class="ps-card-body">
         <div class="counter-widget-wrapper">
           <div class="counter">
-            <span class="counter-text">05</span>
+            <span class="counter-text">{{ pad(numberOfElement) }}</span>
           </div>
           <span class="counter-title">Reservations</span>
         </div>

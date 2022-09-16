@@ -1,0 +1,100 @@
+<div class="caisse-page-wrapper">
+  <div class="caisse-widget ps-card">
+    <h4>{{ cashier?.nom }}</h4>
+    <div class="cashier-info">
+      <div class="cashier-status">
+        <span class="status-a">{{ cashier?.status }}</span>
+        <span class="status-b">A Ouvrir</span>
+        <div class="owner">{{ cashier?.user?.firstname }} {{ cashier?.user?.lastname }}</div>
+      </div>
+      <div class="cashier">
+        Solde de la tresorerie
+        <span class="solde">{{ cashier?.solde }} FCFA</span>
+      </div>
+    </div>
+    <div class="waiting mb-5" *ngIf="cashier.status == 'ATTENTE' || cashier.status == 'ATTENTE_FERMETURE'">
+      veuiller patienter <br>
+      Votre requete est en attente de Validation
+    </div>
+    <div class="form" *ngIf="!requestSent && cashier.status == 'FERME'" >
+      <form action="" [formGroup]="caishierForm">
+        <div class="form-item">
+          <label for="amount">{{'open_amount' | translate}}</label>
+          <div class="input-control" [class.error]="caishierForm?.get('amount')?.touched && caishierForm?.get('amount')?.hasError('required')" >
+            <input type="text" id="amount" formControlName="amount" name="amount" >
+            <span class="input-error-image" *ngIf="caishierForm?.get('amount')?.touched && caishierForm?.get('amount')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+          </div>
+          <span class="hint"></span>
+          <span class="hint error" *ngIf="caishierForm?.get('amount')?.touched && caishierForm?.get('amount')?.hasError('required')">{{'required_field' | translate}}</span>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-item">
+              <label for="momo">{{'momo' | translate}}</label>
+              <div class="input-control" [class.error]="caishierForm?.get('momo')?.touched && caishierForm?.get('momo')?.hasError('required')" >
+                <input type="text" id="momo" formControlName="momo" name="momo" >
+                <span class="input-error-image" *ngIf="caishierForm?.get('momo')?.touched && caishierForm?.get('momo')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="caishierForm?.get('momo')?.touched && caishierForm?.get('momo')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+            <div class="form-item">
+              <label for="om">{{'om' | translate}}</label>
+              <div class="input-control" [class.error]="caishierForm?.get('om')?.touched && caishierForm?.get('om')?.hasError('required')" >
+                <input type="text" id="om" formControlName="om" name="om" >
+                <span class="input-error-image" *ngIf="caishierForm?.get('om')?.touched && caishierForm?.get('om')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="caishierForm?.get('om')?.touched && caishierForm?.get('om')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+            <div class="form-item">
+              <label for="cheque">{{'cheque' | translate}}</label>
+              <div class="input-control" [class.error]="caishierForm?.get('cheque')?.touched && caishierForm?.get('cheque')?.hasError('required')" >
+                <input type="text" id="cheque" formControlName="cheque" name="cheque" >
+                <span class="input-error-image" *ngIf="caishierForm?.get('cheque')?.touched && caishierForm?.get('cheque')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="caishierForm?.get('cheque')?.touched && caishierForm?.get('cheque')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-item">
+              <label for="credit">{{'credit' | translate}}</label>
+              <div class="input-control" [class.error]="caishierForm?.get('credit')?.touched && caishierForm?.get('credit')?.hasError('required')" >
+                <input type="text" id="credit" formControlName="credit" name="credit" >
+                <span class="input-error-image" *ngIf="caishierForm?.get('credit')?.touched && caishierForm?.get('credit')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="caishierForm?.get('credit')?.touched && caishierForm?.get('credit')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+            <div class="form-item">
+              <label for="espece">{{'espece' | translate}}</label>
+              <div class="input-control" [class.error]="caishierForm?.get('espece')?.touched && caishierForm?.get('espece')?.hasError('required')" >
+                <input type="text" id="espece" formControlName="espece" name="espece" >
+                <span class="input-error-image" *ngIf="caishierForm?.get('espece')?.touched && caishierForm?.get('espece')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="caishierForm?.get('espece')?.touched && caishierForm?.get('espece')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="action">
+      <button *ngIf="!requestSent && cashier.status != 'ATTENTE'" class="btn btn-primary mx-5" rbButton [loading]="loading" (click)="OnOpenCashier(cashier)">Ouvrir ma caisse</button>
+      <button class="btn btn-default" (click)="onLogout()">Quitter</button>
+    </div>
+  </div>
+</div>

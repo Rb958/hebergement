@@ -8,6 +8,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {PsVersionComponent} from "../../shared/components/ps-common/ps-version/ps-version.component";
 import {PsFormsModule} from "../../shared/components/ps-forms/ps-forms.module";
+import {ButtonLoaderModule} from "../../shared/components/button-loader/button-loader.module";
 
 
 @NgModule({
@@ -19,13 +20,14 @@ import {PsFormsModule} from "../../shared/components/ps-forms/ps-forms.module";
     exports: [
         PsVersionComponent
     ],
-    imports: [
-        CommonModule,
-        AccountRoutingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule,
-        PsFormsModule
-    ]
+  imports: [
+    CommonModule,
+    AccountRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    PsFormsModule,
+    ButtonLoaderModule
+  ]
 })
 export class AccountModule { }

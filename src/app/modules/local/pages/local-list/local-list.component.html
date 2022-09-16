@@ -34,8 +34,8 @@
                 <th>{{ 'local_type' | translate}}</th>
                 <th>{{ 'building_name' | translate}}</th>
                 <th>{{ 'category' | translate}}</th>
-                <th>{{ 'localization' | translate}}</th>
-                <th>{{ 'status' | translate}}</th>
+                <!-- <th>{{ 'localization' | translate}}</th> -->
+                <!-- <th>{{ 'status' | translate }}</th> -->
                 <th>Actions</th>
                 </thead>
                 <tbody>
@@ -45,19 +45,19 @@
                   <td>{{local?.typeLocal}}</td>
                   <td>{{local?.immeuble}}</td>
                   <td>{{local?.categorie}}</td>
-                  <td>{{local?.localisation}}</td>
-                  <td>{{local?.status}}</td>
+                  <!-- <td>{{local?.localisation}}</td> -->
+                  <!-- <td>{{local?.status}}</td> -->
                   <td class="actions">
                     <div class="dropdown">
                       <button class="btn btn-table-action" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-ellipsis-v"></i>
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li (click)="enableLocal(local)">
+                        <li (click)="showDetails(local)">
                           <a class="dropdown-item" >
                             <i class="fa fa-trash"></i>
                             &nbsp;
-                            {{'enable' | translate}}
+                            {{'details' | translate}}
                           </a>
                         </li>
                         <li (click)="deleteLocal(local)">
@@ -75,8 +75,9 @@
               </table>
             </div>
             <mat-paginator
+              [pageSize]="currentPageElementSize"
               [pageIndex]="currentPageIndex"
-              [length]="currentPageElementSize"
+              [length]="numberOfElements"
               [pageSizeOptions]="pagesElementSize"
             ></mat-paginator>
           </ng-container>
@@ -93,7 +94,7 @@
       <div class="ps-card-body">
         <div class="counter-widget-wrapper">
           <div class="counter">
-            <span class="counter-text">222</span>
+            <span class="counter-text">{{ pad(numberOfElements) }}</span>
           </div>
           <span class="counter-title">Locals enregistrés</span>
         </div>

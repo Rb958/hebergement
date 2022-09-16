@@ -43,4 +43,8 @@ export class UserService extends HttpService {
   disableUser(data: any, id: number): Observable<ApiResponseModel<UserModel>> {
     return this.patch(`api/user/${id}`, data);
   }
+
+  getAllUser() {
+    return this.get(`api/user/`);
+  }
 }

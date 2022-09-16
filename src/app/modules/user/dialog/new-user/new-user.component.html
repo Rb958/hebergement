@@ -46,6 +46,17 @@
         <span class="hint"></span>
         <span class="hint error" *ngIf="userForm?.get('username')?.touched && userForm?.get('username')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
+      <div class="form-item">
+        <label for="password">{{'password' | translate}}</label>
+        <div class="input-control" [class.error]="userForm?.get('password')?.touched && userForm?.get('password')?.hasError('required')" >
+          <input type="text" id="password" formControlName="password" name="password" >
+          <span class="input-error-image" *ngIf="userForm?.get('password')?.touched && userForm?.get('password')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="userForm?.get('password')?.touched && userForm?.get('password')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
     </div>
   </div>
   <div mat-dialog-actions class="dialog-actions">

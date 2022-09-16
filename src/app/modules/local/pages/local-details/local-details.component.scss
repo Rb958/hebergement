@@ -1,0 +1,45 @@
+.local-info{
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.details-item-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 0;
+}
+
+.title{
+    text-align: left!important;
+    font-size: 1.2rem;
+    color: rgba($color: #000000, $alpha: 0.9);
+    font-weight: 500;
+}
+.value{
+    font-size: 1.25rem;
+    margin-left: 20px;
+    color: rgba($color: #000000, $alpha: 0.6);
+}
+
+.badge-value{
+    display: block;
+    padding: 5px 10px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    margin-left: 10px;
+}
+
+.badge-success{
+    @extend .badge-value;
+    background-color: #109226;
+    color: whitesmoke;
+}
+
+.badge-danger{
+    @extend .badge-value;
+    background-color: #921026;
+    color: whitesmoke;
+}

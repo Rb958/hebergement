@@ -26,7 +26,8 @@ export class LoginGuard implements CanActivate, CanActivateChild, CanLoad {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.appStore.getData().sessionExists){
+    const localData = this.appStore.getData();
+    if (localData.sessionExists && localData.keepSessionAlive){
       // if (this.appStore.getData().byAuth){
         return this.router.navigate(['/dashboard']);
      /* } else if (!this.appStore.getData().byAuth && this.appStore.getData().keepSessionAlive){

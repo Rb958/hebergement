@@ -9,12 +9,14 @@ import {Env} from "../../utils/Env";
   providedIn: 'root'
 })
 export class HttpService{
-  private apiServerUrl = Env.getEnv().server.esb;
+  private apiServerUrl = Env.getEnv().server;
+
   constructor(
-    private http: HttpClient,
+    protected http: HttpClient,
   ) { }
 
   protected post(url: string, data: any): Observable<ApiResponseModel<any>> {
+    console.log(this.apiServerUrl + url);
     return this.http.post<ApiResponseModel<any>>(this.apiServerUrl + url, data);
   }
 

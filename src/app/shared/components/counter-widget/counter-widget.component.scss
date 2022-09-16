@@ -1,0 +1,51 @@
+.counter-widget{
+  border: 1px solid transparent;
+  background-color: #f3f3f3;
+  color: #525252;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  margin-bottom: 20px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.04);
+  height: 120px;
+
+  .icon{
+    border: 1px solid transparent;
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(40, 91, 243, 0.09);
+    color: #1e3e9f;
+    i {
+      font-size: 30px;
+    }
+  }
+  .counter-info {
+    padding: 0 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    .title {
+      font-size: 1.1rem;
+      display: block;
+    }
+
+    .value {
+      display: block;
+      font-size: 1.7rem;
+      font-weight: bold;
+    }
+
+    .sub-value {
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+  }
+}
+

@@ -1,0 +1,96 @@
+<div class="tab-tools">
+  <span class="tab-tools-title">{{'list_of_commande' | translate}}</span>
+  <div class="tab-export-tools">
+    <button class="btn btn-default">
+      <i class="fa fa-print"></i>
+    </button>
+    <button class="btn btn-default">
+      <i class="fa fa-download"></i>
+    </button>
+  </div>
+  <div>
+    <button class="btn btn-primary" (click)="newCommande()">
+      <i class="fa fa-plus"></i>
+      {{'new_commande' | translate}}
+    </button>
+  </div>
+</div>
+<div class="ps-card">
+  <div class="ps-card-body">
+    <ng-container *ngIf="(commandes$ | async) as result" [ngSwitch]="result?.dataState">
+      <ng-container *ngSwitchCase="0">
+        <div class="loader-spinner">
+          <img src="../../../../../assets/images/Spin-Preloader.gif" alt="Loading..." class="loading">
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchCase="1">
+        <div class="table-content">
+          <table>
+            <thead>
+            <th>Id</th>
+            <th>{{ 'ref' | translate}}</th>
+            <th>{{ 'demandeur' | translate}}</th>
+            <th>{{ 'status' | translate}}</th>
+            <th>{{ 'fournisseur' | translate}}</th>
+            <th>{{ 'date_livraison' | translate}}</th>
+            <th>{{ 'prix_total' | translate}}</th>
+            <th>{{ 'date_creation' | translate}}</th>
+            <th>Actions</th>
+            </thead>
+            <tbody>
+            <tr *ngFor="let commande of result?.data?.content">
+              <td>{{ commande?.id }}</td>
+              <td>{{ commande?.refCmd }}</td>
+              <td>{{ commande?.demandeur }}</td>
+              <td>{{ commande?.statut }}</td>
+              <td>
+                <ng-container *ngIf="commande.fournisseurEntreprise != null">
+                  {{ commande?.fournisseurEntreprise?.raisonSociale }}
+                </ng-container>
+                <ng-container *ngIf="commande.fournisseurParticulier != null">
+                  {{ commande.fournisseurParticulier?.nom }}
+                </ng-container>
+              </td>
+              <td>{{ commande?.dateLivraison | date:'dd-MM-yyyy'}}</td>
+              <td>{{ commande?.prixTotal }}</td>
+              <td>{{ commande?.createdAt | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+              <td class="actions">
+                <div class="dropdown">
+                  <button class="btn btn-table-action" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-ellipsis-v"></i>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li (click)="deleteCommande(commande)">
+                      <a class="dropdown-item">
+                        <i class="fa fa-trash"></i>
+                        &nbsp;
+                        {{'delete' | translate}}
+                      </a>
+                    </li>
+                    <li (click)="updateCommande(commande)">
+                      <a class="dropdown-item">
+                        <i class="fa fa-trash"></i>
+                        &nbsp;
+                        {{'update' | translate}}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <mat-paginator
+          [pageIndex]="currentPageIndex"
+          [length]="currentPageElementSize"
+          [pageSizeOptions]="pagesElementSize"
+        ></mat-paginator>
+      </ng-container>
+      <ng-container *ngSwitchCase="2">
+        error
+        <!-- // TODO Show Error Illustration here-->
+      </ng-container>
+    </ng-container>
+  </div>
+</div>

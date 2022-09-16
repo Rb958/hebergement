@@ -23,11 +23,12 @@ export class LocalListComponent implements OnInit {
   currentPageElementSize = 32;
   currentPageIndex = 0;
   pagesElementSize = [32, 64, 128, 256];
+  numberOfElements = 0;
+
   totalPage = 0;
 
+
   locals$: Observable<DataStateProcessing<PageModel<LocalModel>>> = {} as Observable<DataStateProcessing<PageModel<LocalModel>>>;
-
-
   public doughnutChartLabels: string[] = [ 'Occupé', 'Libre', 'Hors service' ];
   public doughnutChartData: ChartData<'doughnut'> = {
     labels: this.doughnutChartLabels,
@@ -43,6 +44,7 @@ export class LocalListComponent implements OnInit {
     ],
   };
   public doughnutChartType: ChartType = 'doughnut';
+
   constructor(
     private dialog: MatDialog,
     private localService: LocalService,
@@ -59,6 +61,9 @@ export class LocalListComponent implements OnInit {
       map(
         response => {
           if (response.code === HttpStatusCode.Ok){
+            this.currentPageElementSize = response.result.size;
+            this.numberOfElements = response.result.totalElements;
+            this.currentPageIndex = response.result.pageable.pageNumber;
             return {dataState: DataStateEnum.LOADED, message: response.message, data: response.result}
           }else {
             return {dataState: DataStateEnum.ERROR, message: response.message}
@@ -70,17 +75,8 @@ export class LocalListComponent implements OnInit {
     );
   }
 
-  enableLocal(local: LocalModel) {
-    const dialogRef = this.dialog.open(EnableLocalComponent, {
-      data: local
-    });
-    dialogRef.afterClosed().subscribe(
-      result => {
-        if (result){
-          this.loadData();
-        }
-      }
-    );
+  showDetails(local: LocalModel) {
+    this.router.navigate(['../local-detail', local.id], {relativeTo: this.route});
   }
 
   deleteLocal(local: LocalModel) {
@@ -103,5 +99,9 @@ export class LocalListComponent implements OnInit {
 
   createLocal() {
     this.router.navigate(['../create-local'], {relativeTo: this.route});
+  }
+
+  pad(number : number){
+    return String(number).padStart(3, '0');
   }
 }

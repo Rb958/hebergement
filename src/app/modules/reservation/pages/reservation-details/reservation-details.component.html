@@ -1,0 +1,16 @@
+<ng-container *ngIf="(currentReservation$ | async) as data" [ngSwitch]="data?.dataState">
+  <ng-container *ngSwitchCase="0">
+    <div class="loader-spinner">
+      <img src="../../../../../assets/images/Spin-Preloader.gif" alt="Loading..." class="loading">
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="1">
+    <div class="ps-card">
+      <div class="ps-card-header">
+        <span class="ps-card-title">{{ data.data?.ref }}</span>
+      </div>
+      <div class="ps-card-body">
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

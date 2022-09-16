@@ -1,0 +1,145 @@
+<div class="tab-tools">
+  <span class="tab-tools-title">{{'new_cmd' | translate}}</span>
+</div>
+<div class="ps-card">
+  <div class="ps-card-body p-5">
+    <div class="row">
+      <div class="col-md-6">
+        <form [formGroup]="commandForm">
+          <div class="form-item">
+            <label for="demandeur">{{'demandeur' | translate}}</label>
+            <div class="input-control" [class.error]="commandForm?.get('demandeur')?.touched && commandForm?.get('demandeur')?.hasError('required')" >
+              <input type="text" id="demandeur" formControlName="demandeur" name="demandeur" >
+              <span class="input-error-image" *ngIf="commandForm?.get('demandeur')?.touched && commandForm?.get('demandeur')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+            </div>
+            <span class="hint"></span>
+            <span class="hint error" *ngIf="commandForm?.get('demandeur')?.touched && commandForm?.get('demandeur')?.hasError('required')">{{'required_field' | translate}}</span>
+          </div>
+          <div class="form-item">
+            <label for="dateLivraison">{{'dateLivraison' | translate}}</label>
+            <div class="input-control" [class.error]="commandForm?.get('dateLivraison')?.touched && commandForm?.get('dateLivraison')?.hasError('required')" >
+              <input type="date" id="dateLivraison" formControlName="dateLivraison" name="dateLivraison" >
+              <span class="input-error-image" *ngIf="commandForm?.get('dateLivraison')?.touched && commandForm?.get('dateLivraison')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+            </div>
+            <span class="hint"></span>
+            <span class="hint error" *ngIf="commandForm?.get('dateLivraison')?.touched && commandForm?.get('dateLivraison')?.hasError('required')">{{'required_field' | translate}}</span>
+          </div>
+          <div class="form-item">
+            <div class="question-item" >
+              <div class="question-check">
+                <input type="checkbox" id="isEnterprise" [(ngModel)]="isEnterprise" [ngModelOptions]="{standalone: true}">
+                <label for="isEnterprise" class="check-label"></label>
+              </div>
+              <span class="response_label">Le fournisseur est une entreprise</span>
+            </div>
+          </div>
+          <div class="form-item">
+            <label>{{ 'fournisseur' | translate }}</label>
+            <ng-container *ngIf="isEnterprise">
+              <div class="input-control" formGroupName="fournisseurEntreprise">
+                <select class="input-control" formControlName="id" id="fournisseurEntreprise">
+                  <option value="">Selectionner un fournisseur</option>
+                  <option [value]="four?.id" *ngFor="let four of fournisseursEntreprise">{{four?.raisonSociale}}</option>
+                </select>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="commandForm?.get('fournisseurEntreprise')?.get('id')?.touched && commandForm?.get('fournisseurEntreprise')?.get('id')?.hasError('required')">{{'required_field' | translate}}</span>
+            </ng-container>
+            <ng-container *ngIf="!isEnterprise">
+              <div class="input-control" formGroupName="fournisseurParticulier">
+                <select class="input-control" formControlName="id" id="fournisseurParticulier">
+                  <option value="">Selectionner un fournisseur</option>
+                  <option [value]="four?.id" *ngFor="let four of fournisseursParticuliers">{{ four?.nom }} {{four?.prenom}}</option>
+                </select>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="commandForm?.get('fournisseurParticulier')?.get('id')?.touched && commandForm?.get('fournisseurParticulier')?.get('id')?.hasError('required')">{{'required_field' | translate}}</span>
+            </ng-container>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-6">
+        <form [formGroup]="ligneCmdForm" (ngSubmit)="addLigneCommande()">
+          <div class="form-item">
+            <label for="article">{{'article' | translate}}</label>
+            <div class="input-control" formGroupName="article" [class.error]="ligneCmdForm?.get('article')?.touched && ligneCmdForm?.get('article')?.hasError('required')" >
+              <select name="article" id="article" formControlName="id">
+                <option value="">Selectionner un article</option>
+                <option [value]="article.id" *ngFor="let article of articles">{{ article?.designation }}</option>
+              </select>
+            </div>
+            <span class="hint"></span>
+            <span class="hint error" *ngIf="ligneCmdForm?.get('article')?.touched && ligneCmdForm?.get('article')?.hasError('required')">{{'required_field' | translate}}</span>
+          </div>
+          <div class="form-item">
+            <label for="qte">{{'qte' | translate}}</label>
+            <div class="input-control" [class.error]="ligneCmdForm?.get('qte')?.touched && ligneCmdForm?.get('qte')?.hasError('required')" >
+              <input type="text" id="qte" formControlName="qte" name="qte" >
+              <span class="input-error-image" *ngIf="ligneCmdForm?.get('qte')?.touched && ligneCmdForm?.get('qte')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+            </div>
+            <span class="hint"></span>
+            <span class="hint error" *ngIf="ligneCmdForm?.get('qte')?.touched && ligneCmdForm?.get('qte')?.hasError('required')">{{'required_field' | translate}}</span>
+          </div>
+          <div class="form-item">
+            <label for="prixUnitaire">{{'prixUnitaire' | translate}}</label>
+            <div class="input-control" [class.error]="ligneCmdForm?.get('prixUnitaire')?.touched && ligneCmdForm?.get('prixUnitaire')?.hasError('required')" >
+              <input type="text" id="prixUnitaire" formControlName="prixUnitaire" name="prixUnitaire" >
+              <span class="input-error-image" *ngIf="ligneCmdForm?.get('prixUnitaire')?.touched && ligneCmdForm?.get('prixUnitaire')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+            </div>
+            <span class="hint"></span>
+            <span class="hint error" *ngIf="ligneCmdForm?.get('prixUnitaire')?.touched && ligneCmdForm?.get('prixUnitaire')?.hasError('required')">{{'required_field' | translate}}</span>
+          </div>
+          <div class="form-item">
+            <button class="btn btn-primary" [disabled]="ligneCmdForm.invalid">
+              <i class="fa fa-plus"></i>
+              Ajouter
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <table>
+        <div class="table-content">
+          <table>
+            <thead>
+              <th>{{ 'article' | translate}}</th>
+              <th>{{ 'qte' | translate}}</th>
+              <th>{{ 'prix_unitaire' | translate}}</th>
+              <th>Actions</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ligne of lignesCommande">
+                <td>{{ ligne?.article?.designation }}</td>
+                <td>{{ ligne?.qte }}</td>
+                <td>{{ ligne?.prixUnitaire }}</td>
+                <td>
+                  <button class="btn btn-default" (click)="deleteLigneCommande(ligne)">
+                    <i class="bx bx-trash"></i>
+                  </button>
+                  <button class="btn btn-default" (click)="updateLigneCommande(ligne)">
+                    <i class="bx bx-edit"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </table>
+    </div>
+    <div class="d-flex justify-content-center mt-3 p-4">
+      <button class="btn btn-primary" [disabled]="commandForm.invalid || lignesCommande.length <= 0" (click)="saveCommande()">
+        <i class="bx bx-save"></i>
+        {{ 'save' | translate}}
+      </button>
+    </div>
+  </div>
+</div>

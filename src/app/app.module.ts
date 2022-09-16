@@ -21,7 +21,7 @@ import {ApiRequestInterceptor} from "./shared/interceptor/api-request.intercepto
 @NgModule({
   declarations: [
     AppComponent,
-    NotFoundComponent
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,9 +43,9 @@ import {ApiRequestInterceptor} from "./shared/interceptor/api-request.intercepto
     AccountModule
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'fr-FR'},
-    { provide: HTTP_INTERCEPTORS, useClass: GlobalRequestInterceptor, multi: true},
-    { provide: HTTP_INTERCEPTORS, useClass: ApiRequestInterceptor, multi: true}
+    {provide: LOCALE_ID, useValue: 'fr-FR'},
+    {provide: HTTP_INTERCEPTORS, useClass: GlobalRequestInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ApiRequestInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

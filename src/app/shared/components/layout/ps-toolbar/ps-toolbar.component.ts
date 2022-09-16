@@ -14,16 +14,16 @@ export enum MenuState {
 })
 export class PsToolbarComponent implements OnInit {
 
-  @Input()
-  username: string = 'Username';
+  @Input('username')
+  username : string | undefined = 'Username';
   @Input()
   userRole: any = 'user';
   @Input()
   badgeValue: number = 0;
   @Input()
   toolbarTitle: string = 'dashboard';
-  @Input()
-  userAvatar: string = ''
+  @Input('userAvatar')
+  userAvatar = ''
 
   @Output()
   search: EventEmitter<string> = new EventEmitter<string>();

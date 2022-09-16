@@ -27,24 +27,26 @@
         <div class="table-content">
           <table>
             <thead>
-            <th>{{ 'local_number' | translate }}</th>
-            <th>{{ 'local_name' | translate}}</th>
-            <th>{{ 'local_type' | translate}}</th>
-            <th>{{ 'building_name' | translate}}</th>
-            <th>{{ 'category' | translate}}</th>
-            <th>{{ 'localization' | translate}}</th>
-            <th>{{ 'status' | translate}}</th>
+            <th>Id</th>
+            <th>{{ 'nom' | translate }}</th>
+            <th>{{ 'prenom' | translate}}</th>
+            <th>{{ 'fonction' | translate}}</th>
+            <th>{{ 'telephone' | translate}}</th>
+            <th>{{ 'salaireMois' | translate}}</th>
+            <th>{{ 'cni' | translate}}</th>
+            <th>{{ 'date_creation' | translate}}</th>
             <th>Actions</th>
             </thead>
             <tbody>
             <tr *ngFor="let employee of result?.data?.content">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td>{{ employee?.id }}</td>
+              <td>{{ employee?.nom }}</td>
+              <td>{{ employee?.prenom }}</td>
+              <td>{{ employee?.fonction }}</td>
+              <td>{{ employee?.telephone }}</td>
+              <td>{{ employee?.salaireMois }}</td>
+              <td>{{ employee?.cni }}</td>
+              <td>{{ employee?.createdAt | date:'dd-MM-yyyy'}}</td>
               <td class="actions">
                 <div class="dropdown">
                   <button class="btn btn-table-action" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -56,6 +58,13 @@
                         <i class="fa fa-trash"></i>
                         &nbsp;
                         {{'delete' | translate}}
+                      </a>
+                    </li>
+                    <li (click)="updateEmployee(employee)">
+                      <a class="dropdown-item">
+                        <i class="fa fa-trash"></i>
+                        &nbsp;
+                        {{'update' | translate}}
                       </a>
                     </li>
                   </ul>

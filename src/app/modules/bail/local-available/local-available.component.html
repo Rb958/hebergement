@@ -1,0 +1,88 @@
+<div class="tab-tools">
+  <span class="tab-tools-title">{{'select_one_local' | translate}}</span>
+</div>
+<div class="page-wrapper row">
+  <ng-container *ngIf="!hasResult">
+    <div class="search-form">
+      <div class="ps-card">
+        <form [formGroup]="bookingSearchForm" class="booking-search-form">
+          <div class="form-item">
+            <label class="form-label">Type de local</label>
+            <div class="input-control">
+              <select formControlName="typeLocal">
+                <option value="">Selectionner le type de locale</option>
+                <option value="APPARTEMENT">Appartement</option>
+                <option value="STUDIO">Studio</option>
+                <option value="CHAMBRE">Chambre</option>
+                <option value="SUITE">Suite</option>
+                <option value="BOUTIQUE">Boutique</option>
+                <option value="MAGASIN">Magasin</option>
+                <option value="BUREAU">Bureau</option>
+              </select>
+              <span class="input-error-image" *ngIf="bookingSearchForm?.get('immeuble')?.touched && bookingSearchForm?.get('immeuble')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+            </div>
+            <span class="hint"></span>
+            <span class="hint error" *ngIf="bookingSearchForm?.get('immeuble')?.touched && bookingSearchForm?.get('immeuble')?.hasError('required')">{{'required_field' | translate}}</span>
+          </div>
+          <div class="form-item">
+            <label for="startDate">{{'startDate' | translate}}</label>
+            <div class="input-control"  [class.error]="bookingSearchForm?.get('startDate')?.touched && bookingSearchForm?.get('startDate')?.hasError('required')" >
+              <input type="date" placeholder="2" id="startDate" #startDateInput formControlName="startDate" name="startDate" >
+              <span class="input-error-image" *ngIf="bookingSearchForm?.get('startDate')?.touched && bookingSearchForm?.get('startDate')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+            </div>
+            <span class="hint"></span>
+            <span class="hint error" *ngIf="bookingSearchForm?.get('startDate')?.touched && bookingSearchForm?.get('startDate')?.hasError('required')">{{'required_field' | translate}}</span>
+          </div>
+          <div class="form-item">
+            <label for="endDate">{{'endDate' | translate}}</label>
+            <div class="input-control"  [class.error]="bookingSearchForm?.get('endDate')?.touched && bookingSearchForm?.get('endDate')?.hasError('required')" >
+              <input type="date" placeholder="2" id="endDate" #endDateInput formControlName="endDate" name="endDate" >
+              <span class="input-error-image" *ngIf="bookingSearchForm?.get('endDate')?.touched && bookingSearchForm?.get('endDate')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+            </div>
+            <span class="hint"></span>
+            <span class="hint error" *ngIf="bookingSearchForm?.get('endDate')?.touched && bookingSearchForm?.get('endDate')?.hasError('required')">{{'required_field' | translate}}</span>
+          </div>
+          <div class="form-item">
+            <button rbButton [loading]="loadingSearch" class="btn btn-primary btn-block" (click)="onSearch()">
+              <i class="fa fa-search"></i>&nbsp;&nbsp;
+              {{'search' | translate}}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="hasResult">
+    <!--    <ng-container *ngIf="(locals$ | async) as result" [ngSwitch]="result?.dataState">-->
+    <!--      <ng-container *ngSwitchCase="0">-->
+    <!--        <div class="loader-spinner">-->
+    <!--          <img src="../../../../../assets/images/Spin-Preloader.gif" alt="Loading..." class="loading">-->
+    <!--        </div>-->
+    <!--      </ng-container>-->
+    <!--      <ng-container *ngSwitchCase="1">-->
+    <div class="col-md-3" *ngFor="let local of locals">
+      <div class="object-wrapper" (click)="selectLocal(local)">
+        <div class="number">{{ local?.numeroLocal }}</div>
+        <div class="title">{{ local?.nomLocal }}</div>
+        <div class="book">{{'book_now' | translate}}</div>
+      </div>
+    </div>
+    <mat-paginator
+      [pageIndex] = "currentPageIndex"
+      [length] = "currentPageElementSize"
+      [pageSizeOptions] = "pagesElementSize"
+    ></mat-paginator>
+    <!--      </ng-container>-->
+    <!--      <ng-container *ngSwitchCase = "2">-->
+    <!--        error-->
+    <!--        &lt;!&ndash; // TODO Show Error Illustration here&ndash;&gt;-->
+    <!--      </ng-container>-->
+    <!--    </ng-container>-->
+  </ng-container>
+</div>

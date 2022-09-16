@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 import {catchError, map, Observable, of, startWith, tap} from "rxjs";
 import {DataStateEnum, DataStateProcessing} from "../../../../shared/utils/data-processing-state";
 import {PageModel} from "../../../../shared/models/page-model";
@@ -29,7 +30,8 @@ export class ListLocataireParticulierComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private locataireService: LocataireService
+    private locataireService: LocataireService,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -80,6 +82,18 @@ export class ListLocataireParticulierComponent implements OnInit {
     });
   }
 
+  getSanitizedUrl(url?: string){
+    if (url){
+      let urlCopie = url;
+      if(!url.startsWith('http://') || !url.startsWith('https://')){
+        urlCopie = 'https://' + url;
+      }
+      return this.sanitizer.sanitize(SecurityContext.URL, urlCopie);
+    }else{
+      return '';
+    }
+  }
+
   newLocataire() {
     const dialogRef = this.dialog.open(EditLocataireParticulierComponent, {
       width: '600px',
@@ -89,11 +103,7 @@ export class ListLocataireParticulierComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result){
-        this.locataireParticulier$.pipe(
-          tap(list => {
-            list.data?.content.push(result);
-          })
-        );
+        this.loadData();
       }
     });
   }

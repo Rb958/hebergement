@@ -1,15 +1,17 @@
 import * as CryptoJS from "crypto-js";
 import {Injectable} from "@angular/core";
-import {Observable, Subject} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 import jwt_decode from 'jwt-decode';
 @Injectable({
   providedIn: 'root'
 })
 export class AppStore{
-  private DATA_KEY = '_app';
+  private DATA_KEY = 'logement';
   private SECRET = '66079d121713c3828d7357e972f9b3c0';
   private IV = 'dc1f10209cc52a2e69e0bd004b146d8e';
   private sessionState: Subject<Boolean> = new Subject<Boolean>();
+  private data: BehaviorSubject<LocalData> = new BehaviorSubject<LocalData>(new LocalData());
+  public  data$ = this.data.asObservable();
 
   constructor( ) {}
 
@@ -24,6 +26,8 @@ export class AppStore{
     const encrypted = CryptoJS.AES.encrypt(strData, secret, {iv: iv});
     localStorage.removeItem(this.DATA_KEY);
     localStorage.setItem(this.DATA_KEY, encrypted.toString(CryptoJS.format.OpenSSL));
+    this.data.next(data);
+    // this.data.complete();
   }
 
   getData(): LocalData{
@@ -33,7 +37,10 @@ export class AppStore{
       const iv = CryptoJS.enc.Hex.parse(this.IV);
       let decrypted = CryptoJS.AES.decrypt(encrypted, secret, {iv: iv}).toString(CryptoJS.enc.Utf8);
       decrypted = decrypted.replace(/_/gmi, '');
-      return <LocalData>JSON.parse(decrypted, );
+      const data = <LocalData>JSON.parse(decrypted);
+      this.data.next(data);
+      // this.data.complete();
+      return data;
     }else {
       return new LocalData();
     }
@@ -46,7 +53,7 @@ export class AppStore{
   }
 
   getSessionState(): Observable<Boolean>{
-    if (this.getData() != null){
+    if (this.getData() != null && this.getData().token){
       const token = this.getData().token;
       const details = Object.create(jwt_decode(token));
       const rest = (details != undefined) ? details.exp - details.iat : 0;
@@ -62,17 +69,77 @@ export class AppStore{
       return this.sessionState.asObservable();
     }
   }
+
+  logout(localData: LocalData) {
+    localData.token = null;
+    localData.sessionExists = false;
+    localData.hasCashierOpened = false;
+    localData.userDetails = null;
+    this.save(localData);
+  }
+}
+
+export class UserDetails{
+  private _firstname: string = '';
+  private _lastname: string = '';
+  private _userId: number = 0;
+  private _role: string = '';
+  private _username: string = '';
+  private _avatar: string = '';
+
+  constructor() { }
+
+  get firstname(): string {
+    return this._firstname;
+  }
+
+  set firstname(value: string) {
+    this._firstname = value;
+  }
+
+  get lastname(): string {
+    return this._lastname;
+  }
+
+  set lastname(value: string) {
+    this._lastname = value;
+  }
+
+  get userId(): number {
+    return this._userId;
+  }
+
+  set userId(value: number) {
+    this._userId = value;
+  }
+
+  get role(): string {
+    return this._role;
+  }
+
+  set role(value: string) {
+    this._role = value;
+  }
+
+  get username(): string {
+    return this._username;
+  }
+
+  set username(value: string) {
+    this._username = value;
+  }
+
+  get avatar(): string {
+    return this._avatar;
+  }
+
+  set avatar(value: string) {
+    this._avatar = value;
+  }
 }
 
 export class LocalData{
-  get byAuth(): boolean {
-    return this._byAuth;
-  }
-
-  set byAuth(value: boolean) {
-    this._byAuth = value;
-  }
-  private _lang: string = 'en';
+  private _lang: string = 'fr';
   private _appVersion: string = '0.0.1';
   private _appName: string = 'LSD Gestion logement';
   private _sessionExists: boolean = false;
@@ -80,12 +147,25 @@ export class LocalData{
   private _token: any = null;
   private _isFirstUse: boolean = true;
   private _theme: string = 'default';
-  private _userAvatar: string = '';
-  private _userName: string = 'Username';
-  private _userRole: string = 'User';
   private _byAuth: boolean = false;
+  private _hasCashierOpened = false;
+  private _userDetails: UserDetails | null = null;
 
   constructor() {}
+
+  get hasCashierOpened(): boolean {
+    return this._hasCashierOpened;
+  }
+  set hasCashierOpened(value: boolean) {
+    this._hasCashierOpened = value;
+  }
+
+  get byAuth(): boolean {
+    return this._byAuth;
+  }
+  set byAuth(value: boolean) {
+    this._byAuth = value;
+  }
 
   get lang(): string {
     return this._lang;
@@ -154,28 +234,11 @@ export class LocalData{
     this._theme = value;
   }
 
-
-  get userAvatar(): string {
-    return this._userAvatar;
+  get userDetails(): UserDetails | null {
+    return this._userDetails;
   }
 
-  set userAvatar(value: string) {
-    this._userAvatar = value;
-  }
-
-  get userName(): string {
-    return this._userName;
-  }
-
-  set userName(value: string) {
-    this._userName = value;
-  }
-
-  get userRole(): string {
-    return this._userRole;
-  }
-
-  set userRole(value: string) {
-    this._userRole = value;
+  set userDetails(value: UserDetails | null) {
+    this._userDetails = value;
   }
 }

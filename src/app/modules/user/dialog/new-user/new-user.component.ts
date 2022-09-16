@@ -34,14 +34,16 @@ export class NewUserComponent implements OnInit {
         firstname: [''],
         lastname: ['', Validators.required],
         phone: [''],
-        username: ['', Validators.required]
+        username: ['', Validators.required],
+        password: ['', Validators.required]
       })
     }else{
       this.userForm = this.fb.group({
         firstname: [this.data.user.firstname],
         lastname: [this.data.user.lastname, Validators.required],
         phone: [this.data.user.phone],
-        username: [this.data.user.username, Validators.required]
+        username: [this.data.user.username, Validators.required],
+        password: ['', Validators.required]
       })
     }
   }

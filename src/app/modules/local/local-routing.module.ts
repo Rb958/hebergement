@@ -19,7 +19,7 @@ const routes: Routes = [
     component: NewLocalComponent
   },
   {
-    path: 'local-detail',
+    path: 'local-detail/:id',
     component: LocalDetailsComponent
   }
 ];

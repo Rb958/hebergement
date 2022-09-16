@@ -7,6 +7,7 @@ export class PayementsModel{
   public amount: number;
   public isLast: boolean;
   public rest: number;
+  public discount: number;
   public paymentMethod: string;
   public booking: ReservationModel;
 
@@ -14,6 +15,7 @@ export class PayementsModel{
     this.id = 0;
     this.createdAt = new Date();
     this.lastUpdatedAt = new Date();
+    this.discount = 0;
     this.amount = 0;
     this.paymentMethod = '';
     this.isLast = false;

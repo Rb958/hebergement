@@ -1,0 +1,45 @@
+<h3 mat-dialog-title *ngIf="!isEdition">{{ 'new_caisse' | translate }}</h3>
+<h3 mat-dialog-title *ngIf="isEdition">{{ 'update_caisse' | translate }}</h3>
+<form [formGroup]="transfertForm" (ngSubmit)="saveTransfert()">
+  <div mat-dialog-content>
+    <div class="form-content">
+      <div class="form-item" formGroupName="transfertDe">
+        <label for="transfertDe">{{'transfertDe' | translate}}</label>
+        <div class="input-control" [class.error]="transfertForm?.get('transfertDe')?.get('id')?.touched && transfertForm?.get('transfertDe')?.get('id')?.hasError('required')" >
+          <select name="transfertDe" id="transfertDe" formControlName="id">
+            <option value="">Selectionner une caisse</option>
+            <option [value]="caisse.id" *ngFor="let caisse of caisses">{{caisse.nom}} {{caisse.nom}}</option>
+          </select>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="transfertForm?.get('transfertDe')?.get('id')?.touched && transfertForm?.get('transfertDe')?.get('id')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item" formGroupName="transfertA">
+        <label for="transfertA">{{'transfertA' | translate}}</label>
+        <div class="input-control" [class.error]="transfertForm?.get('transfertA')?.get('id')?.touched && transfertForm?.get('transfertA')?.get('id')?.hasError('required')" >
+          <select name="transfertDe" id="transfertA" formControlName="id">
+            <option value="">Selectionner une caisse</option>
+            <option [value]="caisse.id" *ngFor="let caisse of caisses">{{caisse.nom}} {{caisse.nom}}</option>
+          </select>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="transfertForm?.get('transfertA')?.get('id')?.touched && transfertForm?.get('transfertA')?.get('id')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="montant">{{'montant' | translate}}</label>
+        <div class="input-control" [class.error]="transfertForm?.get('montant')?.touched && transfertForm?.get('montant')?.hasError('required')" >
+          <input type="text" id="montant" formControlName="montant" name="montant" >
+          <span class="input-error-image" *ngIf="transfertForm?.get('montant')?.touched && transfertForm?.get('montant')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="transfertForm?.get('montant')?.touched && transfertForm?.get('montant')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="dialog-actions">
+    <button class="btn btn-default" [mat-dialog-close]="false" type="button">{{ 'cancel' | translate }}</button>
+    <button class="btn btn-primary" type="submit">{{ 'save' | translate }}</button>
+  </div>
+</form>

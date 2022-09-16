@@ -1,0 +1,89 @@
+<h3 mat-dialog-title *ngIf="!isEdition">{{ 'new_fournisseur_part' | translate }}</h3>
+<h3 mat-dialog-title *ngIf="isEdition">{{ 'update_fournisseur_part' | translate }}</h3>
+<form [formGroup]="fournisseurFormGroup" (ngSubmit)="saveFournisseur()">
+  <div mat-dialog-content>
+    <div class="form-content">
+      <div class="form-item">
+        <label for="nom">{{'nom' | translate}}</label>
+        <div class="input-control" [class.error]="fournisseurFormGroup?.get('nom')?.touched && fournisseurFormGroup?.get('nom')?.hasError('required')" >
+          <input type="text" id="nom" formControlName="nom" name="nom" >
+          <span class="input-error-image" *ngIf="fournisseurFormGroup?.get('nom')?.touched && fournisseurFormGroup?.get('nom')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="fournisseurFormGroup?.get('nom')?.touched && fournisseurFormGroup?.get('nom')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="prenom">{{'prenom' | translate}}</label>
+        <div class="input-control" [class.error]="fournisseurFormGroup?.get('prenom')?.touched && fournisseurFormGroup?.get('prenom')?.hasError('required')" >
+          <input type="text" id="prenom" formControlName="prenom" name="prenom" >
+          <span class="input-error-image" *ngIf="fournisseurFormGroup?.get('prenom')?.touched && fournisseurFormGroup?.get('prenom')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="fournisseurFormGroup?.get('prenom')?.touched && fournisseurFormGroup?.get('prenom')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="localisation">{{'localisation' | translate}}</label>
+        <div class="input-control" [class.error]="fournisseurFormGroup?.get('localisation')?.touched && fournisseurFormGroup?.get('localisation')?.hasError('required')" >
+          <input type="text" id="localisation" formControlName="localisation" name="localisation" >
+          <span class="input-error-image" *ngIf="fournisseurFormGroup?.get('localisation')?.touched && fournisseurFormGroup?.get('localisation')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="fournisseurFormGroup?.get('localisation')?.touched && fournisseurFormGroup?.get('localisation')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="telephone">{{'telephone' | translate}}</label>
+        <div class="input-control" [class.error]="fournisseurFormGroup?.get('telephone')?.touched && fournisseurFormGroup?.get('telephone')?.hasError('required')" >
+          <input type="text" id="telephone" formControlName="telephone" name="telephone" >
+          <span class="input-error-image" *ngIf="fournisseurFormGroup?.get('telephone')?.touched && fournisseurFormGroup?.get('telephone')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="fournisseurFormGroup?.get('telephone')?.touched && fournisseurFormGroup?.get('telephone')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="echeance">{{'echeance' | translate}}</label>
+        <div class="input-control" [class.error]="fournisseurFormGroup?.get('echeance')?.touched && fournisseurFormGroup?.get('echeance')?.hasError('required')" >
+          <input type="text" id="echeance" formControlName="echeance" name="echeance" >
+          <span class="input-error-image" *ngIf="fournisseurFormGroup?.get('echeance')?.touched && fournisseurFormGroup?.get('echeance')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="fournisseurFormGroup?.get('echeance')?.touched && fournisseurFormGroup?.get('echeance')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="mail1">{{'mail1' | translate}}</label>
+        <div class="input-control" [class.error]="fournisseurFormGroup?.get('mail1')?.touched && fournisseurFormGroup?.get('mail1')?.hasError('required')" >
+          <input type="email" id="mail1" formControlName="mail1" name="mail1" >
+          <span class="input-error-image" *ngIf="fournisseurFormGroup?.get('mail1')?.touched && fournisseurFormGroup?.get('mail1')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="fournisseurFormGroup?.get('mail1')?.touched && fournisseurFormGroup?.get('mail1')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="mail2">{{'mail2' | translate}}</label>
+        <div class="input-control" [class.error]="fournisseurFormGroup?.get('mail2')?.touched && fournisseurFormGroup?.get('mail2')?.hasError('required')" >
+          <input type="email" id="mail2" formControlName="mail2" name="mail2" >
+          <span class="input-error-image" *ngIf="fournisseurFormGroup?.get('mail2')?.touched && fournisseurFormGroup?.get('mail2')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="fournisseurFormGroup?.get('mail2')?.touched && fournisseurFormGroup?.get('mail2')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="dialog-actions">
+    <button class="btn btn-default" [mat-dialog-close]="false" type="button">{{ 'cancel' | translate }}</button>
+    <button class="btn btn-primary" type="submit">{{ 'save' | translate }}</button>
+  </div>
+</form>

@@ -1,3 +1,4 @@
+import { FileUploaderModule } from './../../shared/components/file-uploader/file-uploader.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -30,7 +31,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     LocataireRoutingModule,
     TranslateModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule,
+    FileUploaderModule
   ]
 })
 export class LocataireModule { }

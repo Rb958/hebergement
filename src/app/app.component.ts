@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Subscription, takeLast, takeUntil } from 'rxjs';
+import { Component, DoCheck, OnChanges, OnInit, SimpleChanges, OnDestroy } from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
 import {Router} from "@angular/router";
-import {AppStore} from "./shared/utils/app-store";
+import {AppStore, LocalData} from "./shared/utils/app-store";
 import {NavItem} from "./shared/components/layout/ps-navbar/ps-navbar.component";
 import {MenuState} from "./shared/components/layout/ps-toolbar/ps-toolbar.component";
 
@@ -10,12 +12,17 @@ import {MenuState} from "./shared/components/layout/ps-toolbar/ps-toolbar.compon
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
-  title = 'School Portal';
+export class AppComponent implements OnInit, OnDestroy{
+  title = 'Gestion logement';
   authenticated: boolean = false;
   menuItems: Array<NavItem> = new Array<NavItem>();
   menuState: MenuState = MenuState.OPEN;
   currentTitle: string = 'dashboard';
+  localData: LocalData = {} as LocalData;
+  hasCashierOpened:  boolean = false;
+  hasCashierOpened$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+  localDataSubscription: Subscription = {} as Subscription; 
 
   constructor(
     private translate: TranslateService,
@@ -31,15 +38,24 @@ export class AppComponent implements OnInit{
     if (arrayLang.lastIndexOf(lang) < 0) {
       lang = defaultLang;
     }
+
     if (!this.appStore.isInitialized()){
       this.appStore.initialize(lang);
     }
-    if (this.appStore.getData()) {
-      translate.setDefaultLang(<string> this.appStore.getData()?.lang);
+
+    this.localData = this.appStore.getData();
+
+    if (this.localData) {
+      translate.setDefaultLang(<string> this.localData?.lang);
     } else {
       translate.setDefaultLang(defaultLang);
     }
-    this.title = <string>this.appStore.getData()?.appName;
+    
+    this.title = <string>this.localData?.appName;
+
+    this.hasCashierOpened$.subscribe(value => {
+      this.hasCashierOpened = value;
+    })
   }
 
   ngOnInit(): void {
@@ -55,10 +71,10 @@ export class AppComponent implements OnInit{
         []
       ),
       new NavItem(
-        'Locals',
+        'Locaux',
         '/local',
         'bx bx-building-house',
-        'Locals',
+        'Locaux',
         false,
         0,
         []
@@ -116,7 +132,17 @@ export class AppComponent implements OnInit{
         'Reservation',
         false,
         0,
-        []
+        [
+          new NavItem(
+            'Calendrier',
+            '/reservation/calendrier',
+            'bx bx-clipboard',
+            'Calendrier de reservation',
+            false,
+            0,
+            []
+          ),
+        ]
       ),
       new NavItem(
         'Bails',
@@ -129,7 +155,8 @@ export class AppComponent implements OnInit{
       ),
       new NavItem(
         'Finances',
-        '/finance',
+        // '/finance',
+        undefined,
         'bx bxs-bank',
         'Finances',
         false,
@@ -161,17 +188,64 @@ export class AppComponent implements OnInit{
           false,
           0,
           []
-      )
+          )
         ]
       ),
       new NavItem(
         'Fournisseurs',
-        '/fournisseur',
+        undefined,
         'bx bx-hard-hat',
         'Fournisseurs',
         false,
         0,
-        []
+        [
+          new NavItem(
+            'particulier',
+            '/fournisseur/particulier',
+            'bx bx-hard-hat',
+            'Fournisseurs particulier',
+            false,
+            0,
+            []
+          ),
+          new NavItem(
+            'Entreprise',
+            '/fournisseur/entreprise',
+            'bx bx-hard-hat',
+            'Fournisseurs entreprise',
+            false,
+            0,
+            []
+          ),
+        ]
+      ),
+      new NavItem(
+        'Stock',
+        '/stock',
+        'bx bx-package',
+        'Stock',
+        false,
+        0,
+        [
+          new NavItem(
+            'Articles',
+            '/stock/article',
+            'bx bx-hard-hat',
+            'Articles',
+            false,
+            0,
+            []
+          ),
+          new NavItem(
+            'Commande',
+            '/stock/commande',
+            'bx bx-hard-hat',
+            'Commandes',
+            false,
+            0,
+            []
+          )
+        ]
       )
     ];
   }
@@ -203,12 +277,15 @@ export class AppComponent implements OnInit{
   }
 
   logout() {
-    const localData = this.appStore.getData();
-    localData.token = null;
-    localData.sessionExists = false;
-    localData.userName = 'USER';
-    localData.userRole = 'UNKNOWN';
-    this.appStore.save(localData);
+    this.hasCashierOpened = false;
+    this.appStore.logout(this.localData);
     this.router.navigateByUrl("/");
+  }
+
+  ngOnDestroy(): void {
+    this.hasCashierOpened = false;
+    if(this.localDataSubscription){
+      this.localDataSubscription.unsubscribe();
+    }
   }
 }

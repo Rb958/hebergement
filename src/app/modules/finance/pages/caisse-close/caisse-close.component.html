@@ -1,0 +1,8 @@
+<h3 mat-dialog-title>{{ 'close_caisse' | translate }}</h3>
+<p mat-dialog-content>
+  {{ 'close_caisse_content' | translate }}
+</p>
+<div mat-dialog-actions class="dialog-actions">
+  <button class="btn btn-default" [mat-dialog-close]="false">{{ 'no' | translate }}</button>
+  <button class="btn btn-primary" rbButton [loading]="loading" (click)="process()">{{ 'yes' | translate }}</button>
+</div>

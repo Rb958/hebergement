@@ -1,3 +1,5 @@
+import {ReservationModel} from "./reservation.model";
+
 export class LocalModel {
   public id : number;
   public ville : string | null;
@@ -26,6 +28,8 @@ export class LocalModel {
   public typePrix : string | null;
   public contrat : string | null;
   public status: string | null;
+  public bookings: Array<ReservationModel>;
+  public immobilisations: Array<any>;
 
   constructor() {
     this.id = 0;
@@ -55,5 +59,7 @@ export class LocalModel {
     this.typePrix = null;
     this.contrat = null;
     this.status = null;
+    this.bookings = [];
+    this.immobilisations = [];
   }
 }

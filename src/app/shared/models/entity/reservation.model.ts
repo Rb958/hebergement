@@ -5,6 +5,7 @@ import {PayementsModel} from "./payements.model";
 export class ReservationModel{
   public id: number;
   public dateReservation: Date;
+  public ref: string | null;
   public nom: string | null;
   public prenom: string | null;
   public telephone: string | null;
@@ -26,6 +27,7 @@ export class ReservationModel{
     this.dateReservation = new Date();
     this.nom = null;
     this.prenom = null;
+    this.ref = null;
     this.telephone = null;
     this.validite = null;
     this.numReservation = null;

@@ -1,0 +1,34 @@
+<table>
+  <thead>
+  <tr>
+    <th [colSpan]="days.length + 3" rowspan>
+      <div class="date-switcher-wrapper">
+        <button class="round-btn-arrow" (click)="previousMonth()">
+          <i class="bx bx-chevron-left"></i>
+        </button>
+        <span class="date-switcher-text">{{ currentMonthName }} / {{ currentYear }}</span>
+        <button class="round-btn-arrow" (click)="nextMonth()">
+          <i class="bx bx-chevron-right"></i>
+        </button>
+      </div>
+    </th>
+  </tr>
+  <tr>
+    <th rowspan="2">Num</th>
+    <th rowspan="2">Type</th>
+    <th *ngFor="let i of days">{{ i }}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let local of locals">
+    <td>{{ local?.numeroLocal }}</td>
+    <td>{{ local?.typeLocal }}</td>
+    <td *ngFor="let i of days"(click)="onAction(local, i)" [ngClass]="hasBooking(local, i)">
+      <div ></div>
+      <ng-container *ngIf="isToday(i, currentMonth)">
+      <div class="today-marker"></div>
+      </ng-container>
+    </td>
+  </tr>
+  </tbody>
+</table>

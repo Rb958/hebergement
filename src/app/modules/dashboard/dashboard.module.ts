@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
+import {CounterWidgetModule} from "../../shared/components/counter-widget/counter-widget.module";
+import {NgChartsModule} from "ng2-charts";
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { DashboardComponent } from './dashboard.component';
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    CounterWidgetModule,
+    NgChartsModule
   ]
 })
 export class DashboardModule { }

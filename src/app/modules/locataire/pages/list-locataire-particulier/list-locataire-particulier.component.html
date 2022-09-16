@@ -34,7 +34,7 @@
             <th>{{'telephone' | translate}}</th>
             <th>{{'lieuTravail' | translate}}</th>
             <th>{{'cni' | translate}}</th>
-            <th>{{'pjCni' | translate}}</th>
+            <!-- <th>{{'pjCni' | translate}}</th> -->
             <th>Actions</th>
             </thead>
             <tbody>
@@ -45,7 +45,7 @@
               <td>{{ locataire?.telephone }}</td>
               <td>{{ locataire?.lieuTravail }}</td>
               <td>{{ locataire?.cni }}</td>
-              <td>{{ locataire?.pjCni }}</td>
+              <!-- <td>{{ locataire?.pjCni }}</td> -->
               <td class="actions">
                 <div class="dropdown">
                   <button class="btn btn-table-action" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -61,6 +61,13 @@
                     </li>
                     <li (click)="delete(locataire)">
                       <a class="dropdown-item">
+                        <i class="fa fa-trash"></i>
+                        &nbsp;
+                        {{'delete' | translate}}
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" target="_blank" [href]="getSanitizedUrl(locataire?.pjCni)">
                         <i class="fa fa-trash"></i>
                         &nbsp;
                         {{'delete' | translate}}

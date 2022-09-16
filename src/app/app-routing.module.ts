@@ -56,6 +56,30 @@ const routes: Routes = [
     loadChildren: () => import('./modules/employee/employee.module').then(m => m.EmployeeModule)
   },
   {
+    canLoad: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    path: 'finance',
+    loadChildren: () => import('./modules/finance/finance.module').then(m => m.FinanceModule)
+  },
+  {
+    canLoad: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    path: 'stock',
+    loadChildren: () => import('./modules/stock/stock.module').then(m => m.StockModule)
+  },
+  {
+    canLoad: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    path: 'fournisseur',
+    loadChildren: () => import('./modules/fournisseur/fournisseur.module').then(m => m.FournisseurModule)
+  },
+  {
+    canLoad: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    path: 'bails',
+    loadChildren: () => import('./modules/bail/bail.module').then(m => m.BailModule)
+  },
+  {
     path: '**',
     component: NotFoundComponent,
     pathMatch: 'full'

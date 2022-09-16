@@ -1,11 +1,28 @@
 .ps-card{
-  background-color: #f2f2f2;
+  background-color: #f5f5f5;
   border-radius: 10px;
-  .ps-card-title{
-    font-size: 1.3rem;
+
+  .ps-card-title {
+    font-size: 20px;
+    font-weight: 500;
+    // color: #000;
+    text-transform: capitalize;
+    //margin-bottom: 0.75rem;
   }
 
-  .ps-card-body{
-    padding-bottom: 10px;
+  .ps-card-header {
+    border-color: #f0f1f5;
+    position: relative;
+    background: transparent;
+    padding: 1.5rem 1.875rem 1.25rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  }
+
+  .ps-card-body {
+    padding: 1.875rem;
+    flex: 1 1 auto;
+    min-height: 1px;
   }
 }

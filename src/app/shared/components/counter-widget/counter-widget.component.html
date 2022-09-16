@@ -1,0 +1,11 @@
+<div class="counter-widget">
+  <div class="icon">
+    <i class='bx bx-money-withdraw' ></i>
+  </div>
+  <div class="counter-info">
+    <span class="value" *ngIf="isAmount">{{ value | hundredSeparator}} {{ unit }}</span>
+    <span class="value" *ngIf="!isAmount">{{ value | padStart: 2  }} {{ unit }}</span>
+    <span class="title">{{ title }}</span>
+  </div>
+</div>
+
