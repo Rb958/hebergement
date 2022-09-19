@@ -8,6 +8,7 @@ export class DepenseModel{
   public type: string;
   public status: string;
   public srcDepense: string;
+  public validatedBy: String;
   public montant: number;
   public commentaire: string;
   public pieceJointe: string;
@@ -19,6 +20,7 @@ export class DepenseModel{
     this.demandeur = "";
     this.local = {} as LocalModel;
     this.categorie = "";
+    this.validatedBy = '';
     this.type = "";
     this.status = "";
     this.srcDepense = "";

@@ -93,7 +93,7 @@ export class OpenCaissePageComponent implements OnInit {
       // subCashier.caisse = cashier;
     }); 
     cashier.transactionCaisses = [];
-    cashier.user = null;
+    // cashier.user = ;
     this.cashierService.openCaisse(cashier).subscribe(
       
       apiResponse => {

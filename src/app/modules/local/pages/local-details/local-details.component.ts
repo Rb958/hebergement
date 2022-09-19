@@ -1,3 +1,6 @@
+import { DomSanitizer } from '@angular/platform-browser';
+import { UploadService } from './../../../../shared/services/services/upload.service';
+import { LocataireParticulierModel } from './../../../../shared/models/entity/locataire.model';
 import { catchError, map, of, startWith } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { DataStateEnum, DataStateProcessing } from './../../../../shared/utils/data-processing-state';
@@ -6,6 +9,7 @@ import { LocalModel } from './../../../../shared/models/entity/local.model';
 import { LocalService } from './../../../../shared/services/services/local.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpStatusCode } from '@angular/common/http';
+import { Env } from 'src/app/shared/utils/Env';
 
 @Component({
   selector: 'app-local-details',

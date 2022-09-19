@@ -9,6 +9,8 @@ import {HttpService} from "../http-services/http.service";
   providedIn: 'root'
 })
 export class BailService extends HttpService{
+  
+  
   url = 'api/bail';
 
   getAllBailPaginated(pageIndex: number, pageSize: number, queryParam: any): Observable<ApiResponseModel<PageModel<BailModel>>> {
@@ -30,5 +32,13 @@ export class BailService extends HttpService{
 
   getStats(){
     return this.get(`${this.url}/stats`);
+  }
+
+  findById(id: string | null) {
+    return this.get(`${this.url}/${id}`);
+  }
+
+  addPayment(userId: number | undefined, payment: any, bailId: number) {
+    return this.patch(`${this.url}/user/${userId}/payment/add/${bailId}`, payment);
   }
 }

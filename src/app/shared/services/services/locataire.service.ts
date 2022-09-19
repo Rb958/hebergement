@@ -57,4 +57,8 @@ export class LocataireService extends HttpService {
   getListLocatairePart() {
     return this.get(`${this.url}/particulier/`);
   }
+
+  findLocataireParticulierById(id: string | null) {
+    return this.get(`${this.url}/particulier/${id}`);
+  }
 }

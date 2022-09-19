@@ -16,6 +16,7 @@ import { BookingCalendarComponent } from './pages/booking-calendar/booking-calen
 import { CalendrierReservationComponent } from './pages/calendrier-reservation/calendrier-reservation.component';
 import {ButtonLoaderModule} from "../../shared/components/button-loader/button-loader.module";
 import { ReservationDetailsComponent } from './pages/reservation-details/reservation-details.component';
+import { CustomPipeModule } from 'src/app/shared/custom-pipe/custom-pipe.module';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { ReservationDetailsComponent } from './pages/reservation-details/reserva
     imports: [
         CommonModule,
         ReservationRoutingModule,
+        CustomPipeModule,
         TranslateModule,
         FormsModule,
         ReactiveFormsModule,

@@ -13,6 +13,9 @@ export class ReservationModel{
   public numReservation: string | null;
   public statut: string | null;
   public sejour: number;
+  public paidAmount: number;
+  public totalAmount: number;
+  public restAmount: number;
   public preriodUnit: string | null;
   public paymentStatus: string | null;
   public createdAt: Date;
@@ -33,6 +36,9 @@ export class ReservationModel{
     this.numReservation = null;
     this.statut = null;
     this.sejour = 0;
+    this.paidAmount = 0;
+    this.restAmount = 0;
+    this.totalAmount = 0;
     this.preriodUnit = null;
     this.paymentStatus = null;
     this.createdAt = new Date();

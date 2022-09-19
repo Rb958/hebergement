@@ -1,3 +1,4 @@
+import { BailDetailsPageComponent } from './pages/bail-details-page/bail-details-page.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {ListBailPageComponent} from "./pages/list-bail-page/list-bail-page.component";
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'local-available',
     component: LocalAvailableComponent
+  },
+  {
+    path: 'details/:id',
+    component: BailDetailsPageComponent
   }
 ];
 

@@ -1,0 +1,14 @@
+.details-item-wrapper{
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    .title{
+        display: block;
+        font-size: 1.2rem
+    }
+    .value{
+        font-size: 1rem;
+        font-weight: 400;
+        color: rgba($color: #2c2c2c, $alpha: .5)
+    }
+}

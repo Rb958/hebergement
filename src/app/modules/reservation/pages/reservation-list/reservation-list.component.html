@@ -1,13 +1,6 @@
 <div class="tab-tools">
   <span class="tab-tools-title">{{'list_of_user' | translate}}</span>
-  <div class="tab-export-tools">
-    <button class="btn btn-default">
-      <i class="fa fa-print"></i>
-    </button>
-    <button class="btn btn-default">
-      <i class="fa fa-download"></i>
-    </button>
-  </div>
+  
   <div>
     <button class="btn btn-primary" (click)="newReservation()">
       <i class="fa fa-plus"></i>
@@ -31,9 +24,14 @@
               <table>
                 <thead>
                 <th>Id</th>
-                <th>{{'dateReservation' | translate }}</th>
+                <th>{{'dateEntre' | translate }}</th>
+                <th>{{'dateSortir' | translate }}</th>
                 <th>{{'locataire' | translate}}</th>
                 <th>{{'numReservation' | translate}}</th>
+                <th>{{'local_number' | translate}}</th>
+                <th>{{'amount' | translate}}</th>
+                <th>{{'total_amount' | translate}}</th>
+                <th>{{'rest_amount' | translate}}</th>
                 <th>{{'status' | translate}}</th>
                 <th>{{'payement' | translate}}</th>
                 <th>Actions</th>
@@ -42,6 +40,7 @@
                 <tr *ngFor="let reservation of result?.data?.content">
                   <td>#{{ reservation?.id }}</td>
                   <td>{{ reservation?.dateReservation | date : 'dd/MM/yyyy' }}</td>
+                  <td>{{ reservation?.validite | date : 'dd/MM/yyyy' }}</td>
                   <td>
                     <ng-container *ngIf="!reservation.locataireParticulier && !reservation.locataireSociete">
                       {{ reservation?.prenom }} {{ reservation?.nom }}
@@ -56,6 +55,10 @@
                     </ng-container>
                   </td>
                   <td>{{ reservation?.numReservation }}</td>
+                  <td>{{ reservation?.local?.numeroLocal }}</td>
+                  <td>{{ reservation?.paidAmount || 0 }} FCFA</td>
+                  <td>{{ reservation?.totalAmount || 0 }} FCFA</td>
+                  <td>{{ reservation?.restAmount || 0 }} FCFA</td>
                   <td>
                     <ng-container [ngSwitch]="reservation.statut">
                       <ng-container *ngSwitchCase="'CONFIRME'">
@@ -104,7 +107,7 @@
                           </li>
                         </ng-container>
                         <ng-container *ngIf="reservation?.paymentStatus != 'PAYE' && reservation?.statut != 'ANNULE' && reservation?.statut != 'CLOTURER'">
-                          <li class="dropdown-item" (click)="cancelBooking(reservation)">
+                          <li class="dropdown-item" (click)="openPayment(reservation)">
                             <i class="bx bx-wallet-alt"></i>
                             &nbsp;
                             {{'new_payment' | translate}}

@@ -1,13 +1,6 @@
 <div class="tab-tools">
   <span class="tab-tools-title">{{'list_of_locataire_particulier' | translate}}</span>
-  <div class="tab-export-tools">
-    <button class="btn btn-default">
-      <i class="fa fa-print"></i>
-    </button>
-    <button class="btn btn-default">
-      <i class="fa fa-download"></i>
-    </button>
-  </div>
+  
   <div>
     <button class="btn btn-primary" (click)="newLocataire()">
       <i class="fa fa-plus"></i>
@@ -54,7 +47,7 @@
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li (click)="update(locataire)">
                       <a class="dropdown-item">
-                        <i class="fa fa-trash"></i>
+                        <i class="fa fa-edit"></i>
                         &nbsp;
                         {{'update' | translate}}
                       </a>
@@ -66,11 +59,11 @@
                         {{'delete' | translate}}
                       </a>
                     </li>
-                    <li>
-                      <a class="dropdown-item" target="_blank" [href]="getSanitizedUrl(locataire?.pjCni)">
-                        <i class="fa fa-trash"></i>
+                    <li (click)="openDetails(locataire)">
+                      <a class="dropdown-item">
+                        <i class="fa fa-eye"></i>
                         &nbsp;
-                        {{'delete' | translate}}
+                        {{'details' | translate}}
                       </a>
                     </li>
                   </ul>

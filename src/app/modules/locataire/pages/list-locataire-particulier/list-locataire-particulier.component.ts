@@ -6,11 +6,10 @@ import {PageModel} from "../../../../shared/models/page-model";
 import {LocataireParticulierModel} from "../../../../shared/models/entity/locataire.model";
 import {MatDialog} from "@angular/material/dialog";
 import {LocataireService} from "../../../../shared/services/services/locataire.service";
-import {NewLocataireComponent} from "../../dialog/new-locataire/new-locataire.component";
-import {DeleteLocataireComponent} from "../../dialog/delete-locataire/delete-locataire.component";
 import {HttpStatusCode} from "@angular/common/http";
 import {EditLocataireParticulierComponent} from "../../dialog/edit-locataire-particulier/edit-locataire-particulier.component";
 import {DeleteLocataireParticulierComponent} from "../../dialog/delete-locataire-particulier/delete-locataire-particulier.component";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-list-locataire-particulier',
@@ -31,7 +30,9 @@ export class ListLocataireParticulierComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private locataireService: LocataireService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -106,6 +107,10 @@ export class ListLocataireParticulierComponent implements OnInit {
         this.loadData();
       }
     });
+  }
+
+  openDetails(particulier: LocataireParticulierModel){
+    this.router.navigate(['../details/', particulier.id], {relativeTo: this.route});
   }
 
   private loadData(queryParam?: any){

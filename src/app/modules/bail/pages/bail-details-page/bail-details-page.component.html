@@ -1,4 +1,4 @@
-<ng-container *ngIf="(currentReservation$ | async) as data" [ngSwitch]="data?.dataState">
+<ng-container *ngIf="(currentBail$ | async) as data" [ngSwitch]="data?.dataState">
   <ng-container *ngSwitchCase="0">
     <div class="loader-spinner">
       <img src="../../../../../assets/images/Spin-Preloader.gif" alt="Loading..." class="loading">
@@ -11,7 +11,7 @@
           <div class="ps-card-header">
             <span class="ps-card-title">
               <i class="fa fa-ticket" aria-hidden="true"></i> &nbsp;
-              Informations de reservation
+              Contrat de bail
             </span>
           </div>
           <div class="ps-card-body">
@@ -23,6 +23,14 @@
               <div class="info-item">
                 <span class="element">Date de creation</span>
                 <span class="value">{{ data.data?.createdAt | date: 'dd-MM-yyyy HH:mm:ss' }}</span>
+              </div>
+              <div class="info-item">
+                <span class="element">Periode</span>
+                <span class="value">{{ data.data?.sejour}} mois</span>
+              </div>
+              <div class="info-item">
+                <span class="element">Echeance dans</span>
+                <span class="value">{{ data.data?.echeance}} jours</span>
               </div>
               <div class="info-item">
                 <span class="element">status</span>
@@ -45,11 +53,14 @@
               </div>
               <div class="info-item">
                 <span class="element">Date d'entrée</span>
-                <span class="value">{{ data.data?.dateReservation | date: 'dd-MM-yyyy' }}</span>
+                <span class="value">{{ data.data?.dateEntre| date: 'dd-MM-yyyy' }}</span>
               </div>
               <div class="info-item">
                 <span class="element">Date de sortie</span>
                 <span class="value">{{ data.data?.validite | date: 'dd-MM-yyyy' }}</span>
+              </div>
+              <div class="info-item">
+                
               </div>
             </div>
           </div>
@@ -60,24 +71,56 @@
           <div class="ps-card-header">
             <span class="ps-card-title">
               <i class="fa fa-user"></i>&nbsp;
-              Informations du demandeur
+              Informations du locataire
             </span>
           </div>
           <div class="ps-card-body">
             <div class="info-wrapper">
-              <div class="info-item">
-                <span class="element">Nom</span>
-                <span class="value">{{ data.data?.nom }}</span>
-              </div>
-              <div class="info-item">
-                <span class="element">Prenom</span>
-                <span class="value">{{ data.data?.prenom }}</span>
-              </div>
-              <div class="info-item">
-                <span class="element">Téléphone</span>
-                <span class="value">{{ data.data?.telephone }}</span>
-              </div>
+              <ng-container *ngIf="data.data?.locataireParticulier">
+                <div class="info-item">
+                  <span class="element">Nom</span>
+                  <span class="value">{{ data.data?.locataireParticulier?.nom }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="element">Prenom</span>
+                  <span class="value">{{ data.data?.locataireParticulier?.prenom }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="element">Téléphone</span>
+                  <span class="value">{{ data.data?.locataireParticulier?.telephone }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="element">Lieu de travail</span>
+                  <span class="value">{{ data.data?.locataireParticulier?.lieuTravail }}</span>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="data.data?.locataireSociete">
+                <div class="info-item">
+                  <span class="element">Raison sociale</span>
+                  <span class="value">{{ data.data?.locataireSociete?.raisonSociale }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="element">NIU</span>
+                  <span class="value">{{ data.data?.locataireSociete?.niu }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="element">Locataire</span>
+                  <span class="value">{{ data.data?.locataireSociete?.nomGerant }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="element">Profession</span>
+                  <span class="value">{{ data.data?.locataireSociete?.profession }}</span>
+                </div>
+              </ng-container>
             </div>
+          </div>
+          <div class="ps-card-footer">
+            <ng-container *ngIf="data.data?.locataireParticulier">
+                <a [routerLink]="['/locataire/particulier/details', data.data?.locataireParticulier?.id]">Voir plus</a>
+            </ng-container>
+            <ng-container *ngIf="data.data?.locataireSociete">
+                <a [routerLink]="['/locataire/societe/details', data.data?.locataireSociete?.id]">Voir plus</a>
+            </ng-container>
           </div>
         </div>
       </div>
@@ -86,7 +129,7 @@
           <div class="ps-card-header">
             <span class="ps-card-title">
               <i class="fa fa-building"></i>&nbsp;
-              Informations du local reservé
+              Informations du local
             </span>
           </div>
           <div class="ps-card-body">

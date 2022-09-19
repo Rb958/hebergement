@@ -17,7 +17,6 @@
   "list_of_user" : "Liste des utilisateurs",
   "new_user" : "Nouvel utilisateur",
   "list_of_locals" : "Liste des locaux",
-  "local_number" : "Numéro",
   "local_name" : "Nom",
   "local_type" : "Type",
   "building_name" : "Immeuble",
@@ -149,5 +148,16 @@
   "parking": "Parking interieur",
   "gardien_jour": "Gardient de jour",
   "gardien_nuit": "Gardient de nuit",
-  "groupe": "Groupe electrogène"
+  "groupe": "Groupe electrogène",
+  "local_number": "Numero local",
+  "dateEntre" : "Date d'entrée",
+  "dateSortir": "Date de sortie",
+  "total_amount": "Montant total",
+  "rest_amount": "Montat restant",
+  "periode_restant": "Periode restante",
+  "month": "Mois",
+  "contrat_bail": "Contrat de bail",
+  "pieceJointe": "Piece jointe",
+  "close": "Cloturé",
+  "validated_by": "Validé par"
 }

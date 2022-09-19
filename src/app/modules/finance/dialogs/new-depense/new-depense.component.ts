@@ -1,3 +1,4 @@
+import { LocalData, AppStore } from './../../../../shared/utils/app-store';
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
@@ -10,6 +11,7 @@ import {DepenseService} from "../../../../shared/services/services/depense.servi
 import {DepenseModel} from "../../../../shared/models/entity/depense.model";
 import {LocalModel} from "../../../../shared/models/entity/local.model";
 import {LocalService} from "../../../../shared/services/services/local.service";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-new-depense',
@@ -22,15 +24,27 @@ export class NewDepenseComponent implements OnInit {
   isEdition: boolean;
   locals: Array<LocalModel> = [];
 
+  localData: LocalData = {} as LocalData;
+
+  uploadSuccess: boolean = false;
+  uploadError: boolean = false;
+  uploadedFileLink: string | undefined;
+
+  loading = false;
+
+  uploadSubscription: Subscription | undefined;
+
   constructor(
     private dialogRef: MatDialogRef<NewDepenseComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private fb: FormBuilder,
     private depenseService: DepenseService,
     private notifierService: NotifierService,
-    private localService: LocalService
+    private localService: LocalService,
+    private appStore: AppStore
   ) {
     this.isEdition = false;
+    this.localData = this.appStore.getData();
   }
 
   ngOnInit(): void {
@@ -53,32 +67,38 @@ export class NewDepenseComponent implements OnInit {
         }),
         categorie: [depense?.categorie, Validators.required],
         montant: [depense?.montant, Validators.required],
-        commentaire: [depense?.commentaire, Validators.required],
-        pieceJointe: [depense?.pieceJointe, Validators.required]
+        commentaire: [depense?.commentaire],
+        // pieceJointe: [depense?.pieceJointe, Validators.required]
       });
     } else {
       this.depenseForm = this.fb.group({
-        demandeur: ['', Validators.required],
+        demandeur: [this.localData.userDetails?.firstname + ' ' + this.localData.userDetails?.lastname, Validators.required],
         type: ['', Validators.required],
         local: this.fb.group({
-          id: ['', Validators.required]
+          id: ['']
         }),
         categorie: ['', Validators.required],
         montant: ['', Validators.required],
         commentaire: [''],
-        pieceJointe: ['', Validators.required]
+        // pieceJointe: ['', Validators.required]
       });
     }
   }
 
   saveDepense() {
-    if (this.depenseForm.valid) {
-      if (!this.data.edition) {
+    this.loading = true;
+    this.depenseForm.value.pieceJointe = this.uploadedFileLink;
+    this.depenseForm.value.local = this.depenseForm.value.local.id == '' ? null : {id : this.depenseForm.value.local.id}
+    if (this.depenseForm.valid && this.uploadSuccess) {
+      if (!this.data.edition ) {
+        // this.depenseForm.value.pieceJointe = this.uploadedFileLink;
         this.depenseService.create(this.depenseForm.value).subscribe(
           apiResponse => {
+            this.loading = false;
             this.processSuccess(apiResponse);
           },
           error => {
+            this.loading = false;
             this.processError(error);
           }
         );
@@ -86,14 +106,32 @@ export class NewDepenseComponent implements OnInit {
         // this.employeeForm.value.id = this.data.employee.id;
         this.depenseService.updateDepense(this.depenseForm.value, this.data.employee.id).subscribe(
           apiResponse => {
+            this.loading = false;
             this.processSuccess(apiResponse);
           },
           error => {
+            this.loading = false;
             this.processError(error);
           }
         );
       }
+    }else{
+      this.loading = false;
+      this.notifierService.notify(
+        'Verifier les champs obliatoirs',
+        'Formulaire invalide',
+        NotificationType.ERROR
+      );
     }
+  }
+
+  processFinished(event: any) {
+    this.uploadSuccess = true;
+    this.uploadedFileLink = event.ref;
+  }
+
+  handleError(event: any) {
+    this.uploadError = true;
   }
 
   private processSuccess(apiResponse: ApiResponseModel<any>) {

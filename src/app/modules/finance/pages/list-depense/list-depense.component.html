@@ -1,13 +1,6 @@
 <div class="tab-tools">
   <span class="tab-tools-title">{{'list_of_depense' | translate}}</span>
-  <div class="tab-export-tools">
-    <button class="btn btn-default">
-      <i class="fa fa-print"></i>
-    </button>
-    <button class="btn btn-default">
-      <i class="fa fa-download"></i>
-    </button>
-  </div>
+  
   <div>
     <button class="btn btn-primary" (click)="newDepense()">
       <i class="fa fa-plus"></i>
@@ -32,9 +25,9 @@
             <th>{{ 'local' | translate}}</th>
             <th>{{ 'categorie' | translate}}</th>
             <th>{{ 'status' | translate}}</th>
-            <th>{{ 'srcDepense' | translate}}</th>
+            <th>{{ 'type' | translate}}</th>
             <th>{{ 'montant' | translate}}</th>
-            <th>{{ 'commentaire' | translate}}</th>
+            <th>{{ 'validated_by' | translate}}</th>
             <th>{{ 'date_creation' | translate}}</th>
             <th>Actions</th>
             </thead>
@@ -45,8 +38,9 @@
               <td>{{ depense?.local?.nomLocal }} {{ depense?.local?.numeroLocal }}</td>
               <td>{{ depense?.categorie }}</td>
               <td>{{ depense?.status }}</td>
-              <td>{{ depense?.srcDepense }}</td>
+              <td>{{ depense?.type }}</td>
               <td>{{ depense?.montant }}</td>
+              <td>{{ depense?.validatedBy }}</td>
               <td>{{ depense?.commentaire }}</td>
               <td>{{ depense?.createdAt | date:'dd-MM-yyyy'}}</td>
               <td class="actions">
@@ -76,12 +70,12 @@
                         {{'validate' | translate}}
                       </a>
                     </li>
-                    <ng-container *ngIf="depense?.status == 'VALIDE'">
+                    <ng-container *ngIf="depense?.status != 'VALIDE'">
                       <li (click)="cloturerDepense(depense)">
                         <a class="dropdown-item">
                           <i class="fa fa-trash"></i>
                           &nbsp;
-                          {{'validate' | translate}}
+                          {{'close' | translate}}
                         </a>
                       </li>
                     </ng-container>

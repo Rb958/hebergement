@@ -1,3 +1,4 @@
+import { NewPaymentsComponent } from './../new-payments/new-payments.component';
 import {Component, OnInit} from '@angular/core';
 import {catchError, map, Observable, of, startWith} from "rxjs";
 import {DataStateEnum, DataStateProcessing} from "../../../../shared/utils/data-processing-state";
@@ -87,6 +88,20 @@ export class ReservationListComponent implements OnInit {
 
   newReservation() {
     this.router.navigate(['../local-available'], {relativeTo: this.route});
+  }
+
+  openPayment(reservation: ReservationModel){
+    const dialogRef = this.dialog.open(NewPaymentsComponent,{
+      width: '700px',
+      data: reservation
+    });
+    dialogRef.afterClosed().subscribe(
+      result => {
+        if (result){
+          this.loadData();
+        }
+      }
+    );
   }
 
   updateBooking(reservation: ReservationModel) {

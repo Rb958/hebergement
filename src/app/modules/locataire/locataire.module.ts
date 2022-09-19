@@ -13,6 +13,7 @@ import { ListLocataireParticulierComponent } from './pages/list-locataire-partic
 import { EditLocataireParticulierComponent } from './dialog/edit-locataire-particulier/edit-locataire-particulier.component';
 import { DeleteLocataireParticulierComponent } from './dialog/delete-locataire-particulier/delete-locataire-particulier.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { LocatairePartDetailsComponent } from './pages/locataire-part-details/locataire-part-details.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     DeleteLocataireComponent,
     ListLocataireParticulierComponent,
     EditLocataireParticulierComponent,
-    DeleteLocataireParticulierComponent
+    DeleteLocataireParticulierComponent,
+    LocatairePartDetailsComponent
   ],
   imports: [
     CommonModule,

@@ -24,4 +24,8 @@ export class UploadService extends HttpService{
     const req = new HttpRequest('POST', `${this.storage}api/file/upload`, formData, { reportProgress: true });
     return this.http.request(req);
   }
+
+  getFile(ref: string) {
+    return this.http.get(`api/file/${ref}`);
+  }
 }

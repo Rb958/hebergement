@@ -1,12 +1,12 @@
 <div class="tab-tools">
   <span class="tab-tools-title">{{'liste_des_bails' | translate}}</span>
   <div class="tab-export-tools">
-    <button class="btn btn-default">
+    <!-- <button class="btn btn-default">
       <i class="fa fa-print"></i>
     </button>
     <button class="btn btn-default">
       <i class="fa fa-download"></i>
-    </button>
+    </button> -->
   </div>
   <div>
     <button class="btn btn-primary" (click)="newBail()">
@@ -34,6 +34,7 @@
                 <th>{{'locataire' | translate}}</th>
                 <th>{{'startDate' | translate }}</th>
                 <th>{{'endDate' | translate}}</th>
+                <th>{{'periode_restant' | translate }}</th>
                 <th>{{'status' | translate}}</th>
                 <th>{{'payement' | translate}}</th>
                 <th>Actions</th>
@@ -53,6 +54,7 @@
                   </td>
                   <td>{{ bail?.dateEntre | date : 'dd/MM/yyyy' }}</td>
                   <td>{{ bail?.validite | date : 'dd/MM/yyyy' }}</td>
+                  <td>{{ bail?.echeance }} Jours</td>
                   <td>
                     <ng-container [ngSwitch]="bail.statut">
                       <ng-container *ngSwitchCase="'CONFIRME'">
@@ -107,13 +109,13 @@
                             {{'new_payment' | translate}}
                           </li>
                         </ng-container>
-                        <ng-container *ngIf="bail.statut != 'CLOTURER' && bail.statut != 'ANNULE'">
+                        <!-- <ng-container *ngIf="bail.statut != 'CLOTURER' && bail.statut != 'ANNULE'">
                           <li class="dropdown-item" (click)="updateBail(bail)">
                             <i class="fa fa-edit"></i>
                             &nbsp;
                             {{'update' | translate}}
                           </li>
-                        </ng-container>
+                        </ng-container> -->
                       </ul>
                     </div>
                   </td>

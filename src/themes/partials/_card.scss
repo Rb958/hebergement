@@ -20,6 +20,17 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
   }
 
+  .ps-card-footer{
+    border-color: #f0f1f5;
+    position: relative;
+    background: transparent;
+    padding: 1rem 1.575rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+  }
+
   .ps-card-body {
     padding: 1.875rem;
     flex: 1 1 auto;

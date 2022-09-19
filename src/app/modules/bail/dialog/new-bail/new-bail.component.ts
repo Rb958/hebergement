@@ -11,6 +11,7 @@ import * as moment from "moment";
 import {BailService} from "../../../../shared/services/services/bail.service";
 import {BailModel} from "../../../../shared/models/entity/bail.model";
 import { AppStore, LocalData } from 'src/app/shared/utils/app-store';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-new-bail',
@@ -32,11 +33,17 @@ export class NewBailComponent implements OnInit {
   sejour: number = 0;
   loading = false;
 
+  uploadSuccess: boolean = false;
+  uploadError: boolean = false;
+  uploadedFileLink: string | undefined;
+
+  uploadSubscription: Subscription | undefined;
+
   localData: LocalData = {} as LocalData;
 
   constructor(
     private dialogRef: MatDialogRef<NewBailComponent>,
-    @Inject(MAT_DIALOG_DATA) private local: any,
+    @Inject(MAT_DIALOG_DATA) private local: LocalModel,
     private bailService: BailService,
     private fb: FormBuilder,
     private appStore: AppStore,
@@ -46,16 +53,18 @@ export class NewBailComponent implements OnInit {
 
   ngOnInit(): void {
     this.localData = this.appStore.getData();
-    this.currentLocal = this.local.local;
-    this.totalPrice = this.computeTotalPrice(this.local.startDate, this.local.endDate);
+    this.currentLocal = this.local;
+    // this.totalPrice = this.computeTotalPrice(this.local.startDate, this.local.endDate);
     this.initForm();
     this.loadLocataires();
+    this.computeTotalPrice();
   }
 
   private initForm() {
     this.reservationForm = this.fb.group({
-      dateEntre: [this.local.startDate],
-      validite: [this.local.endDate, Validators.required],
+      dateEntre: [''],
+      period: [1, Validators.required],
+      caution: [0, Validators.required],
       preriodUnit: [this.currentLocal.typePrix, Validators.required],
       locataireSociete: this.fb.group({
         id: ['']
@@ -67,9 +76,18 @@ export class NewBailComponent implements OnInit {
 
     this.paymentForm = this.fb.group({
       amount: [0, [Validators.pattern('^[0-9]+$'),Validators.required]],
-      discount: [0, Validators.required],
+      discount: [0],
       paymentMethod: ['', Validators.required]
     });
+  }
+
+  processFinished(event: any) {
+    this.uploadSuccess = true;
+    this.uploadedFileLink = event.ref;
+  }
+
+  handleError(event: any) {
+    this.uploadError = true;
   }
 
   sumbitForm() {
@@ -83,8 +101,9 @@ export class NewBailComponent implements OnInit {
       payment.paymentMethod = this.paymentForm.value.paymentMethod;
       this.reservationForm.value.payements = payment;
     }
-    if (this.reservationForm.valid){
+    if (this.reservationForm.valid && this.uploadSuccess){
       const booking = this.initBooking(this.reservationForm);
+      console.dir(booking);
       this.bailService.create(booking, this.localData.userDetails?.userId).subscribe(
         apiResponse => {
           if (apiResponse.code == 200){
@@ -164,12 +183,8 @@ export class NewBailComponent implements OnInit {
     return this.totalPrice - parseInt(value) - this.discountAmount;
   }
 
-  computeTotalPrice(startDate: string, endDate: string) {
-    const start = moment(startDate);
-    const end = moment(endDate);
-    const days = end.diff(start, 'months', true);
-    this.sejour = Math.abs(Math.ceil(days));
-    this.totalPrice = this.currentLocal.prix * Math.abs(Math.ceil(days));
+  computeTotalPrice() {
+    this.totalPrice = (this.currentLocal.prix * this.reservationForm.value.period) + this.reservationForm.value.caution;
     return this.totalPrice;
   }
 
@@ -184,18 +199,18 @@ export class NewBailComponent implements OnInit {
     bail.dateEntre = reservationForm.value.dateEntre;
     bail.validite = reservationForm.value.validite;
     bail.preriodUnit = reservationForm.value.preriodUnit;
-    bail.sejour = this.sejour;
+    bail.sejour = this.reservationForm.value.period;
     const local = Object.create(null);
     local.id = reservationForm.value.local.id;
     bail.local = local;
     bail.locataireSociete = (reservationForm.value.locataireSociete?.id) ? reservationForm.value.locataireSociete : null;
     bail.locataireParticulier = (reservationForm.value.locataireParticulier?.id) ? reservationForm.value.locataireParticulier : null;
-
+    bail.pj = this.uploadedFileLink;
+    
     const payments = new PayementsModel();
     payments.rest = reservationForm.value.payements.rest;
     payments.amount = reservationForm.value.payements.amount;
     payments.paymentMethod = reservationForm.value.payements.paymentMethod;
-    console.dir(reservationForm.value);
 
     bail.payements = [payments];
     return bail;

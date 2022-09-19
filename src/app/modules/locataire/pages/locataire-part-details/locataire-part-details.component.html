@@ -1,0 +1,62 @@
+<ng-container *ngIf="(locataireParticulier$ | async) as result" [ngSwitch]="result?.dataState">
+  <ng-container *ngSwitchCase="0">
+    <div class="loader-spinner">
+      <img src="../../../../../assets/images/Spin-Preloader.gif" alt="Loading..." class="loading">
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="1">
+    <div class="ps-card">
+      <div class="ps-card-header">
+        <h4 class="ps-card-title">Information du locataire {{ result.data?.nom }} {{ result.data?.prenom }}</h4>
+      </div>
+      <div class="ps-card-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="details-item-wrapper">
+              <span class="title">{{ 'nom' | translate }} </span>
+              <span class="value">{{ result.data?.nom }}</span>
+            </div>
+            <div class="details-item-wrapper">
+              <span class="title">{{ 'prenom' | translate }} </span>
+              <span class="value">{{ result.data?.prenom }}</span>
+            </div>
+            <div class="details-item-wrapper">
+              <span class="title">{{ 'phone' | translate }} </span>
+              <span class="value">{{ result.data?.telephone }}</span>
+            </div>
+            <div class="details-item-wrapper">
+              <span class="title">{{ 'lieu_travail' | translate }} </span>
+              <span class="value">{{ result.data?.lieuTravail }}</span>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="details-item-wrapper">
+              <span class="title">{{ 'cni' | translate }} </span>
+              <span class="value">{{ result.data?.cni }}</span>
+            </div>
+            <div class="details-item-wrapper">
+              <span class="title">{{ 'pjCni' | translate }} </span>
+              <span class="value">
+                <a target="_blank" [href]="getSanitizedUrl(result.data?.pjCni)">
+                  <i class="fa fa-download"></i>&nbsp;Telecharger
+                </a>
+              </span>
+            </div>
+            <div class="details-item-wrapper">
+              <span class="title">{{ 'person_to_contact' | translate }} </span>
+              <span class="value">{{ result.data?.persContact }}</span>
+            </div>
+            <div class="details-item-wrapper">
+              <span class="title">{{ 'person_to_contact_phone' | translate }} </span>
+              <span class="value">{{ result.data?.persTelephone }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="2">
+    Error : {{ result?.message }}
+  </ng-container>
+</ng-container>
+

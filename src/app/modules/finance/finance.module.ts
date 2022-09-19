@@ -1,3 +1,4 @@
+import { FileUploaderModule } from './../../shared/components/file-uploader/file-uploader.module';
 import { CustomPipeModule } from './../../shared/custom-pipe/custom-pipe.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -42,7 +43,9 @@ import { CaisseCloseComponent } from './pages/caisse-close/caisse-close.componen
         CustomPipeModule,
         FinanceRoutingModule,
         MatDialogModule,
+        ButtonLoaderModule,
         FormsModule,
+        FileUploaderModule,
         ReactiveFormsModule,
         TranslateModule,
         MatPaginatorModule,

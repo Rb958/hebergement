@@ -1,3 +1,4 @@
+import { BailPaymentDialogComponent } from './../../dialog/bail-payment-dialog/bail-payment-dialog.component';
 import { Component, OnInit } from '@angular/core';
 import {catchError, map, Observable, of, startWith} from "rxjs";
 import {DataStateEnum, DataStateProcessing} from "../../../../shared/utils/data-processing-state";
@@ -51,7 +52,7 @@ export class ListBailPageComponent implements OnInit {
   }
 
   showBail(bail: BailModel) {
-
+    this.router.navigate(['../details', bail.id], {relativeTo: this.route});
   }
 
   cancelBail(bail: BailModel) {
@@ -71,7 +72,17 @@ export class ListBailPageComponent implements OnInit {
   }
 
   newPayment(bail: BailModel) {
-
+    const dialogRef = this.dialog.open(BailPaymentDialogComponent,{
+      width: '700px',
+      data: bail
+    });
+    dialogRef.afterClosed().subscribe(
+      result => {
+        if (result){
+          this.loadData();
+        }
+      }
+    );
   }
 
   updateBail(bail: BailModel) {

@@ -5,7 +5,6 @@ import {LocalService} from "../../../shared/services/services/local.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {NotifierService} from "../../../shared/components/notification/notifier.service";
-import {ReservationFormComponent} from "../../reservation/pages/reservation-form/reservation-form.component";
 import {HttpStatusCode} from "@angular/common/http";
 import {NotificationType} from "../../../shared/components/notification/notification-type";
 import {NewBailComponent} from "../dialog/new-bail/new-bail.component";
@@ -21,7 +20,7 @@ export class LocalAvailableComponent implements OnInit {
   currentPageElementSize = 32;
   pagesElementSize = [32, 64, 128, 256];
   locals: Array<LocalModel> = [];
-  hasResult = false;
+  hasResult = true;
   bookingSearchForm: FormGroup = {} as FormGroup;
   loadingSearch = false;
 
@@ -36,18 +35,14 @@ export class LocalAvailableComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.findAvailableLocal();
-    this.initSearchForm();
+    this.onSearch();
+    // this.initSearchForm();
   }
 
   selectLocal(local: LocalModel) {
     const dialog = this.dialog.open(NewBailComponent, {
       width: '1000px',
-      data: {
-        local,
-        startDate: this.bookingSearchForm.value.startDate,
-        endDate: this.bookingSearchForm.value.endDate
-      }
+      data: local
     });
 
     dialog.afterClosed().subscribe(
@@ -67,8 +62,12 @@ export class LocalAvailableComponent implements OnInit {
 
   onSearch() {
     this.loadingSearch = true;
-    if (this.bookingSearchForm.valid){
-      this.localService.findBail(this.bookingSearchForm.value).subscribe(
+    // if (this.bookingSearchForm.valid){
+      const localSearch = Object.create(null);
+      localSearch.startDate = new Date().toLocaleDateString('en-Ca').split(',')[0];
+      localSearch.endDate = null;
+      localSearch.typeLocal = null;
+      this.localService.findBail(localSearch).subscribe(
         apiResponse => {
           if (apiResponse.code == HttpStatusCode.Ok.valueOf()){
             this.loadingSearch = false;
@@ -92,7 +91,7 @@ export class LocalAvailableComponent implements OnInit {
           );
         }
       );
-    }
+    // }
   }
 
 }

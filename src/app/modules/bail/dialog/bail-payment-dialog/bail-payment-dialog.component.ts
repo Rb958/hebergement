@@ -1,21 +1,21 @@
-import { ReservationModel } from 'src/app/shared/models/entity/reservation.model';
+import { BailService } from 'src/app/shared/services/services/bail.service';
+import { BailModel } from 'src/app/shared/models/entity/bail.model';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { NotifierService } from 'src/app/shared/components/notification/notifier.service';
-import { ReservationService } from 'src/app/shared/services/services/reservation.service';
-import { AppStore, LocalData } from 'src/app/shared/utils/app-store';
-import { ReservationFormComponent } from '../reservation-form/reservation-form.component';
 import * as moment from 'moment';
-import { LocalModel } from 'src/app/shared/models/entity/local.model';
+import { ReservationFormComponent } from 'src/app/modules/reservation/pages/reservation-form/reservation-form.component';
 import { NotificationType } from 'src/app/shared/components/notification/notification-type';
+import { NotifierService } from 'src/app/shared/components/notification/notifier.service';
+import { LocalModel } from 'src/app/shared/models/entity/local.model';
+import { LocalData, AppStore } from 'src/app/shared/utils/app-store';
 
 @Component({
-  selector: 'app-new-payments',
-  templateUrl: './new-payments.component.html',
-  styleUrls: ['./new-payments.component.scss']
+  selector: 'app-bail-payment-dialog',
+  templateUrl: './bail-payment-dialog.component.html',
+  styleUrls: ['./bail-payment-dialog.component.scss']
 })
-export class NewPaymentsComponent implements OnInit {
+export class BailPaymentDialogComponent implements OnInit {
 
   paymentForm: FormGroup = {} as FormGroup;
 
@@ -32,8 +32,8 @@ export class NewPaymentsComponent implements OnInit {
   
   constructor(
     private dialogRef: MatDialogRef<ReservationFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public reservation: ReservationModel,
-    private reservationService: ReservationService,
+    @Inject(MAT_DIALOG_DATA) public bail: BailModel,
+    private bailService: BailService,
     private fb: FormBuilder,
     private notifier: NotifierService,
     private appStore: AppStore
@@ -41,13 +41,13 @@ export class NewPaymentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.paymentForm = this.fb.group({
-      amount: [this.reservation.restAmount, [Validators.pattern('^[0-9]+$'),Validators.required]],
+      amount: [this.bail.restAmount, [Validators.pattern('^[0-9]+$'),Validators.required]],
       discount: [0],
       paymentMethod: ['', Validators.required]
     });
     this.localData = this.appStore.getData();
-    this.totalPrice = this.reservation.restAmount;
-    // this.totalPrice = this.computeTotalPrice(this.reservation.startDate, this.reservation.endDate);
+    this.totalPrice = this.bail.restAmount;
+    // this.totalPrice = this.computeTotalPrice(this.bail.startDate, this.bail.endDate);
   }
 
   computeRest(value: string) : number{
@@ -70,7 +70,7 @@ export class NewPaymentsComponent implements OnInit {
 
   performAction(){
     if(this.paymentForm.valid){
-      this.reservationService.addPayment(this.localData.userDetails?.userId, this.paymentForm.value, this.reservation.id).subscribe(
+      this.bailService.addPayment(this.localData.userDetails?.userId, this.paymentForm.value, this.bail.id).subscribe(
         apiResponse => {
           if (apiResponse.code == 200){
             this.notifier.notify(
@@ -83,7 +83,7 @@ export class NewPaymentsComponent implements OnInit {
           }else{
             this.loading = false;
             this.notifier.notify(
-              'Erreur lors de la creation de la reservation. Veuiller rééssayer',
+              'Erreur lors de la creation de la bail. Veuiller rééssayer',
               'Notification',
               NotificationType.ERROR
             );

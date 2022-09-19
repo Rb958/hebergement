@@ -38,4 +38,8 @@ export class ReservationService extends HttpService{
   findById(id: any) {
     return this.get(`${this.url}/${id}`);
   }
+
+  addPayment(userId: number | undefined, payment: any, bookingId: number) {
+    return this.patch(`${this.url}/user/${userId}/payment/add/${bookingId}`, payment);
+  }
 }

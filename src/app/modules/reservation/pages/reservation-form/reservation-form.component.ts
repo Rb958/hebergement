@@ -30,6 +30,7 @@ export class ReservationFormComponent implements OnInit {
   rest: number = 0;
   loading = false;
   localData: LocalData = {} as LocalData;
+  
 
   constructor(
     private dialogRef: MatDialogRef<ReservationFormComponent>,
@@ -60,7 +61,7 @@ export class ReservationFormComponent implements OnInit {
 
     this.paymentForm = this.fb.group({
       amount: [0, [Validators.pattern('^[0-9]+$'),Validators.required]],
-      discount: [0, Validators.required],
+      discount: [0],
       paymentMethod: ['', Validators.required]
     });
   }
@@ -74,9 +75,11 @@ export class ReservationFormComponent implements OnInit {
       payment.rest = this.computeRest(String(payment.amount));
       payment.paymentMethod = this.paymentForm.value.paymentMethod;
       this.reservationForm.value.payements = payment;
+      this.reservationForm.value.sejour = this.computeSejour(this.reservationForm.value.dateReservation, this.reservationForm.value.validite);
     }
     if (this.reservationForm.valid){
       const booking = this.initBooking(this.reservationForm);
+      console.dir(booking);
       this.reservationService.create(booking, this.localData.userDetails?.userId).subscribe(
         apiResponse => {
           if (apiResponse.code == 200){
@@ -123,6 +126,13 @@ export class ReservationFormComponent implements OnInit {
 
   computeRest(value: string) : number{
     return this.totalPrice - parseInt(value) - this.discountAmount;
+  }
+
+  computeSejour(startDate: string, endDate: string){
+    const start = moment(startDate);
+    const end = moment(endDate);
+    const days = end.diff(start, 'days', true) + 1;
+    return days;
   }
 
   computeTotalPrice(startDate: string, endDate: string) {
