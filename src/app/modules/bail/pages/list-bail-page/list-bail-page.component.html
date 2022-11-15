@@ -17,7 +17,7 @@
 </div>
 
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-12">
     <div class="ps-card">
       <div class="ps-card-body">
         <ng-container *ngIf="(bails$ | async) as result" [ngSwitch]="result?.dataState">
@@ -35,6 +35,9 @@
                 <th>{{'startDate' | translate }}</th>
                 <th>{{'endDate' | translate}}</th>
                 <th>{{'periode_restant' | translate }}</th>
+                <th>{{'amount' | translate}}</th>
+                <th>{{'total_amount' | translate}}</th>
+                <th>{{'rest_amount' | translate}}</th>
                 <th>{{'status' | translate}}</th>
                 <th>{{'payement' | translate}}</th>
                 <th>Actions</th>
@@ -55,34 +58,14 @@
                   <td>{{ bail?.dateEntre | date : 'dd/MM/yyyy' }}</td>
                   <td>{{ bail?.validite | date : 'dd/MM/yyyy' }}</td>
                   <td>{{ bail?.echeance }} Jours</td>
+                  <td>{{ bail?.paidAmount || 0 | hundredSeparator}} FCFA</td>
+                  <td>{{ bail?.totalAmount || 0 |hundredSeparator }} FCFA</td>
+                  <td>{{ bail?.restAmount || 0 | hundredSeparator }} FCFA</td>
                   <td>
-                    <ng-container [ngSwitch]="bail.statut">
-                      <ng-container *ngSwitchCase="'CONFIRME'">
-                        <span class="ps-chip chip-success">{{ bail?.statut }}</span>
-                      </ng-container>
-                      <ng-container *ngSwitchCase="'ANNULE'">
-                        <span class="ps-chip chip-danger">{{ bail?.statut }}</span>
-                      </ng-container>
-                      <ng-container *ngSwitchCase="'CLOTURER'">
-                        <span class="ps-chip chip-primary">{{ bail?.statut }}</span>
-                      </ng-container>
-                      <ng-container *ngSwitchCase="'RESERVE'">
-                        <span class="ps-chip chip-secondary">{{ bail?.statut }}</span>
-                      </ng-container>
-                    </ng-container>
+                    <span class="ps-chip" [ngClass]="getStatusStyle(bail?.statut)">{{ bail?.statut }}</span>
                   </td>
                   <td>
-                    <ng-container [ngSwitch]="bail.paymentStatus">
-                      <ng-container *ngSwitchCase="'PAYE'">
-                        <span class="ps-chip chip-success">{{ bail?.paymentStatus }}</span>
-                      </ng-container>
-                      <ng-container *ngSwitchCase="'IMPAYE'">
-                        <span class="ps-chip chip-danger">{{ bail?.paymentStatus }}</span>
-                      </ng-container>
-                      <ng-container *ngSwitchCase="'PARTIELLE'">
-                        <span class="ps-chip chip-warning">{{ bail?.paymentStatus }}</span>
-                      </ng-container>
-                    </ng-container>
+                      <span class="ps-chip" [ngClass]="getPaymentStyle(bail?.paymentStatus)">{{ bail?.paymentStatus }}</span>
                   </td>
                   <td class="actions">
                     <div class="dropdown">
@@ -90,6 +73,11 @@
                         <i class="fa fa-ellipsis-v"></i>
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li class="dropdown-item" (click)="updateBail(bail)">
+                          <i class="bx bx-edit"></i>
+                          &nbsp;
+                          {{'update' | translate}}
+                        </li>
                         <li class="dropdown-item" (click)="showBail(bail)">
                           <i class="bx bx-detail"></i>
                           &nbsp;
@@ -109,13 +97,20 @@
                             {{'new_payment' | translate}}
                           </li>
                         </ng-container>
-                        <!-- <ng-container *ngIf="bail.statut != 'CLOTURER' && bail.statut != 'ANNULE'">
-                          <li class="dropdown-item" (click)="updateBail(bail)">
-                            <i class="fa fa-edit"></i>
+                        <li class="dropdown-item">
+                          <a [href]="getDownloadLink(bail)" target="_blank">
+                            <i class="fa fa-download"></i>
                             &nbsp;
-                            {{'update' | translate}}
-                          </li>
-                        </ng-container> -->
+                            {{'download_receipt_a4' | translate}}
+                          </a>
+                        </li>
+                        <!-- <li class="dropdown-item">
+                          <a [href]="getDownloadLink(bail)" target="_blank">
+                            <i class="fa fa-download"></i>
+                            &nbsp;
+                            {{'download_receipt_80' | translate}}
+                          </a>
+                        </li> -->
                       </ul>
                     </div>
                   </td>
@@ -138,7 +133,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-4">
+  <!-- <div class="col-md-4">
     <div class="ps-card">
       <div class="ps-card-body">
         <div class="counter-widget-wrapper">
@@ -149,15 +144,5 @@
         </div>
       </div>
     </div>
-    <div class="ps-v-spacer"></div>
-    <div class="ps-card">
-      <div class="ps-card-body">
-        <canvas baseChart
-                [data]="doughnutChartData"
-                [labels]="doughnutChartLabels"
-                [type]="doughnutChartType">
-        </canvas>
-      </div>
-    </div>
-  </div>
+  </div> -->
 </div>

@@ -1,3 +1,5 @@
+import { Env } from './../../../../shared/utils/Env';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NotificationType } from './../../../../shared/components/notification/notification-type';
 import { Subscription } from 'rxjs';
@@ -27,6 +29,7 @@ export class CaisseDetailsComponent implements OnInit {
     private appStore: AppStore,
     private notifierService: NotifierService,
     private dialog: MatDialog,
+    private sanitizer: DomSanitizer,
     private router: Router
   ) { }
 
@@ -61,7 +64,8 @@ export class CaisseDetailsComponent implements OnInit {
   }
 
   print(currentCaisse: CaisseModel){
-
+    const server = Env.getEnv().server;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(server + 'api/caisse/export/journal/' + currentCaisse.id);
   }
 
   transfert(currentCaisse: CaisseModel){

@@ -29,7 +29,7 @@ export class NewPaymentsComponent implements OnInit {
   loading = false;
 
   localData: LocalData = {} as LocalData;
-  
+
   constructor(
     private dialogRef: MatDialogRef<ReservationFormComponent>,
     @Inject(MAT_DIALOG_DATA) public reservation: ReservationModel,
@@ -69,7 +69,17 @@ export class NewPaymentsComponent implements OnInit {
 
 
   performAction(){
+
     if(this.paymentForm.valid){
+      if(this.totalPrice < this.paymentForm.value.amount){
+        this.loading = false;
+        this.notifier.notify(
+          'Le montant à payer doit etre inferieur au montant total',
+          'Notification',
+          NotificationType.WARNING
+        );
+        return;
+      }
       this.reservationService.addPayment(this.localData.userDetails?.userId, this.paymentForm.value, this.reservation.id).subscribe(
         apiResponse => {
           if (apiResponse.code == 200){
@@ -92,7 +102,7 @@ export class NewPaymentsComponent implements OnInit {
         error => {
           this.loading = false;
           this.notifier.notify(
-            'Probleme de communication avec le serveur',
+            'Erreur lors du traitement de la requete. Veuillez reesayer et si le probleme persite contacter l\'equipe technique',
             'Notification',
             NotificationType.ERROR
           );

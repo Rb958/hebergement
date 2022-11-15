@@ -15,6 +15,8 @@ import {MatStepperModule} from "@angular/material/stepper";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgChartsModule} from "ng2-charts";
 import {ButtonLoaderModule} from "../../shared/components/button-loader/button-loader.module";
+import { EditLocalComponent } from './pages/edit-local/edit-local.component';
+import { LocalHorsServiceComponent } from './pages/local-hors-service/local-hors-service.component';
 
 
 @NgModule({
@@ -24,6 +26,8 @@ import {ButtonLoaderModule} from "../../shared/components/button-loader/button-l
     DeleteLocalComponent,
     EnableLocalComponent,
     LocalDetailsComponent,
+    EditLocalComponent,
+    LocalHorsServiceComponent,
   ],
     imports: [
         CommonModule,

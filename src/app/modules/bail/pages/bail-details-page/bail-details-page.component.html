@@ -26,11 +26,11 @@
               </div>
               <div class="info-item">
                 <span class="element">Periode</span>
-                <span class="value">{{ data.data?.sejour}} mois</span>
+                <span class="value">{{ data.data?.sejour }} mois</span>
               </div>
               <div class="info-item">
                 <span class="element">Echeance dans</span>
-                <span class="value">{{ data.data?.echeance}} jours</span>
+                <span class="value">{{ data.data?.echeance }}</span>
               </div>
               <div class="info-item">
                 <span class="element">status</span>
@@ -52,6 +52,18 @@
                 </div>
               </div>
               <div class="info-item">
+                <span class="element">Indice d'entrée</span>
+                <span class="value">{{ data.data?.indiceEntre }} Kw</span>
+              </div>
+              <div class="info-item">
+                <span class="element">Indice de sorti</span>
+                <span class="value">{{ data.data?.indiceSortie }} Kw</span>
+              </div>
+              <div class="info-item">
+                <span class="element">Consomation total</span>
+                <span class="value">{{ data.data?.moyenneConso }} Kw</span>
+              </div>
+              <div class="info-item">
                 <span class="element">Date d'entrée</span>
                 <span class="value">{{ data.data?.dateEntre| date: 'dd-MM-yyyy' }}</span>
               </div>
@@ -59,10 +71,10 @@
                 <span class="element">Date de sortie</span>
                 <span class="value">{{ data.data?.validite | date: 'dd-MM-yyyy' }}</span>
               </div>
-              <div class="info-item">
-                
-              </div>
             </div>
+          </div>
+          <div class="ps-card-footer">
+            <a [href]="getSanitizedLink(data.data?.pj)" target="_blank">Voir le contrat</a>
           </div>
         </div>
       </div>
@@ -116,10 +128,10 @@
           </div>
           <div class="ps-card-footer">
             <ng-container *ngIf="data.data?.locataireParticulier">
-                <a [routerLink]="['/locataire/particulier/details', data.data?.locataireParticulier?.id]">Voir plus</a>
+              <a [routerLink]="['/locataire/particulier/details', data.data?.locataireParticulier?.id]">Voir plus</a>
             </ng-container>
             <ng-container *ngIf="data.data?.locataireSociete">
-                <a [routerLink]="['/locataire/societe/details', data.data?.locataireSociete?.id]">Voir plus</a>
+              <a [routerLink]="['/locataire/societe/details', data.data?.locataireSociete?.id]">Voir plus</a>
             </ng-container>
           </div>
         </div>
@@ -145,6 +157,25 @@
               <div class="info-item">
                 <span class="element">Type</span>
                 <span class="value">{{ data.data?.local?.typeLocal }}</span>
+              </div>
+              <div class="info-item">
+                <span class="element">Type</span>
+                <span class="value">{{ data.data?.local?.typeLocal }}</span>
+              </div>
+              <div class="info-item">
+                <span class="element">Status</span>
+                <span class="value" [ngClass]="getLocalStatusStyle(data.data?.local?.status)">{{ data.data?.local?.status }}</span>
+              </div>
+              <div *ngIf="data.data?.statut != 'CLOTURER'">
+                <div class="dt-actions" *ngIf="canShow(data.data)">
+                  <button class="btn btn-primary" *ngIf="data.data?.local?.status == 'LIBRE' && canOccupied(data.data)" rbButton [loading]="occuperLocalLoading" (click)="occuperLocal(data.data)">Occuper le local</button>
+                  <button class="btn btn-default" *ngIf="data.data?.local?.status == 'OCCUPE' && canClose(data.data) " rbButton [loading]="occuperLocalLoading" (click)="libererLocal(data.data)">Cloturer le bail</button>
+                </div>
+                <div class="dt-actions">
+                  <button class="btn btn-secondary" *ngIf="data.data?.local?.status != 'HORS_SERVICE' " rbButton [loading]="loading" (click)="miseHosService(data.data?.local)">Mettre hors service</button>
+                  <button class="btn btn-primary" rbButton [loading]="loading" (click)="changeLocal(data.data)">Changer de local</button>
+                  <span *ngIf="!canShow(data.data) && data.data?.local?.status == 'HORS_SERVICE'">Certaines actions seront disponibles à partir de la date d'entrée specifiée dans le contrat de bail</span>
+                </div>
               </div>
             </div>
           </div>
@@ -194,6 +225,44 @@
                 <span class="value">{{ data.data?.restAmount || 0 | hundredSeparator }} FCFA</span>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="ps-card">
+          <div class="ps-card-header">
+            <span class="ps-card-title">Liste des paiements éffectués</span>
+          </div>
+          <div class="ps-card-body">
+            <mat-accordion class="mb-2" *ngFor="let payment of payments; let i = index">
+              <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Paiement #{{ i + 1 }} du {{ payment?.createdAt | date:'dd-MM-yyyy' }} a {{ payment?.createdAt | date:'HH:mm:ss' }}
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="row justify-content-end">
+                  <div class="info-wrapper">
+                    <div class="info-item">
+                      <span class="element">Moyen de paiement</span>
+                      <span class="value">{{ payment?.paymentMethod }}</span>
+                    </div>
+                    <div class="info-item">
+                      <span class="element">Montant</span>
+                      <span class="value">{{ payment?.amount }}</span>
+                    </div>
+                    <div class="info-item">
+                      <span class="element">Reste</span>
+                      <span class="value">{{ payment?.rest }}</span>
+                    </div>
+                    <div class="info-item">
+                      <span class="element">Remise</span>
+                      <span class="value">{{ payment?.discount }}</span>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
           </div>
         </div>
       </div>

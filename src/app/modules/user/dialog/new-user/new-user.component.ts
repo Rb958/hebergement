@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {UserService} from "../../../../shared/services/services/user.service";
 import {HttpStatusCode} from "@angular/common/http";
@@ -12,12 +12,12 @@ import {NotificationType} from "../../../../shared/components/notification/notif
   styleUrls: ['./new-user.component.scss']
 })
 export class NewUserComponent implements OnInit {
-  userForm: UntypedFormGroup = {} as UntypedFormGroup;
+  userForm: FormGroup = {} as FormGroup;
 
   constructor(
     private matDialogRef: MatDialogRef<NewUserComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private userService: UserService,
     private notifier: NotifierService
   ) { }
@@ -34,6 +34,7 @@ export class NewUserComponent implements OnInit {
         firstname: [''],
         lastname: ['', Validators.required],
         phone: [''],
+        email: ['', Validators.required],
         username: ['', Validators.required],
         password: ['', Validators.required]
       })
@@ -42,6 +43,7 @@ export class NewUserComponent implements OnInit {
         firstname: [this.data.user.firstname],
         lastname: [this.data.user.lastname, Validators.required],
         phone: [this.data.user.phone],
+        email: [this.data.user.email, Validators.required],
         username: [this.data.user.username, Validators.required],
         password: ['', Validators.required]
       })
@@ -70,14 +72,14 @@ export class NewUserComponent implements OnInit {
           },
           error => {
             this.notifier.notify(
-              'Erreur de communication avec le serveur',
+              'Erreur lors du traitement de la requete. Veuillez reesayer et si le probleme persite contacter l\'equipe technique',
               'Notification',
               NotificationType.ERROR
             );
           }
         );
       }else{
-        this.userService.updateUser(this.userForm.value).subscribe(
+        this.userService.updateUser(this.userForm.value, this.data.user.id).subscribe(
           apiResult => {
             if (apiResult.code === HttpStatusCode.Ok.valueOf()){
               this.matDialogRef.close(apiResult.result);
@@ -91,7 +93,7 @@ export class NewUserComponent implements OnInit {
           },
           error => {
             this.notifier.notify(
-              'Erreur de communication avec le serveur',
+              'Erreur lors du traitement de la requete. Veuillez reesayer et si le probleme persite contacter l\'equipe technique',
               'Notification',
               NotificationType.ERROR
             );

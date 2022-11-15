@@ -1,0 +1,28 @@
+<span mat-dialog-title>Indisponibilité</span>
+<div mat-dialog-content>
+  <div class="form-item">
+    <label for="startDate">{{'startDate' | translate}}<span class="required">*</span></label>
+    <div class="input-control" [class.error]="!startDate">
+      <input type="date" id="startDate" min="0" [(ngModel)]="startDate" name="startDate">
+      <span class="input-error-image" *ngIf="!startDate">
+          <i class="fa fa-ban" aria-hidden="true"></i>
+        </span>
+    </div>
+    <span class="hint"></span>
+    <span class="hint error" *ngIf="!startDate">{{'required_field' | translate}}</span>
+  </div>
+  <div class="form-item">
+    <label for="endDate">{{'endDate' | translate}}<span class="required">*</span></label>
+    <div class="input-control" [class.error]="!endDate">
+      <input type="date" id="endDate" min="0" [(ngModel)]="endDate" name="endDate">
+      <span class="input-error-image" *ngIf="!endDate">
+          <i class="fa fa-ban" aria-hidden="true"></i>
+        </span>
+    </div>
+    <span class="hint"></span>
+    <span class="hint error" *ngIf="!startDate">{{'required_field' | translate}}</span>
+  </div>
+</div>
+<div class="action" mat-dialog-actions>
+  <button class="btn btn-primary" rbButton [loading]="loading" (click)="onProcess()">{{ 'save' | translate }}</button>
+</div>

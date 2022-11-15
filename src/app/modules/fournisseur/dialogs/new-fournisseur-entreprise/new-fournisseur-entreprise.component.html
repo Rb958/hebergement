@@ -4,7 +4,7 @@
   <div mat-dialog-content>
     <div class="form-content">
       <div class="form-item">
-        <label for="raisonSociale">{{'raisonSociale' | translate}}</label>
+        <label for="raisonSociale">{{'raisonSociale' | translate}}<span class="required">*</span></label>
         <div class="input-control" [class.error]="fournisseurFormGroup?.get('raisonSociale')?.touched && fournisseurFormGroup?.get('raisonSociale')?.hasError('required')" >
           <input type="text" id="raisonSociale" formControlName="raisonSociale" name="raisonSociale" >
           <span class="input-error-image" *ngIf="fournisseurFormGroup?.get('raisonSociale')?.touched && fournisseurFormGroup?.get('raisonSociale')?.hasError('required')">
@@ -26,7 +26,7 @@
         <span class="hint error" *ngIf="fournisseurFormGroup?.get('logo')?.touched && fournisseurFormGroup?.get('logo')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
-        <label for="niu">{{'niu' | translate}}</label>
+        <label for="niu">{{'niu' | translate}}<span class="required">*</span></label>
         <div class="input-control" [class.error]="fournisseurFormGroup?.get('niu')?.touched && fournisseurFormGroup?.get('niu')?.hasError('required')" >
           <input type="text" id="niu" formControlName="niu" name="niu" >
           <span class="input-error-image" *ngIf="fournisseurFormGroup?.get('niu')?.touched && fournisseurFormGroup?.get('niu')?.hasError('required')">
@@ -37,7 +37,7 @@
         <span class="hint error" *ngIf="fournisseurFormGroup?.get('niu')?.touched && fournisseurFormGroup?.get('niu')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
-        <label for="rccm">{{'rccm' | translate}}</label>
+        <label for="rccm">{{'rccm' | translate}}<span class="required">*</span></label>
         <div class="input-control" [class.error]="fournisseurFormGroup?.get('rccm')?.touched && fournisseurFormGroup?.get('rccm')?.hasError('required')" >
           <input type="text" id="rccm" formControlName="rccm" name="rccm" >
           <span class="input-error-image" *ngIf="fournisseurFormGroup?.get('rccm')?.touched && fournisseurFormGroup?.get('rccm')?.hasError('required')">
@@ -48,7 +48,7 @@
         <span class="hint error" *ngIf="fournisseurFormGroup?.get('rccm')?.touched && fournisseurFormGroup?.get('rccm')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
-        <label for="poste">{{'poste' | translate}}</label>
+        <label for="poste">{{'poste' | translate}}<span class="required">*</span></label>
         <div class="input-control" [class.error]="fournisseurFormGroup?.get('poste')?.touched && fournisseurFormGroup?.get('poste')?.hasError('required')" >
           <input type="text" id="poste" formControlName="poste" name="poste" >
           <span class="input-error-image" *ngIf="fournisseurFormGroup?.get('poste')?.touched && fournisseurFormGroup?.get('poste')?.hasError('required')">
@@ -59,7 +59,7 @@
         <span class="hint error" *ngIf="fournisseurFormGroup?.get('poste')?.touched && fournisseurFormGroup?.get('poste')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
-        <label for="telephone">{{'telephone' | translate}}</label>
+        <label for="telephone">{{'telephone' | translate}}<span class="required">*</span></label>
         <div class="input-control" [class.error]="fournisseurFormGroup?.get('telephone')?.touched && fournisseurFormGroup?.get('telephone')?.hasError('required')" >
           <input type="text" id="telephone" formControlName="telephone" name="telephone" >
           <span class="input-error-image" *ngIf="fournisseurFormGroup?.get('telephone')?.touched && fournisseurFormGroup?.get('telephone')?.hasError('required')">
@@ -81,7 +81,7 @@
         <span class="hint error" *ngIf="fournisseurFormGroup?.get('echeance')?.touched && fournisseurFormGroup?.get('echeance')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
-        <label for="mail1">{{'mail1' | translate}}</label>
+        <label for="mail1">{{'mail1' | translate}}<span class="required">*</span></label>
         <div class="input-control" [class.error]="fournisseurFormGroup?.get('mail1')?.touched && fournisseurFormGroup?.get('mail1')?.hasError('required')" >
           <input type="email" id="mail1" formControlName="mail1" name="mail1" >
           <span class="input-error-image" *ngIf="fournisseurFormGroup?.get('mail1')?.touched && fournisseurFormGroup?.get('mail1')?.hasError('required')">

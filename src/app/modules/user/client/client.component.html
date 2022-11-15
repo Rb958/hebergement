@@ -1,0 +1,76 @@
+<div class="ps-card">
+  <div class="ps-card-header">
+    <span class="ps-card-title">Information de la structure</span>
+  </div>
+  <div class="ps-card-body">
+    <form [formGroup]="clientForm" (ngSubmit)="submitForm()">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-content">
+            <div class="form-item">
+              <label for="clientName">{{'clientName' | translate}}<span class="required">*</span></label>
+              <div class="input-control" [class.error]="clientForm.get('clientName')?.touched && clientForm.get('clientName')?.hasError('required')" >
+                <input type="text" id="clientName" formControlName="clientName" name="clientName" >
+                <span class="input-error-image" *ngIf="clientForm.get('clientName')?.touched && clientForm.get('clientName')?.hasError('required')">
+                  <i class="fa fa-ban" aria-hidden="true"></i>
+                </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="clientForm.get('clientName')?.touched && clientForm.get('clientName')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+            <div class="form-item">
+              <label for="rccm">{{'rccm' | translate}}<span class="required">*</span></label>
+              <div class="input-control" [class.error]="clientForm.get('rccm')?.touched && clientForm.get('rccm')?.hasError('required')" >
+                <input type="text" id="rccm" formControlName="rccm" name="rccm" >
+                <span class="input-error-image" *ngIf="clientForm.get('rccm')?.touched && clientForm.get('rccm')?.hasError('required')">
+                  <i class="fa fa-ban" aria-hidden="true"></i>
+                </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="clientForm.get('rccm')?.touched && clientForm.get('rccm')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+            <div class="form-item">
+              <label for="phone">{{'phone' | translate}}<span class="required">*</span></label>
+              <div class="input-control" [class.error]="clientForm.get('phone')?.touched && clientForm.get('phone')?.hasError('required')" >
+                <input type="text" id="phone" formControlName="phone" name="phone" >
+                <span class="input-error-image" *ngIf="clientForm.get('phone')?.touched && clientForm.get('phone')?.hasError('required')">
+                  <i class="fa fa-ban" aria-hidden="true"></i>
+                </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="clientForm.get('phone')?.touched && clientForm.get('phone')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+            <div class="form-item">
+              <label for="email">{{'email' | translate}}<span class="required">*</span></label>
+              <div class="input-control" [class.error]="clientForm.get('email')?.touched && clientForm.get('email')?.hasError('required')" >
+                <input type="text" id="email" formControlName="email" name="email" >
+                <span class="input-error-image" *ngIf="clientForm.get('email')?.touched && clientForm.get('email')?.hasError('required')">
+                  <i class="fa fa-ban" aria-hidden="true"></i>
+                </span>
+              </div>
+              <span class="hint"></span>
+              <span class="hint error" *ngIf="clientForm.get('email')?.touched && clientForm.get('email')?.hasError('required')">{{'required_field' | translate}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-item">
+            <label for="header">{{'header' | translate}}<span class="required">*</span></label>
+            <rb-file-uploader (onError)="handleError($event)" (onFinish)="processFinished($event)"></rb-file-uploader>
+            <!-- <span class="hint"></span>
+            <span class="hint error" *ngIf="locatairePartForm.get('pjCni')?.touched && locatairePartForm.get('pjCni')?.hasError('required')">{{'required_field' | translate}}</span> -->
+          </div>
+          <div class="form-item">
+            <label for="footer">{{'footer' | translate}}<span class="required">*</span></label>
+            <rb-file-uploader (onError)="handleFooterError($event)" (onFinish)="processFooterFinished($event)"></rb-file-uploader>
+            <!-- <span class="hint"></span>
+            <span class="hint error" *ngIf="locatairePartForm.get('pjCni')?.touched && locatairePartForm.get('pjCni')?.hasError('required')">{{'required_field' | translate}}</span> -->
+          </div>
+        </div>
+      </div>
+      <div mat-dialog-actions class="row dialog-actions">
+        <button class="btn btn-primary" rbButton [loading]="loading" [disabled]="clientForm.invalid" type="submit">{{'save'|translate}}</button>
+      </div>
+    </form>
+  </div>
+</div>

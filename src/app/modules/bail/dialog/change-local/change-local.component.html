@@ -1,0 +1,28 @@
+<h3 mat-dialog-title>Changement de locale</h3>
+<form [formGroup]="reservationForm">
+  <div mat-dialog-content >
+    <ng-container *ngIf="(locals$ | async) as result" [ngSwitch]="result.dataState">
+      <ng-container *ngSwitchCase="0"></ng-container>
+      <ng-container *ngSwitchCase="1">
+        <div class="form-content">
+          <div class="form-item" formGroupName="local">
+            <label for="local">Nouveau locale<span class="required">*</span></label>
+            <div class="input-control">
+              <select name="" id="local" formControlName="id">
+                <option value="">Selectionner le nouveau locale</option>
+                <option [value]="local.id" *ngFor="let local of result.data">{{local.numeroLocal}} {{local.nomLocal}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchCase="2">
+        error : {{result.message}}
+      </ng-container>
+    </ng-container>
+  </div>
+</form>
+<div mat-dialog-actions class="dialog-actions">
+  <button class="btn btn-default" [mat-dialog-close]="false">{{'cancel'|translate}}</button>
+  <button class="btn btn-primary" rbButton [loading]="loading" (click)="sumbitForm()" [disabled]="reservationForm.invalid" type="submit">{{'save'|translate}}</button>
+</div>

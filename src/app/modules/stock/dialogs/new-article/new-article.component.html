@@ -5,14 +5,14 @@
     <div class="form-content">
       <div class="form-item">
         <label for="designation">{{'designation' | translate}}</label>
-        <div class="input-control" [class.error]="articleForm?.get('designation')?.touched && articleForm?.get('designation')?.hasError('required')" >
+        <div class="input-control" [class.error]="articleForm.get('designation')?.touched && articleForm.get('designation')?.hasError('required')" >
           <input type="text" id="designation" formControlName="designation" name="designation" >
-          <span class="input-error-image" *ngIf="articleForm?.get('designation')?.touched && articleForm?.get('designation')?.hasError('required')">
+          <span class="input-error-image" *ngIf="articleForm.get('designation')?.touched && articleForm.get('designation')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
         </div>
         <span class="hint"></span>
-        <span class="hint error" *ngIf="articleForm?.get('designation')?.touched && articleForm?.get('designation')?.hasError('required')">{{'required_field' | translate}}</span>
+        <span class="hint error" *ngIf="articleForm.get('designation')?.touched && articleForm.get('designation')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
     </div>
   </div>

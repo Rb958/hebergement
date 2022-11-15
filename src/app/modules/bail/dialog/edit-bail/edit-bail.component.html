@@ -1,0 +1,66 @@
+<h3 mat-dialog-title>{{'nouvelle_reservation_de'|translate}} {{ currentLocal.nomLocal }}</h3>
+<form [formGroup]="reservationForm" (ngSubmit)="sumbitForm()">
+  <div mat-dialog-content >
+    <div class="form-content">
+      <div class="row">
+        <div class="form-item">
+          <div class="question-item" >
+            <div class="question-check">
+              <input type="checkbox" id="isLocataireSociete" [(ngModel)]="isParticulier" (change)="initLocataire()" [ngModelOptions]="{standalone: true}">
+              <label for="isLocataireSociete" class="check-label"></label>
+            </div>
+            <span class="response_label">Le future locataire est un particulier</span>
+          </div>
+        </div>
+        <div class="form-item">
+          <label>{{'locataire' | translate}}<span class="required">*</span></label>
+          <div *ngIf="!isParticulier">
+            <div class="input-control" formGroupName="locataireSociete">
+              <select class="input-control" formControlName="id" id="locataireSociete">
+                <option value="">Selectionner un locataire</option>
+                <option [value]="locSoc?.id" *ngFor="let locSoc of locatairesSociete">{{locSoc?.nomGerant}} ({{'societe' | translate}}) {{locSoc?.raisonSociale}}</option>
+              </select>
+            </div>
+            <span class="hint"></span>
+            <span class="hint error" *ngIf="reservationForm.get('locataireSociete')?.touched && reservationForm.get('locataireSociete')?.hasError('required')">{{'required_field' | translate}}</span>
+          </div>
+          <div *ngIf="isParticulier">
+            <div class="input-control" formGroupName="locataireParticulier">
+              <select class="input-control" formControlName="id" id="locataireParticulier">
+                <option value="">Selectionner un locataire</option>
+                <option [value]="locPart?.id" *ngFor="let locPart of locataireParticulier">{{locPart?.prenom}} {{locPart?.nom}}</option>
+              </select>
+            </div>
+            <span class="hint"></span>
+            <span class="hint error" *ngIf="reservationForm.get('locataireParticulier')?.touched && reservationForm.get('locataireParticulier')?.hasError('required')">{{'required_field' | translate}}</span>
+          </div>
+          <div class="form-item">
+            <label for="dateEntre">{{'dateEntre' | translate}}<span class="required">*</span></label>
+            <div class="input-control"  [class.error]="reservationForm.get('dateEntre')?.touched && reservationForm.get('dateEntre')?.hasError('required')" >
+              <input type="date" id="dateEntre" #dateEntreInput formControlName="dateEntre" name="dateEntre" >
+              <span class="input-error-image" *ngIf="reservationForm.get('dateEntre')?.touched && reservationForm.get('dateEntre')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+            </div>
+            <span class="hint"></span>
+            <span class="hint error" *ngIf="reservationForm.get('dateEntre')?.touched && reservationForm.get('dateEntre')?.hasError('required')">{{'required_field' | translate}}</span>
+          </div>
+          <div class="row">
+            <div class="form-item">
+              <label for="pjCni">{{'contrat_bail' | translate}}<span class="required">*</span></label>
+              <rb-file-uploader (onError)="handleError($event)" (onFinish)="processFinished($event)"></rb-file-uploader>
+              <div class="file">
+                <i class="fa fa-file-pdf"></i>
+                <a [href]="getSanitizeLink()">Voir le document</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div mat-dialog-actions class="dialog-actions">
+        <button class="btn btn-default" [mat-dialog-close]="false">{{'cancel'|translate}}</button>
+        <button class="btn btn-primary" rbButton [loading]="loading" [disabled]="reservationForm.invalid" type="submit">{{'save'|translate}}</button>
+      </div>
+    </div>
+  </div>
+</form>

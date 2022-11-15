@@ -61,6 +61,7 @@ export class NewLocalComponent implements OnInit {
       nbrChambre: [0, [Validators.required, Validators.pattern(/^[0-9]+$/)]],
       nbrDouche: [0, [Validators.required, Validators.pattern(/^[0-9]+$/)]],
       prix: [0, [Validators.required, Validators.pattern(/^[0-9]+$/)]],
+      numCptEneo: [0, Validators.required]
       // typePrix: ['', Validators.required],
       // charges: [''],
       // contrat: ['']

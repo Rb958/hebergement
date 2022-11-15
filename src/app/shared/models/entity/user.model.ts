@@ -9,6 +9,7 @@ export class UserModel{
   private _firstname: string | null;
   private _lastname: string;
   private _phone: string | null;
+  private _email: string | null;
   private _roles: Array<any>;
 
   constructor() {
@@ -22,6 +23,7 @@ export class UserModel{
     this._firstname = null;
     this._lastname = '';
     this._phone = null;
+    this._email = null;
     this._roles = [];
   }
 
@@ -103,6 +105,14 @@ export class UserModel{
 
   set phone(value: string | null) {
     this._phone = value;
+  }
+
+  get email(): string | null {
+    return this._email;
+  }
+
+  set email(value: string | null){
+    this._email = value;
   }
 
   get roles(): Array<any> {

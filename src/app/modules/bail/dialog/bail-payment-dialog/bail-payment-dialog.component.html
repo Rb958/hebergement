@@ -1,13 +1,13 @@
 <form [formGroup]="paymentForm">
-    <span matDialogTitle>Nouveau paiement pour la bail {{ bail?.numReservation }}</span>
+    <span matDialogTitle>Nouveau paiement pour la bail {{ bail.numReservation }}</span>
     <div matDialogContent>
       <div class="form-item">
         <label>{{'local_price' | translate}}</label>
-        <span class="price">{{ bail.totalAmount || 0 }} FCFA</span>
+        <span class="price">{{ bail.totalAmount || 0 | hundredSeparator }} FCFA</span>
       </div>
       <div class="form-item">
-        <label for="paymentMethod">{{'paymentMethod' | translate}}</label>
-        <div class="input-control" [class.error]="paymentForm?.get('paymentMethod')?.touched && paymentForm?.get('paymentMethod')?.hasError('required')">
+        <label for="paymentMethod">{{'paymentMethod' | translate}}<span class="required">*</span></label>
+        <div class="input-control" [class.error]="paymentForm.get('paymentMethod')?.touched && paymentForm.get('paymentMethod')?.hasError('required')">
           <select name="paymentMethod" id="paymentMethod" formControlName="paymentMethod">
             <option value="">Selectionner un moyen de paiement</option>
             <option value="Virement bancaire">Virement bancaire</option>
@@ -18,41 +18,41 @@
           </select>
         </div>
         <span class="hint"></span>
-        <span class="hint error" *ngIf="paymentForm?.get('paymentMethod')?.touched && paymentForm?.get('paymentMethod')?.hasError('required')">{{'required_field' | translate}}</span>
+        <span class="hint error" *ngIf="paymentForm.get('paymentMethod')?.touched && paymentForm.get('paymentMethod')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
-      <div class="form-item">
+      <!-- <div class="form-item">
         <label for="discount">{{'discount' | translate}} (%)</label>
-        <div class="input-control" [class.error]="paymentForm?.get('discount')?.touched && paymentForm?.get('discount')?.hasError('required')">
+        <div class="input-control" [class.error]="paymentForm.get('discount')?.touched && paymentForm.get('discount')?.hasError('required')">
           <input type="number" id="discount" min="0" max="100" #discount placeholder="10%" formControlName="discount" name="discount">
-          <span class="input-error-image" *ngIf="paymentForm?.get('discount')?.touched && paymentForm?.get('discount')?.hasError('required')">
+          <span class="input-error-image" *ngIf="paymentForm.get('discount')?.touched && paymentForm.get('discount')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
         </div>
         <span class="hint"></span>
-        <span class="hint error" *ngIf="paymentForm?.get('discount')?.touched && paymentForm?.get('discount')?.hasError('required')">{{'required_field' | translate}}</span>
+        <span class="hint error" *ngIf="paymentForm.get('discount')?.touched && paymentForm.get('discount')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
         <label>{{ 'discount' | translate }} : {{ discount.value }}%</label>
-        <span class="rest">{{ computeDiscount(discount.value) || 0 }} FCFA</span>
-      </div>
+        <span class="rest">{{ computeDiscount(discount.value) || 0 | hundredSeparator}} FCFA</span>
+      </div> -->
       <div class="form-item">
         <label>{{'amount_to_pay' | translate}}</label>
-        <span class="total-amount">{{ totalPrice || 0 }} FCFA</span>
+        <span class="total-amount">{{ totalPrice || 0 | hundredSeparator }} FCFA</span>
       </div>
       <div class="form-item">
-        <label for="amount">{{'amount' | translate}}</label>
-        <div class="input-control" [class.error]="paymentForm?.get('amount')?.touched && paymentForm?.get('amount')?.hasError('required')">
+        <label for="amount">{{'amount' | translate}}<span class="required">*</span></label>
+        <div class="input-control" [class.error]="paymentForm.get('amount')?.touched && paymentForm.get('amount')?.hasError('required')">
           <input type="number" id="amount" min="0" #amount [placeholder]="currentLocal.prix * 2 || 0" formControlName="amount" name="amount">
-          <span class="input-error-image" *ngIf="paymentForm?.get('amount')?.touched && paymentForm?.get('amount')?.hasError('required')">
+          <span class="input-error-image" *ngIf="paymentForm.get('amount')?.touched && paymentForm.get('amount')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
         </div>
         <span class="hint"></span>
-        <span class="hint error" *ngIf="paymentForm?.get('amount')?.touched && paymentForm?.get('amount')?.hasError('required')">{{'required_field' | translate}}</span>
+        <span class="hint error" *ngIf="paymentForm.get('amount')?.touched && paymentForm.get('amount')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
         <label>{{ 'rest' | translate }}</label>
-        <span class="rest">{{ computeRest(amount.value) || 0 }} FCFA</span>
+        <span class="rest">{{ computeRest(amount.value) || 0 | hundredSeparator }} FCFA</span>
       </div>
     </div>
     <div mat-dialog-actions class="dialog-actions">
@@ -60,4 +60,3 @@
       <button class="btn btn-primary" [disabled]="paymentForm.invalid" (click)="performAction()">{{ 'save' | translate }}</button>
     </div>
   </form>
-  

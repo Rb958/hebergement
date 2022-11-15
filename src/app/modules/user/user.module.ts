@@ -1,3 +1,5 @@
+import { ButtonLoaderModule } from './../../shared/components/button-loader/button-loader.module';
+import { FileUploaderModule } from './../../shared/components/file-uploader/file-uploader.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -11,6 +13,9 @@ import {TranslateModule} from "@ngx-translate/core";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatDialogModule} from "@angular/material/dialog";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { UserProfileComponent } from './dialog/user-profile/user-profile.component';
+import { ClientComponent } from './client/client.component';
+import { InitPassComponent } from './dialog/init-pass/init-pass.component';
 
 
 @NgModule({
@@ -19,12 +24,17 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     UserDetailsComponent,
     UserListComponent,
     DeleteUserComponent,
-    EnableUserComponent
+    EnableUserComponent,
+    UserProfileComponent,
+    ClientComponent,
+    InitPassComponent
   ],
   imports: [
     CommonModule,
     UserRoutingModule,
     TranslateModule,
+    FileUploaderModule,
+    ButtonLoaderModule,
     FormsModule,
     ReactiveFormsModule,
     MatPaginatorModule,

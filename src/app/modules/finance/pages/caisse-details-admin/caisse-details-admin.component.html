@@ -1,0 +1,80 @@
+<!-- <link rel="stylesheet" href="caisse-details.component.scss"> -->
+<div class="tab-tools">
+  <span class="tab-tools-title">{{'journal_caisse' | translate}}</span>
+</div>
+<div class="ps-card">
+  <div class="ps-card-header">
+    <h4 class="ps-card-title">{{ currentCaisse.nom }}</h4>
+  </div>
+  <div class="ps-card-body">
+    <div class="caisse-info-wrapper">
+      <div class="info row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-6">
+              <span class="title">Responsable</span>
+            </div>
+            <div class="col-md-6">
+              <span class="value">{{ currentCaisse?.user?.lastname }} {{ currentCaisse?.user?.firstname }}</span>
+            </div>
+          </div>
+          <div class="row pt-4">
+            <div class="col-md-6">
+              <span class="title">Solde</span>
+            </div>
+            <div class="col-md-6">
+              <span class="value">{{ currentCaisse?.solde | hundredSeparator }} FCFA</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-6">
+              <span class="title">Date d'ouverture</span>
+            </div>
+            <div class="col-md-6">
+              <span class="value">{{ currentCaisse?.lastOpening | date: 'dd-MM-yyyy HH:mm:SS' }}</span>
+            </div>
+          </div>
+          <div class="row pt-4">
+            <div class="col-md-6">
+              <span class="title">Date de fermeture</span>
+            </div>
+            <div class="col-md-6">
+              <span class="value">{{ currentCaisse?.lastClosing | date: 'dd-MM-yyyy HH:mm:SS' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="actions pt-5">
+        <h4>Actions sur la caisse</h4>
+        <button class="btn btn-primary mx-4" (click)="closeCaisse(currentCaisse)">Fermer la caisse</button>
+        <a class="btn btn-default" [href]="print(currentCaisse)" target="_blank"> <i class="fa fa-print" aria-hidden="true"></i> Imprimer le journal</a>
+        <!-- <button class="btn btn-default" (click)="transfert(currentCaisse)"> <i class="fa fa-exchange" aria-hidden="true"></i> Transferer les fonds</button> -->
+      </div>
+    </div>
+    <h4 class="pt-5">Résumé par moyen de paiement</h4>
+    <div class="table-content">
+      <table>
+        <thead>
+        <th>#</th>
+        <th>{{ 'paymentMethod' | translate}}</th>
+        <th>{{ 'total' | translate}}</th>
+        <th>{{ 'soldeO' | translate}}</th>
+        <th>{{ 'soldeF' | translate}}</th>
+        <th>{{ 'diff' | translate}}</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let sousCaisse of currentCaisse.sousCaisses index as i" >
+          <td>{{ i + 1 }}</td>
+          <td>{{ sousCaisse.name }}</td>
+          <td>{{ sousCaisse.total | hundredSeparator }} FCFA</td>
+          <td>{{ sousCaisse.soldeInit | hundredSeparator }} FCFA</td>
+          <td>{{ sousCaisse.soldeFin | hundredSeparator }} FCFA</td>
+          <td>{{ sousCaisse.diff | hundredSeparator }} FCFA</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

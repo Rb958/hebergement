@@ -24,20 +24,24 @@ export class UserService extends HttpService {
     return this.post("api/user/", user);
   }
 
-  updateUser(user: any): Observable<ApiResponseModel<UserModel>> {
-    return this.put("api/user/", JSON.stringify(user));
+  updateUser(user: any, id: any): Observable<ApiResponseModel<UserModel>> {
+    return this.put(`api/user/${id}`, user);
   }
 
   deleteUser(id: number): Observable<ApiResponseModel<any>> {
     return this.delete(`api/user/${id}`);
   }
 
-  getSingleUser(id: number): Observable<ApiResponseModel<UserModel>> {
+  getSingleUser(id: any): Observable<ApiResponseModel<UserModel>> {
     return this.get(`api/user/${id}`);
   }
 
+  passwordUpdate(currentUser: UserModel, userId: number | undefined) {
+    return this.patch(`api/user/${currentUser.id}/password`, currentUser);
+  }
+
   enableUser(data: any, id: number): Observable<ApiResponseModel<UserModel>> {
-    return this.patch(`api/user/${id}`, JSON.stringify(data));
+    return this.patch(`api/user/enable/${id}`, data);
   }
 
   disableUser(data: any, id: number): Observable<ApiResponseModel<UserModel>> {

@@ -1,3 +1,4 @@
+import { LocalData } from 'src/app/shared/utils/app-store';
 import { UserModel } from './../../../../shared/models/entity/user.model';
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -18,6 +19,8 @@ export class OpenCaissePageComponent implements OnInit {
   requestSent = false;
   loading = false;
   canShow = true;
+  localData: LocalData = {} as LocalData;
+
   constructor(
     private fb: FormBuilder,
     private cashierService: CaisseService,
@@ -26,6 +29,7 @@ export class OpenCaissePageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.localData = this.appStore.getData();
     this.loadCaisse();
   }
 
@@ -35,8 +39,8 @@ export class OpenCaissePageComponent implements OnInit {
         if (apiResponse?.code == HttpStatusCode.Ok.valueOf()){
           this.cashier = apiResponse?.result;
           if (this.cashier.status == 'ATTENTE' || this.cashier.status == 'ATTENTE_FERMETURE'){
-            this.requestSent = true;
-            this.canShow = false;
+            this.requestSent = false;
+            this.canShow = true;
           }
           this.initForm(this.cashier);
         }
@@ -50,7 +54,7 @@ export class OpenCaissePageComponent implements OnInit {
     const soldeCheque = caisse.sousCaisses.find(sousCaise => sousCaise.name == 'Chèque');
     const soldeCredit = caisse.sousCaisses.find(sousCaise => sousCaise.name == 'Crédit');
     const soldeEspece = caisse.sousCaisses.find(sousCaise => sousCaise.name == 'Espèces');
-  
+
     this.caishierForm = this.fb.group({
       amount: [caisse.solde, Validators.required],
       om: [soldeOm?.total, Validators.required],
@@ -91,16 +95,19 @@ export class OpenCaissePageComponent implements OnInit {
         subCashier.total = this.caishierForm.value.espece;
       }
       // subCashier.caisse = cashier;
-    }); 
+    });
     cashier.transactionCaisses = [];
     // cashier.user = ;
     this.cashierService.openCaisse(cashier).subscribe(
-      
+
       apiResponse => {
         if (apiResponse.code == HttpStatusCode.Ok.valueOf()){
+          this.localData.hasCashierOpened = true;
+          this.appStore.save(this.localData);
           this.loading = false;
           this.requestSent = true;
           this.canShow = false
+          this.router.navigateByUrl("/dashboard");
         }else{
           this.loading = false;
         }

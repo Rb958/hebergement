@@ -50,11 +50,31 @@ export class LocalService extends HttpService{
     return this.get(this.url);
   }
 
+  findmeuble(){
+    return this.get(`${this.url}/search/meuble`);
+  }
+
   findBooking(searchValue: any) {
     return this.post(`${this.url}/search/meuble/available`, searchValue);
   }
 
   findBail(value: any) {
     return this.post(`${this.url}/search/non-meuble/available`, value);
+  }
+
+  liberer(id: number) {
+    return this.patch(`${this.url}/${id}/liberer`, {});
+  }
+
+  occuper(id: number) {
+    return this.patch(`${this.url}/${id}/occuper`, {});
+  }
+
+  horsService(id: number, indisponibilite: any) {
+    return this.patch(`${this.url}/${id}/hors-service`, indisponibilite);
+  }
+
+  update(data: any, id: number) {
+    return this.put(`${this.url}/${id}`, data);
   }
 }

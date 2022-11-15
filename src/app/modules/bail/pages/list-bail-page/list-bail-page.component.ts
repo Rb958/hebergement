@@ -1,3 +1,12 @@
+import { NotificationType } from 'src/app/shared/components/notification/notification-type';
+import { UserDetails } from './../../../../shared/utils/app-store';
+import { LocalData, AppStore } from 'src/app/shared/utils/app-store';
+import { RembourseBailComponent } from './../../dialog/rembourse-bail/rembourse-bail.component';
+import { CancelBailComponent } from './../../dialog/cancel-bail/cancel-bail.component';
+import { EditBailComponent } from './../../dialog/edit-bail/edit-bail.component';
+import { NewBailComponent } from './../../dialog/new-bail/new-bail.component';
+import { Env } from './../../../../shared/utils/Env';
+import { DomSanitizer } from '@angular/platform-browser';
 import { BailPaymentDialogComponent } from './../../dialog/bail-payment-dialog/bail-payment-dialog.component';
 import { Component, OnInit } from '@angular/core';
 import {catchError, map, Observable, of, startWith} from "rxjs";
@@ -10,7 +19,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {NotifierService} from "../../../../shared/components/notification/notifier.service";
 import {BailService} from "../../../../shared/services/services/bail.service";
-import {DeleteReservationComponent} from "../../../reservation/delete-reservation/delete-reservation.component";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-list-bail-page',
@@ -24,6 +33,7 @@ export class ListBailPageComponent implements OnInit {
   pagesElementSize = [32, 64, 128, 256];
   bails$: Observable<DataStateProcessing<PageModel<BailModel>>> = {} as Observable<DataStateProcessing<PageModel<BailModel>>>;
   stats = {};
+  localData: LocalData | undefined;
   // Chart
   public doughnutChartLabels: string[] = [ 'Annulés', 'Confirmé', 'Cloturé' ];
   public doughnutChartData: ChartData<'doughnut'>;
@@ -34,7 +44,9 @@ export class ListBailPageComponent implements OnInit {
     private route: ActivatedRoute,
     private bailService: BailService,
     private dialog: MatDialog,
-    private notifierService: NotifierService
+    private notifierService: NotifierService,
+    private sanitize: DomSanitizer,
+    private appStore: AppStore
   ) {
     this.doughnutChartData = {
       labels: this.doughnutChartLabels,
@@ -43,6 +55,7 @@ export class ListBailPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.localData = this.appStore.getData();
     this.loadData();
     this.getStats();
   }
@@ -55,13 +68,33 @@ export class ListBailPageComponent implements OnInit {
     this.router.navigate(['../details', bail.id], {relativeTo: this.route});
   }
 
+  notEnd(bail: BailModel){
+    return moment(bail.validite).isAfter(moment(new Date()));
+  }
+
   cancelBail(bail: BailModel) {
-    const dialogRef = this.dialog.open(DeleteReservationComponent,{
-      width: '400px',
-      data: {
-        bail: bail
+    let dialogRef;
+    if (bail.statut == 'CONFIRME' && this.notEnd(bail)) {
+      if (this.localData?.userDetails?.role == 'ROLEADMIN') {
+        dialogRef = this.dialog.open(RembourseBailComponent, {
+          width: '700px',
+          data: bail
+        });
+      }else{
+        this.notifierService.notify(
+          "Vous n'êtes pas autorisé à effectuer: Seule un administrateur peut traiter ce cas",
+          "Annulation d'une reservation",
+          NotificationType.ERROR
+        );
+        return ;
       }
-    });
+    }else{
+      dialogRef = this.dialog.open(CancelBailComponent,{
+        width: '400px',
+        data: bail
+      });
+    }
+
     dialogRef.afterClosed().subscribe(
       result => {
         if (result){
@@ -86,7 +119,16 @@ export class ListBailPageComponent implements OnInit {
   }
 
   updateBail(bail: BailModel) {
+    const dialogRef = this.dialog.open(EditBailComponent,{
+      width: '1000px',
+      data: bail
+    });
 
+    dialogRef.afterClosed().subscribe(
+      result => {
+        this.router.navigateByUrl('/bails/list-all');
+      }
+    );
   }
 
   pad(number: any) {
@@ -138,5 +180,44 @@ export class ListBailPageComponent implements OnInit {
         }
       }
     );
+  }
+
+  getPaymentStyle(depenseStatus?: string | null){
+    if(depenseStatus){
+      switch (depenseStatus) {
+        case 'PAYE':
+          return 'chip-success';
+        case 'IMPAYE':
+          return 'chip-danger'
+        case 'REMBOURSÉ':
+          return 'chip-blue';
+        default :
+          return 'chip-warning'
+      }
+    }else{
+      return 'chip-warning';
+    }
+  }
+
+  getStatusStyle(depenseStatus?: string | null){
+    if(depenseStatus){
+      switch (depenseStatus) {
+        case 'CONFIRME':
+          return 'chip-success';
+        case 'ANNULE':
+          return 'chip-danger'
+        case 'REMBOURSE':
+          return 'chip-blue';
+        default :
+          return 'chip-warning'
+      }
+    }else{
+      return 'chip-warning';
+    }
+  }
+
+  getDownloadLink(bail: BailModel){
+    const server = Env.getEnv().server;
+    return this.sanitize.bypassSecurityTrustResourceUrl(server + "api/bail/receipt/"+bail.id);
   }
 }

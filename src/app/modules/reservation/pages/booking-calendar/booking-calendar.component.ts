@@ -6,7 +6,6 @@ interface SelectedItem {
   local: string,
   date: string,
   bookingNum: string,
-
 }
 
 @Component({
@@ -32,6 +31,8 @@ export class BookingCalendarComponent implements OnInit {
   currentMonthName: string = '';
   selectedBooking: any = {};
 
+  i = 0;
+
   constructor() { }
 
   ngOnInit(): void {
@@ -39,12 +40,15 @@ export class BookingCalendarComponent implements OnInit {
   }
 
   hasBooking(local: LocalModel, days: any): string {
-    if (local.bookings.length) {
+    let styleClass = 'libre';
+    if(local.status == 'HORS_SERVICE'){
+      styleClass = 'maintenance';
+    }
+    if (local.bookings) {
       const date = this.currentYear + '-' + this.currentMonth + '-' +days;
-      // console.log('Is Valid : ' + moment(date).isBetween('2022-7-20', '2022-7-29'));
       const bookings = local.bookings.filter(booking => {
-        const start = booking.dateReservation.toString().split("T")[0]; //booking.dateReservation.getFullYear() + '-' + booking.dateReservation.getMonth() + '-' + booking.dateReservation.getDate();
-        const end = booking.validite?.split("T")[0]; //booking.dateFin.getFullYear() + '-' + booking.dateFin.getMonth() + '-' + booking.dateFin.getDate();
+        const start = booking.dateReservation.toString().split("T")[0];
+        const end = booking.validite?.split("T")[0];
         if (moment(date).isSameOrAfter(start) && moment(date).isSameOrBefore(end)) {
           return booking;
         } else {
@@ -52,24 +56,41 @@ export class BookingCalendarComponent implements OnInit {
         }
       });
       if (bookings.length > 0) {
-        // console.log('Status: ' + bookings[0].statut);
         switch (bookings[0].statut) {
           case 'CLOTURER':
-            return 'clos';
+            styleClass = 'clos';
+            break;
           case 'ANNULE':
-            return 'annuler';
-          case 'EN_MAINTENANCE':
-            return 'maintenance';
+            styleClass = 'libre';
+            break;
+          case 'ATTENTE':
+            styleClass = 'attente';
+            break;
+          case 'HORS_SERVICE':
+            default:
+            styleClass = 'maintenance';
+            break;
           case 'CONFIRME':
             if (bookings[0].paymentStatus == 'PARTIELLE') {
-              return 'occuper-impayer';
+              if(local.status == 'LIBRE'){
+                styleClass = 'libre-partial';
+              }
+              if (local.status == 'OCCUPE') {
+                styleClass = 'occupe-partial'
+              }
             } else if (bookings[0].paymentStatus == 'PAYE') {
-              return 'occuper-payer'
+              if(local.status == 'LIBRE'){
+                styleClass = 'libre-payer';
+              }
+              if(local.status == 'OCCUPE'){
+                styleClass = 'occuper-payer';
+              }
             }
+            break;
         }
       }
     }
-    return 'libre';
+    return styleClass;
   }
 
   onAction(local: any, day: number) {
@@ -90,19 +111,8 @@ export class BookingCalendarComponent implements OnInit {
   private initView() {
     const date = this.currentYear + '-' + this.currentMonth + '-01';
     this.currentMonthName = moment(date, 'YYYY-MM-DD', 'Fr').format('MMMM');
-    if (this.currentMonth % 2 != 0 || this.currentMonth == 8){
-      this.days = new Array<number>(31).fill(31,0,31).map((x,i) => i + 1);
-    }else {
-      if (this.currentMonth == 2){
-        if (this.currentYear % 4 == 0){
-          this.days = new Array<number>(29).fill(29,0,29).map((x,i) => i + 1);
-        }else{
-          this.days = new Array<number>(28).fill(28,0,28).map((x,i) => i + 1);
-        }
-      }else{
-        this.days = new Array<number>(30).fill(30,0,30).map((x,i) => i + 1);
-      }
-    }
+    const currentMonthDays = moment(date).daysInMonth();
+    this.days = new Array<number>(currentMonthDays).fill(currentMonthDays, 0, currentMonthDays).map((x,i) => i + 1);
   }
 
   previousMonth() {

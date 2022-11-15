@@ -21,6 +21,11 @@ body, html{
   font-family: poppin, sans-serif;
 }
 
+.required{
+  color: #c61c1c;
+  font-weight: bold;
+}
+
 a{
   text-decoration: none;
   color: #4d90e1;
@@ -70,6 +75,9 @@ a{
         text-align: center;
         .btn-table-action{
           display: inline-block;
+        }
+        li:hover{
+          cursor: pointer;
         }
       }
     }
@@ -328,4 +336,64 @@ $black: #464242;
 .dialog-actions{
   display: flex;
   justify-content: space-around;
+}
+
+.badge{
+  // padding: 5px;
+  display: block;
+  border-radius: 5px;
+  display: inline-block;
+  font-weight: 700;
+  line-height: 1.5;
+  font-size: 0.8rem!important;
+  border-radius: 1.25rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid transparent;
+  text-align: center;
+  white-space: nowrap;
+  transition: color 0.15s ease-in-out;
+  width: fit-content;
+}
+
+.valid{
+  @extend .badge;
+  background-color: #e3f9e9;
+  color: #2BC155;
+}
+.close, .rejected{
+  @extend .badge;
+  background-color: #fde5e8;
+  color: #c12b3d;
+}
+
+.progress{
+  @extend .badge;
+  background-color: #fcf8e3;
+  color: #c1ad2b;
+}
+
+.info-wrapper{
+  display: flex;
+  flex-direction: column;
+
+  .info-item {
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+
+      .element{
+          font-size: 1.2rem;
+      }
+
+      .value{
+          font-size: medium;
+      }
+  }
+}
+
+.price{
+  font-size: 2rem;
+}
+.total-amount, .rest{
+  font-size: 1.6rem;
 }

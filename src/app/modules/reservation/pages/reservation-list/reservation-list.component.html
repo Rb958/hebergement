@@ -1,6 +1,6 @@
 <div class="tab-tools">
-  <span class="tab-tools-title">{{'list_of_user' | translate}}</span>
-  
+  <span class="tab-tools-title">{{'list_of_booking' | translate}}</span>
+
   <div>
     <button class="btn btn-primary" (click)="newReservation()">
       <i class="fa fa-plus"></i>
@@ -10,7 +10,7 @@
 </div>
 
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-12">
     <div class="ps-card">
       <div class="ps-card-body">
         <ng-container *ngIf="(reservation$ | async) as result" [ngSwitch]="result?.dataState">
@@ -27,11 +27,11 @@
                 <th>{{'dateEntre' | translate }}</th>
                 <th>{{'dateSortir' | translate }}</th>
                 <th>{{'locataire' | translate}}</th>
-                <th>{{'numReservation' | translate}}</th>
+<!--                <th>{{'numReservation' | translate}}</th>-->
                 <th>{{'local_number' | translate}}</th>
                 <th>{{'amount' | translate}}</th>
-                <th>{{'total_amount' | translate}}</th>
                 <th>{{'rest_amount' | translate}}</th>
+                <th>{{'total_amount' | translate}}</th>
                 <th>{{'status' | translate}}</th>
                 <th>{{'payement' | translate}}</th>
                 <th>Actions</th>
@@ -54,39 +54,16 @@
                       </ng-container>
                     </ng-container>
                   </td>
-                  <td>{{ reservation?.numReservation }}</td>
+<!--                  <td>{{ reservation?.numReservation }}</td>-->
                   <td>{{ reservation?.local?.numeroLocal }}</td>
-                  <td>{{ reservation?.paidAmount || 0 }} FCFA</td>
-                  <td>{{ reservation?.totalAmount || 0 }} FCFA</td>
-                  <td>{{ reservation?.restAmount || 0 }} FCFA</td>
+                  <td>{{ reservation?.paidAmount || 0 | hundredSeparator }} FCFA</td>
+                  <td>{{ reservation?.restAmount || 0 |hundredSeparator }} FCFA</td>
+                  <td>{{ reservation?.totalAmount || 0 | hundredSeparator }} FCFA</td>
                   <td>
-                    <ng-container [ngSwitch]="reservation.statut">
-                      <ng-container *ngSwitchCase="'CONFIRME'">
-                        <span class="ps-chip chip-success">{{ reservation?.statut }}</span>
-                      </ng-container>
-                      <ng-container *ngSwitchCase="'ANNULE'">
-                        <span class="ps-chip chip-danger">{{ reservation?.statut }}</span>
-                      </ng-container>
-                      <ng-container *ngSwitchCase="'CLOTURER'">
-                        <span class="ps-chip chip-primary">{{ reservation?.statut }}</span>
-                      </ng-container>
-                      <ng-container *ngSwitchCase="'RESERVE'">
-                        <span class="ps-chip chip-secondary">{{ reservation?.statut }}</span>
-                      </ng-container>
-                    </ng-container>
+                    <span class="ps-chip" [ngClass]="getBookingStatusStyle(reservation?.statut)">{{ reservation?.statut }}</span>
                   </td>
                   <td>
-                    <ng-container [ngSwitch]="reservation.paymentStatus">
-                      <ng-container *ngSwitchCase="'PAYE'">
-                        <span class="ps-chip chip-success">{{ reservation?.paymentStatus }}</span>
-                      </ng-container>
-                      <ng-container *ngSwitchCase="'IMPAYE'">
-                        <span class="ps-chip chip-danger">{{ reservation?.paymentStatus }}</span>
-                      </ng-container>
-                      <ng-container *ngSwitchCase="'PARTIELLE'">
-                        <span class="ps-chip chip-warning">{{ reservation?.paymentStatus }}</span>
-                      </ng-container>
-                    </ng-container>
+                      <span class="ps-chip" [ngClass]="getPaymentStatusStyle(reservation?.paymentStatus)">{{ reservation?.paymentStatus }}</span>
                   </td>
                   <td class="actions">
                     <div class="dropdown">
@@ -113,13 +90,13 @@
                             {{'new_payment' | translate}}
                           </li>
                         </ng-container>
-                        <!-- <ng-container *ngIf="reservation.statut != 'CLOTURER' && reservation.statut != 'ANNULE'">
-                          <li class="dropdown-item" (click)="updateBooking(reservation)">
+                        <li class="dropdown-item" (click)="updateBooking(reservation)">
+                          <a [href]="getDownloadLink(reservation)" target="_blank">
                             <i class="fa fa-edit"></i>
                             &nbsp;
-                            {{'update' | translate}}
-                          </li>
-                        </ng-container> -->
+                            {{'download_receipt' | translate}}
+                          </a>
+                        </li>
                       </ul>
                     </div>
                   </td>
@@ -142,7 +119,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-4">
+  <!-- <div class="col-md-4">
     <div class="ps-card">
       <div class="ps-card-body">
         <div class="counter-widget-wrapper">
@@ -163,5 +140,5 @@
         </canvas>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>

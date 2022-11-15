@@ -23,7 +23,7 @@
   <tr *ngFor="let local of locals">
     <td>{{ local?.numeroLocal }}</td>
     <td>{{ local?.typeLocal }}</td>
-    <td *ngFor="let i of days"(click)="onAction(local, i)" [ngClass]="hasBooking(local, i)">
+    <td *ngFor="let i of days" [ngClass]="hasBooking(local, i)" (click)="onAction(local, i)">
       <div ></div>
       <ng-container *ngIf="isToday(i, currentMonth)">
       <div class="today-marker"></div>

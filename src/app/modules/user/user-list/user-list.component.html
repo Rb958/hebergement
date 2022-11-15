@@ -1,6 +1,6 @@
 <div class="tab-tools">
   <span class="tab-tools-title">{{'list_of_user' | translate}}</span>
-  
+
   <div>
     <button class="btn btn-primary" (click)="newUser()">
       <i class="fa fa-plus"></i>
@@ -25,6 +25,7 @@
             <th>{{'lastname' | translate}}</th>
             <th>{{'first_name' | translate}}</th>
             <th>{{'phone' | translate}}</th>
+            <th>{{'email' | translate}}</th>
             <th>{{'status' | translate}}</th>
             <th>Actions</th>
             </thead>
@@ -34,8 +35,9 @@
               <td>{{ user?.lastname }}</td>
               <td>{{ user?.firstname }}</td>
               <td>{{ user?.phone }}</td>
+              <td>{{ user?.email }}</td>
               <td>
-                <span class="status enable">{{'enable' | translate}}</span>
+                <span class="status enable">{{ user.enabled ? 'enable' : 'disable' | translate}}</span>
               </td>
               <td class="actions">
                 <div class="dropdown">
@@ -43,10 +45,15 @@
                     <i class="fa fa-ellipsis-v"></i>
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li class="dropdown-item" (click)="enableUser(user)">
-                        <i class="fa fa-trash"></i>
+                    <li class="dropdown-item" *ngIf="!user.enabled" (click)="enableUser(user)">
+                        <i class="fa fa-check"></i>
                         &nbsp;
                         {{'enable_user' | translate}}
+                    </li>
+                    <li class="dropdown-item" *ngIf="localData.userDetails?.role?.includes('ROLEADMIN')" (click)="initUser(user)">
+                      <i class="fa fa-check"></i>
+                      &nbsp;
+                      {{'init_password' | translate}}
                     </li>
                     <li class="dropdown-item" (click)="deleteUser(user)">
                         <i class="fa fa-trash"></i>

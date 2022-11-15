@@ -42,7 +42,7 @@ export class DeleteUserComponent implements OnInit {
       },
       error => {
         this.notifier.notify(
-          'Erreur de communication avec le serveur',
+          'Erreur lors du traitement de la requete. Veuillez reesayer et si le probleme persite contacter l\'equipe technique',
           'Notification',
           NotificationType.ERROR
         );

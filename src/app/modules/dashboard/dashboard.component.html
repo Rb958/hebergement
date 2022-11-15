@@ -1,362 +1,386 @@
-<div class=" row counter-card-wrapper mb-4">
-  <div class="col-md-3">
-    <counter-widget [value]="depenseMois" unit="FCFA" [isAmount]="true" title="Dépenses Par Mois"></counter-widget>
-  </div>
-  <div class="col-md-3">
-    <counter-widget title="Dépense par année" [isAmount]="true" unit="FCFA" [value]="depenseAn"></counter-widget>
-  </div>
-  <div class="col-md-3">
-    <div class="counter-widget">
-      <div class="icon icon-warn">
-        <i class='bx bx-receipt' ></i>
+<ng-container *ngIf="(statsDataState | async) as result" [ngSwitch]="result.dataState">
+  <ng-container *ngSwitchCase="0">
+    Loading...
+  </ng-container>
+  <ng-container *ngSwitchCase="1">
+    <div class=" row counter-card-wrapper mb-4">
+      <div class="col-md-3">
+        <counter-widget [value]="result.data.depenseMois" unit="FCFA" [isAmount]="true" title="Dépenses de ce mois"></counter-widget>
       </div>
-      <div class="counter-info">
-        <span class="value">15</span>
-        <span class="title">Facture Fournisseur</span>
-        <span class="sub-value">395 500 FCFA</span>
+      <div class="col-md-3">
+        <counter-widget title="Dépense de cette année" [isAmount]="true" unit="FCFA" [value]="result.data.depenseAnnee"></counter-widget>
+      </div>
+      <div class="col-md-3">
+        <div class="counter-widget">
+          <div class="icon icon-warn">
+            <i class='bx bx-receipt' ></i>
+          </div>
+          <div class="counter-info">
+            <span class="value">{{result.data.nbrFactFour}}</span>
+            <span class="title">Facture Fournisseur</span>
+            <span class="sub-value">{{result.data.detteFour | hundredSeparator}} FCFA</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="counter-widget">
+          <div class="icon icon-danger">
+            <i class='bx bx-calendar-exclamation' ></i>
+          </div>
+          <div class="counter-info">
+            <span class="value">0</span>
+            <span class="title">Bails à échéances</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="counter-widget">
+          <div class="icon icon-danger">
+            <i class='bx bx-calendar-minus'></i>
+          </div>
+          <div class="counter-info">
+            <span class="value">0</span>
+            <span class="title">Bails expirés</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="counter-widget">
+          <div class="icon icon-green">
+            <i class='bx bx-building-house' ></i>
+          </div>
+          <div class="counter-info">
+            <span class="value">{{ result.data.tom }}%</span>
+            <span class="title">Taux d'occuptation</span>
+            <span class="sub-value">Logement meublé (Ce jour)</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="counter-widget">
+          <div class="icon icon-green">
+            <i class='bx bx-building-house'></i>
+          </div>
+          <div class="counter-info">
+            <span class="value">{{ result.data.tonm }}%</span>
+            <span class="title">Taux d'occupation</span>
+            <span class="sub-value">Logement non meublé (Ce jour)</span>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-md-3">
+        <div class="counter-widget">
+          <div class="icon icon-green">
+            <i class='bx bxs-component' ></i>
+          </div>
+          <div class="counter-info">
+            <span class="value">0 FCFA</span>
+            <span class="title">Valeur du stock</span>
+          </div>
+        </div>
+      </div> -->
+      <div class="col-md-3">
+        <div class="counter-widget">
+          <div class="icon icon-danger">
+            <i class='bx bx-receipt' ></i>
+          </div>
+          <div class="counter-info">
+            <span class="value">{{result.data.detteFour | hundredSeparator}} FCFA</span>
+            <span class="title">Dette fournisseur</span>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-md-3">
-    <div class="counter-widget">
-      <div class="icon icon-danger">
-        <i class='bx bx-calendar-exclamation' ></i>
-      </div>
-      <div class="counter-info">
-        <span class="value">09</span>
-        <span class="title">Bails à échéances</span>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="counter-widget">
-      <div class="icon icon-danger">
-        <i class='bx bx-calendar-minus'></i>
-      </div>
-      <div class="counter-info">
-        <span class="value">20</span>
-        <span class="title">Bails expirés</span>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="counter-widget">
-      <div class="icon icon-green">
-        <i class='bx bx-building-house' ></i>
-      </div>
-      <div class="counter-info">
-        <span class="value">85%</span>
-        <span class="title">Taux d'occuptation</span>
-        <span class="sub-value">Logement meublé (Ce jour)</span>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="counter-widget">
-      <div class="icon icon-green">
-        <i class='bx bx-building-house'></i>
-      </div>
-      <div class="counter-info">
-        <span class="value">100%</span>
-        <span class="title">Taux d'occupation</span>
-        <span class="sub-value">Logement non meublé (Ce jour)</span>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="counter-widget">
-      <div class="icon icon-green">
-        <i class='bx bxs-component' ></i>
-      </div>
-      <div class="counter-info">
-        <span class="value">2 567 650 FCFA</span>
-        <span class="title">Valeur du stock</span>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="counter-widget">
-      <div class="icon icon-danger">
-        <i class='bx bx-receipt' ></i>
-      </div>
-      <div class="counter-info">
-        <span class="value">456 500 FCFA</span>
-        <span class="title">Dette fournisseur</span>
-      </div>
-    </div>
-  </div>
-</div>
 
-<div class="row chart-wrapper mb-4">
-  <div class="col-md-7">
-    <div class="ps-card">
-      <div class="ps-card-header">
-        <i class='bx bx-line-chart'></i>
-        <div class="ps-card-title">
-          <span>Evolution du chiffre d'affaire sur l'année (En ce jour)</span>
+    <div class="row chart-wrapper mb-4">
+      <div class="col-md-7">
+        <div class="ps-card">
+          <div class="ps-card-header">
+            <i class='bx bx-line-chart'></i>
+            <div class="ps-card-title">
+              <span>Evolution du chiffre d'affaire sur l'année (En ce jour)</span>
+            </div>
+          </div>
+          <div class="ps-card-body">
+            <canvas baseChart width="400" height="400"
+                    [data]="lineChartData"
+                    [options]="lineChartOptions"
+                    [type]="lineChartType"></canvas>
+          </div>
         </div>
       </div>
-      <div class="ps-card-body">
-        <canvas baseChart width="400" height="400"
-                [data]="lineChartData"
-                [options]="lineChartOptions"
-                [type]="lineChartType"></canvas>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-5">
-    <div class="ps-card">
-      <div class="ps-card-header">
-        <i class='bx bxs-doughnut-chart' ></i>
-        <div class="ps-card-title">
-          <span>Taux d'occupation par type de logement (En ce jour)</span>
-        </div>
-      </div>
-      <div class="ps-card-body">
-        <canvas baseChart
-                [data]="doughnutChartData"
-                [type]="doughnutChartType">
-        </canvas>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row top-wrapper">
-  <div class="col-md-4">
-    <div class="ps-card">
-      <div class="ps-card-header">
-        <div class="ps-card-title">Top 5 des meilleurs clients</div>
-      </div>
-      <div class="ps-card-body">
-        <div class="top-wrapper">
-          <div class="position">
-            <span>01</span>
+      <div class="col-md-5">
+        <div class="ps-card">
+          <div class="ps-card-header">
+            <i class='bx bxs-doughnut-chart' ></i>
+            <div class="ps-card-title">
+              <span>Taux d'occupation par type de logement (En ce jour)</span>
+            </div>
           </div>
-          <div class="left-info">
-            <span class="info-1">AKAWA Richie</span>
-            <span class="info-2">Préférence: logement meublés</span>
-            <span class="info-3">Enregistré il ya 2ans</span>
-          </div>
-          <div class="right-info">
-            <span class="info-1">3 545 500 FCFA</span>
-            <span class="info-2">Chiffre d'affaire généré</span>
+          <div class="ps-card-body">
+            <canvas baseChart
+                    [data]="doughnutChartData"
+                    [type]="doughnutChartType">
+            </canvas>
           </div>
         </div>
-        <div class="top-wrapper">
-          <div class="position">
-            <span>02</span>
+        <div class="ps-card mt-4">
+          <div class="ps-card-header">
+            <i class='bx bxs-doughnut-chart' ></i>
+            <div class="ps-card-title">
+              <span>Source d'information</span>
+            </div>
           </div>
-          <div class="left-info">
-            <span class="info-1">KEUMO Pierre</span>
-            <span class="info-2">Préférence: logement non meublés</span>
-            <span class="info-3">Enregistré il ya 5ans</span>
-          </div>
-          <div class="right-info">
-            <span class="info-1">2 235 000 FCFA</span>
-            <span class="info-2">Chiffre d'affaire généré</span>
-          </div>
-        </div>
-        <div class="top-wrapper">
-          <div class="position">
-            <span>03</span>
-          </div>
-          <div class="left-info">
-            <span class="info-1">SA'AH Mireille</span>
-            <span class="info-2">Préférence: logement meublés</span>
-            <span class="info-3">Enregistré il ya 7ans</span>
-          </div>
-          <div class="right-info">
-            <span class="info-1">2 035 000 FCFA</span>
-            <span class="info-2">Chiffre d'affaire généré</span>
-          </div>
-        </div>
-        <div class="top-wrapper">
-          <div class="position">
-            <span>04</span>
-          </div>
-          <div class="left-info">
-            <span class="info-1">NGOH Thomas</span>
-            <span class="info-2">Préférence: logement meublés</span>
-            <span class="info-3">Enregistré il ya 3ans</span>
-          </div>
-          <div class="right-info">
-            <span class="info-1">1 250 000 FCFA</span>
-            <span class="info-2">Chiffre d'affaire généré</span>
-          </div>
-        </div>
-        <div class="top-wrapper">
-          <div class="position">
-            <span>05</span>
-          </div>
-          <div class="left-info">
-            <span class="info-1">NGASSAM Blanche</span>
-            <span class="info-2">Préférence: logement meublés</span>
-            <span class="info-3">Enregistré il ya 7mois</span>
-          </div>
-          <div class="right-info">
-            <span class="info-1">1 050 000 FCFA</span>
-            <span class="info-2">Chiffre d'affaire généré</span>
+          <div class="ps-card-body">
+            <canvas baseChart
+                    [data]="siChartData"
+                    [type]="doughnutChartType">
+            </canvas>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="col-md-4">
-    <div class="ps-card">
-      <div class="ps-card-header">
-        <div class="ps-card-title">Top 5 des Logements le plus occupés</div>
+    <div class="row top-wrapper">
+      <div class="col-md-4">
+        <div class="ps-card">
+          <div class="ps-card-header">
+            <div class="ps-card-title">Top 5 des meilleurs clients</div>
+          </div>
+          <div class="ps-card-body">
+            <div class="top-wrapper">
+              <div class="position">
+                <span>01</span>
+              </div>
+              <div class="left-info">
+                <span class="info-1">AKAWA Richie</span>
+                <span class="info-2">Préférence: logement meublés</span>
+                <span class="info-3">Enregistré il ya 2ans</span>
+              </div>
+              <div class="right-info">
+                <span class="info-1">3 545 500 FCFA</span>
+                <span class="info-2">Chiffre d'affaire généré</span>
+              </div>
+            </div>
+            <div class="top-wrapper">
+              <div class="position">
+                <span>02</span>
+              </div>
+              <div class="left-info">
+                <span class="info-1">KEUMO Pierre</span>
+                <span class="info-2">Préférence: logement non meublés</span>
+                <span class="info-3">Enregistré il ya 5ans</span>
+              </div>
+              <div class="right-info">
+                <span class="info-1">2 235 000 FCFA</span>
+                <span class="info-2">Chiffre d'affaire généré</span>
+              </div>
+            </div>
+            <div class="top-wrapper">
+              <div class="position">
+                <span>03</span>
+              </div>
+              <div class="left-info">
+                <span class="info-1">SA'AH Mireille</span>
+                <span class="info-2">Préférence: logement meublés</span>
+                <span class="info-3">Enregistré il ya 7ans</span>
+              </div>
+              <div class="right-info">
+                <span class="info-1">2 035 000 FCFA</span>
+                <span class="info-2">Chiffre d'affaire généré</span>
+              </div>
+            </div>
+            <div class="top-wrapper">
+              <div class="position">
+                <span>04</span>
+              </div>
+              <div class="left-info">
+                <span class="info-1">NGOH Thomas</span>
+                <span class="info-2">Préférence: logement meublés</span>
+                <span class="info-3">Enregistré il ya 3ans</span>
+              </div>
+              <div class="right-info">
+                <span class="info-1">1 250 000 FCFA</span>
+                <span class="info-2">Chiffre d'affaire généré</span>
+              </div>
+            </div>
+            <div class="top-wrapper">
+              <div class="position">
+                <span>05</span>
+              </div>
+              <div class="left-info">
+                <span class="info-1">NGASSAM Blanche</span>
+                <span class="info-2">Préférence: logement meublés</span>
+                <span class="info-3">Enregistré il ya 7mois</span>
+              </div>
+              <div class="right-info">
+                <span class="info-1">1 050 000 FCFA</span>
+                <span class="info-2">Chiffre d'affaire généré</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="ps-card-body">
-        <div class="top-wrapper">
-          <div class="position">
-            <span>01</span>
+      <div class="col-md-4">
+        <div class="ps-card">
+          <div class="ps-card-header">
+            <div class="ps-card-title">Top 5 des Logements le plus occupés</div>
           </div>
-          <div class="left-info">
-            <span class="info-1">Appartement V2</span>
-            <span class="info-2">Meublé</span>
-            <span class="info-3">Enregistré il ya 8ans</span>
-          </div>
-          <div class="right-info">
-            <span class="info-1">6 545 500 FCFA</span>
-            <span class="info-2">Chiffre d'affaire généré</span>
+          <div class="ps-card-body">
+            <div class="top-wrapper">
+              <div class="position">
+                <span>01</span>
+              </div>
+              <div class="left-info">
+                <span class="info-1">Appartement V2</span>
+                <span class="info-2">Meublé</span>
+                <span class="info-3">Enregistré il ya 8ans</span>
+              </div>
+              <div class="right-info">
+                <span class="info-1">6 545 500 FCFA</span>
+                <span class="info-2">Chiffre d'affaire généré</span>
+              </div>
+            </div>
+            <div class="top-wrapper">
+              <div class="position">
+                <span>02</span>
+              </div>
+              <div class="left-info">
+                <span class="info-1">Studio SS20</span>
+                <span class="info-2">Meublé</span>
+                <span class="info-3">Enregistré il ya 8ans</span>
+              </div>
+              <div class="right-info">
+                <span class="info-1">5 890 000 FCFA</span>
+                <span class="info-2">Chiffre d'affaire généré</span>
+              </div>
+            </div>
+            <div class="top-wrapper">
+              <div class="position">
+                <span>03</span>
+              </div>
+              <div class="left-info">
+                <span class="info-1">Chambre A8</span>
+                <span class="info-2">Non meublé</span>
+                <span class="info-3">Enregistré il ya 8ans</span>
+              </div>
+              <div class="right-info">
+                <span class="info-1">3 655 000 FCFA</span>
+                <span class="info-2">Chiffre d'affaire généré</span>
+              </div>
+            </div>
+            <div class="top-wrapper">
+              <div class="position">
+                <span>04</span>
+              </div>
+              <div class="left-info">
+                <span class="info-1">Apparetement VIP</span>
+                <span class="info-2">Meublé</span>
+                <span class="info-3">Enregistré il ya 8ans</span>
+              </div>
+              <div class="right-info">
+                <span class="info-1">2 985 500 FCFA</span>
+                <span class="info-2">Chiffre d'affaire généré</span>
+              </div>
+            </div>
+            <div class="top-wrapper">
+              <div class="position">
+                <span>05</span>
+              </div>
+              <div class="left-info">
+                <span class="info-1">Apparement V2B</span>
+                <span class="info-2">Meublé</span>
+                <span class="info-3">Enregistré il ya 8ans</span>
+              </div>
+              <div class="right-info">
+                <span class="info-1">2 528 950 FCFA</span>
+                <span class="info-2">Chiffre d'affaire généré</span>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="top-wrapper">
-          <div class="position">
-            <span>02</span>
+      </div>
+      <div class="col-md-4">
+        <div class="ps-card">
+          <div class="ps-card-header">
+            <div class="ps-card-title">Top 5 des Logements le plus occupés</div>
           </div>
-          <div class="left-info">
-            <span class="info-1">Studio SS20</span>
-            <span class="info-2">Meublé</span>
-            <span class="info-3">Enregistré il ya 8ans</span>
-          </div>
-          <div class="right-info">
-            <span class="info-1">5 890 000 FCFA</span>
-            <span class="info-2">Chiffre d'affaire généré</span>
-          </div>
-        </div>
-        <div class="top-wrapper">
-          <div class="position">
-            <span>03</span>
-          </div>
-          <div class="left-info">
-            <span class="info-1">Chambre A8</span>
-            <span class="info-2">Non meublé</span>
-            <span class="info-3">Enregistré il ya 8ans</span>
-          </div>
-          <div class="right-info">
-            <span class="info-1">3 655 000 FCFA</span>
-            <span class="info-2">Chiffre d'affaire généré</span>
-          </div>
-        </div>
-        <div class="top-wrapper">
-          <div class="position">
-            <span>04</span>
-          </div>
-          <div class="left-info">
-            <span class="info-1">Apparetement VIP</span>
-            <span class="info-2">Meublé</span>
-            <span class="info-3">Enregistré il ya 8ans</span>
-          </div>
-          <div class="right-info">
-            <span class="info-1">2 985 500 FCFA</span>
-            <span class="info-2">Chiffre d'affaire généré</span>
-          </div>
-        </div>
-        <div class="top-wrapper">
-          <div class="position">
-            <span>05</span>
-          </div>
-          <div class="left-info">
-            <span class="info-1">Apparement V2B</span>
-            <span class="info-2">Meublé</span>
-            <span class="info-3">Enregistré il ya 8ans</span>
-          </div>
-          <div class="right-info">
-            <span class="info-1">2 528 950 FCFA</span>
-            <span class="info-2">Chiffre d'affaire généré</span>
+          <div class="ps-card-body">
+            <div class="top-wrapper">
+              <div class="position">
+                <span>01</span>
+              </div>
+              <div class="left-info">
+                <span class="info-1">Appartement V2</span>
+                <span class="info-2">Meublé</span>
+                <span class="info-3">Enregistré il ya 8ans</span>
+              </div>
+              <div class="right-info">
+                <span class="info-1">6 545 500 FCFA</span>
+                <span class="info-2">Chiffre d'affaire généré</span>
+              </div>
+            </div>
+            <div class="top-wrapper">
+              <div class="position">
+                <span>02</span>
+              </div>
+              <div class="left-info">
+                <span class="info-1">Studio SS20</span>
+                <span class="info-2">Meublé</span>
+                <span class="info-3">Enregistré il ya 8ans</span>
+              </div>
+              <div class="right-info">
+                <span class="info-1">5 890 000 FCFA</span>
+                <span class="info-2">Chiffre d'affaire généré</span>
+              </div>
+            </div>
+            <div class="top-wrapper">
+              <div class="position">
+                <span>03</span>
+              </div>
+              <div class="left-info">
+                <span class="info-1">Chambre A8</span>
+                <span class="info-2">Non meublé</span>
+                <span class="info-3">Enregistré il ya 8ans</span>
+              </div>
+              <div class="right-info">
+                <span class="info-1">3 655 000 FCFA</span>
+                <span class="info-2">Chiffre d'affaire généré</span>
+              </div>
+            </div>
+            <div class="top-wrapper">
+              <div class="position">
+                <span>04</span>
+              </div>
+              <div class="left-info">
+                <span class="info-1">Apparetement VIP</span>
+                <span class="info-2">Meublé</span>
+                <span class="info-3">Enregistré il ya 8ans</span>
+              </div>
+              <div class="right-info">
+                <span class="info-1">2 985 500 FCFA</span>
+                <span class="info-2">Chiffre d'affaire généré</span>
+              </div>
+            </div>
+            <div class="top-wrapper">
+              <div class="position">
+                <span>05</span>
+              </div>
+              <div class="left-info">
+                <span class="info-1">Apparement V2B</span>
+                <span class="info-2">Meublé</span>
+                <span class="info-3">Enregistré il ya 8ans</span>
+              </div>
+              <div class="right-info">
+                <span class="info-1">2 528 950 FCFA</span>
+                <span class="info-2">Chiffre d'affaire généré</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="col-md-4">
-    <div class="ps-card">
-      <div class="ps-card-header">
-        <div class="ps-card-title">Top 5 des Logements le plus occupés</div>
-      </div>
-      <div class="ps-card-body">
-        <div class="top-wrapper">
-          <div class="position">
-            <span>01</span>
-          </div>
-          <div class="left-info">
-            <span class="info-1">Appartement V2</span>
-            <span class="info-2">Meublé</span>
-            <span class="info-3">Enregistré il ya 8ans</span>
-          </div>
-          <div class="right-info">
-            <span class="info-1">6 545 500 FCFA</span>
-            <span class="info-2">Chiffre d'affaire généré</span>
-          </div>
-        </div>
-        <div class="top-wrapper">
-          <div class="position">
-            <span>02</span>
-          </div>
-          <div class="left-info">
-            <span class="info-1">Studio SS20</span>
-            <span class="info-2">Meublé</span>
-            <span class="info-3">Enregistré il ya 8ans</span>
-          </div>
-          <div class="right-info">
-            <span class="info-1">5 890 000 FCFA</span>
-            <span class="info-2">Chiffre d'affaire généré</span>
-          </div>
-        </div>
-        <div class="top-wrapper">
-          <div class="position">
-            <span>03</span>
-          </div>
-          <div class="left-info">
-            <span class="info-1">Chambre A8</span>
-            <span class="info-2">Non meublé</span>
-            <span class="info-3">Enregistré il ya 8ans</span>
-          </div>
-          <div class="right-info">
-            <span class="info-1">3 655 000 FCFA</span>
-            <span class="info-2">Chiffre d'affaire généré</span>
-          </div>
-        </div>
-        <div class="top-wrapper">
-          <div class="position">
-            <span>04</span>
-          </div>
-          <div class="left-info">
-            <span class="info-1">Apparetement VIP</span>
-            <span class="info-2">Meublé</span>
-            <span class="info-3">Enregistré il ya 8ans</span>
-          </div>
-          <div class="right-info">
-            <span class="info-1">2 985 500 FCFA</span>
-            <span class="info-2">Chiffre d'affaire généré</span>
-          </div>
-        </div>
-        <div class="top-wrapper">
-          <div class="position">
-            <span>05</span>
-          </div>
-          <div class="left-info">
-            <span class="info-1">Apparement V2B</span>
-            <span class="info-2">Meublé</span>
-            <span class="info-3">Enregistré il ya 8ans</span>
-          </div>
-          <div class="right-info">
-            <span class="info-1">2 528 950 FCFA</span>
-            <span class="info-2">Chiffre d'affaire généré</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+  </ng-container>
+  <ng-container *ngSwitchCase="2">
+    Error
+  </ng-container>
+</ng-container>

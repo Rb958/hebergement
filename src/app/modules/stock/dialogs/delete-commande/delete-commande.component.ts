@@ -54,7 +54,7 @@ export class DeleteCommandeComponent implements OnInit {
 
   private processError(error: any) {
     this.notifierService.notify(
-      'Erreur de communication avec le serveur',
+      'Erreur lors du traitement de la requete. Veuillez reesayer et si le probleme persite contacter l\'equipe technique',
       'Erreur',
       NotificationType.ERROR
     );

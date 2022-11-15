@@ -1,0 +1,202 @@
+<div class="tab-tools">
+  <span class="tab-tools-title">{{'details_depense' | translate}}</span>
+</div>
+<ng-container *ngIf="(depense$ | async) as result" [ngSwitch]="result?.dataState">
+  <ng-container *ngSwitchCase="0">
+    <div class="loader-spinner">
+      <img src="../../../../../assets/images/Spin-Preloader.gif" alt="Loading..." class="loading">
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="1">
+  <div class="ps-card">
+    <div class="ps-card-body">
+          <div class="caisse-info-wrapper">
+            <div class="info row">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <span class="title">Numero du local</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="value">{{ result.data?.local?.numeroLocal }}</span>
+                  </div>
+                </div>
+                <div class="row pt-4">
+                  <div class="col-md-6">
+                    <span class="title">Nom du local</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="value">{{ result.data?.local?.numeroLocal }}</span>
+                  </div>
+                </div>
+                <div class="row pt-4">
+                  <div class="col-md-6">
+                    <span class="title">Catégorie</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="value">{{ result.data?.categorie }}</span>
+                  </div>
+                </div>
+                <div class="row pt-4">
+                  <div class="col-md-6">
+                    <span class="title">Commentaire</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="value">{{ result?.data?.commentaire }}</span>
+                  </div>
+                </div>
+                <div class="row pt-4">
+                  <div class="col-md-6">
+                    <span class="title">{{'total_amount' | translate}}</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="value">{{ result?.data?.montant | hundredSeparator }} FCFA</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <span class="title">Demandeur</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="value">{{ result?.data?.demandeur }}</span>
+                  </div>
+                </div>
+                <div class="row pt-4">
+                  <div class="col-md-6">
+                    <span class="title">Type</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="value">{{ result?.data?.type }}</span>
+                  </div>
+                </div>
+                <div class="row pt-4">
+                  <div class="col-md-6">
+                    <span class="title">Validé par</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="value">{{ result?.data?.validatedBy }}</span>
+                  </div>
+                </div>
+                <div class="row pt-4">
+                  <div class="col-md-6">
+                    <span class="title">Status</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="value ps-chip" [ngClass]="getStatusStyle(result.data?.status)">{{ result?.data?.status }}</span>
+                  </div>
+                </div>
+                <div class="row pt-4">
+                  <div class="col-md-6">
+                    <span class="title">Date de création</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="value">{{ result?.data?.createdAt | date: 'dd-MM-yyyy HH:mm:ss' }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+    <div class="ps-card-footer" *ngIf="currentDepense?.paymentStatus != 'PAYE'">
+      <button class="btn btn-primary mx-4" (click)="addPayment(currentDepense)">
+        Ajouter un paiement
+      </button>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-md-5">
+      <div class="ps-card">
+        <div class="ps-card-header">
+          <span class="ps-card-title">Etat des paiements</span>
+        </div>
+        <div class="ps-card-body">
+          <div class="caisse-info-wrapper">
+            <div class="info row">
+              <div class="col-md-12">
+                <div class="row pt-4">
+                  <div class="col-md-6">
+                    <span class="title">Statut</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="value ps-chip" [ngClass]="getPeymentStatusStyle(result.data?.paymentStatus)">{{ result.data?.paymentStatus }}</span>
+                  </div>
+                </div>
+                <div class="row pt-4">
+                  <div class="col-md-6">
+                    <span class="title">Montant total</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="value">{{ result.data?.montant | hundredSeparator }} FCFA</span>
+                  </div>
+                </div>
+                <div class="row pt-4">
+                  <div class="col-md-6">
+                    <span class="title">Montant payé</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="value">{{ result.data?.paidAmount | hundredSeparator }} FCFA</span>
+                  </div>
+                </div>
+                <div class="row pt-4">
+                  <div class="col-md-6">
+                    <span class="title">Rest à payé</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="value">{{ result.data?.restAmount | hundredSeparator }} FCFA</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-7">
+      <div class="ps-card">
+        <div class="ps-card-header">
+          <span class="ps-card-title">Liste des paiements éffectués</span>
+        </div>
+        <div class="ps-card-body">
+          <mat-accordion class="mb-2" *ngFor="let payment of currentDepense.payments; let i = index">
+            <mat-expansion-panel hideToggle class="mb-2">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Paiement #{{ i + 1 }} du {{ payment?.createdAt | date:'dd/MM/yyyy' }} effectué à {{ payment?.createdAt | date:'HH:mm:ss' }} <span *ngIf="payment.validatedBy">Validé par {{ payment.validatedBy }}</span>
+                </mat-panel-title>
+                <mat-panel-description>
+                  <span class="ps-chip" [ngClass]="getStyle(payment.status)">{{ payment.status | translate}}</span>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <div class="row justify-content-end">
+                <div class="info-wrapper">
+                  <div class="info-item">
+                    <span class="element">Moyen de paiement</span>
+                    <span class="value">{{ payment?.paymentMethod }}</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="element">Montant</span>
+                    <span class="value">{{ payment?.amount }}</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="element">Reste</span>
+                    <span class="value">{{ payment?.rest }}</span>
+                  </div>
+                </div>
+              </div>
+              <mat-action-row *ngIf="payment?.status == 'PENDING' && localData.userDetails?.role == 'ROLEADMIN'">
+                <button rbButton class="btn btn-default mx-3" [loading]="rejectionLoading" (click)="rejectPayment(currentDepense, payment)">Rejeter</button>
+                <button rbButton class="btn btn-primary" [loading]="validationLoading" (click)="validatePayment(currentDepense, payment)">Valider</button>
+              </mat-action-row>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngSwitchCase="2">
+  Error
+</ng-container>
+</ng-container>

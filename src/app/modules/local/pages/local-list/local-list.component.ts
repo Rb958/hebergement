@@ -1,3 +1,4 @@
+import { NotifierService } from './../../../../shared/components/notification/notifier.service';
 import { Component, OnInit } from '@angular/core';
 import {catchError, map, Observable, of, startWith, tap} from "rxjs";
 import {DataStateEnum, DataStateProcessing} from "../../../../shared/utils/data-processing-state";
@@ -10,6 +11,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {DeleteLocalComponent} from "../../dialogs/delete-local/delete-local.component";
 import {EnableLocalComponent} from "../../enable-local/enable-local.component";
 import {ChartData, ChartType} from "chart.js";
+import { NotificationType } from 'src/app/shared/components/notification/notification-type';
+import {EditLocalComponent} from "../edit-local/edit-local.component";
+import {LocalHorsServiceComponent} from "../local-hors-service/local-hors-service.component";
 
 @Component({
   selector: 'app-local-list',
@@ -49,7 +53,8 @@ export class LocalListComponent implements OnInit {
     private dialog: MatDialog,
     private localService: LocalService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private notifierService: NotifierService
   ) { }
 
   ngOnInit(): void {
@@ -103,5 +108,46 @@ export class LocalListComponent implements OnInit {
 
   pad(number : number){
     return String(number).padStart(3, '0');
+  }
+
+  mettreHorsService(local: LocalModel){
+    const dialogRef = this.dialog.open(LocalHorsServiceComponent, {
+      width: '400px',
+      data: local
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result){
+        this.ngOnInit();
+      }
+    });
+  }
+
+  getStyle(status?: string | null){
+    if(status)
+    switch (status) {
+      case 'OCCUPE':
+        return 'chip-danger'
+      case 'LIBRE':
+        return 'chip-success';
+      case 'HORS_SERVICE':
+        default:
+        return 'chip-warning';
+    }
+    else
+    return 'chip-warning';
+  }
+
+  updateLocal(local: LocalModel) {
+    const dialogRef = this.dialog.open(EditLocalComponent, {
+      width: '900px',
+      data: local
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result){
+        this.ngOnInit();
+      }
+    })
   }
 }

@@ -31,6 +31,10 @@ export class PsToolbarComponent implements OnInit {
   handleMenu: EventEmitter<MenuState> = new EventEmitter<MenuState>();
   @Output()
   handleLogout: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  showProfile: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  showParams: EventEmitter<any> = new EventEmitter<any>();
 
   menuState: MenuState = MenuState.OPEN;
   searchValue: string = '';
@@ -60,6 +64,14 @@ export class PsToolbarComponent implements OnInit {
       this.search.emit(this.searchValue)
       this.searchValue = '';
     }
+  }
+
+  onShowProfile(){
+    this.showProfile.emit(true);
+  }
+
+  onShowParams(){
+    this.showParams.emit(true);
   }
 
   logout() {

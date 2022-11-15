@@ -1,3 +1,4 @@
+import { PsCommonModule } from './shared/components/ps-common/ps-common.module';
 import {LOCALE_ID, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import localeFr from '@angular/common/locales/fr';
@@ -40,7 +41,7 @@ import {ApiRequestInterceptor} from "./shared/interceptor/api-request.intercepto
     }),
     TranslateModule,
     LayoutModule,
-    AccountModule
+    PsCommonModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'fr-FR'},

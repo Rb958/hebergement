@@ -7,26 +7,26 @@
       <div class="col-md-6">
         <form [formGroup]="commandForm">
           <div class="form-item">
-            <label for="demandeur">{{'demandeur' | translate}}</label>
-            <div class="input-control" [class.error]="commandForm?.get('demandeur')?.touched && commandForm?.get('demandeur')?.hasError('required')" >
+            <label for="demandeur">{{'demandeur' | translate}}<span class="required">*</span></label>
+            <div class="input-control" [class.error]="commandForm.get('demandeur')?.touched && commandForm.get('demandeur')?.hasError('required')" >
               <input type="text" id="demandeur" formControlName="demandeur" name="demandeur" >
-              <span class="input-error-image" *ngIf="commandForm?.get('demandeur')?.touched && commandForm?.get('demandeur')?.hasError('required')">
+              <span class="input-error-image" *ngIf="commandForm.get('demandeur')?.touched && commandForm.get('demandeur')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
             </div>
             <span class="hint"></span>
-            <span class="hint error" *ngIf="commandForm?.get('demandeur')?.touched && commandForm?.get('demandeur')?.hasError('required')">{{'required_field' | translate}}</span>
+            <span class="hint error" *ngIf="commandForm.get('demandeur')?.touched && commandForm.get('demandeur')?.hasError('required')">{{'required_field' | translate}}</span>
           </div>
           <div class="form-item">
-            <label for="dateLivraison">{{'dateLivraison' | translate}}</label>
-            <div class="input-control" [class.error]="commandForm?.get('dateLivraison')?.touched && commandForm?.get('dateLivraison')?.hasError('required')" >
+            <label for="dateLivraison">{{'dateLivraison' | translate}}<span class="required">*</span></label>
+            <div class="input-control" [class.error]="commandForm.get('dateLivraison')?.touched && commandForm.get('dateLivraison')?.hasError('required')" >
               <input type="date" id="dateLivraison" formControlName="dateLivraison" name="dateLivraison" >
-              <span class="input-error-image" *ngIf="commandForm?.get('dateLivraison')?.touched && commandForm?.get('dateLivraison')?.hasError('required')">
+              <span class="input-error-image" *ngIf="commandForm.get('dateLivraison')?.touched && commandForm.get('dateLivraison')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
             </div>
             <span class="hint"></span>
-            <span class="hint error" *ngIf="commandForm?.get('dateLivraison')?.touched && commandForm?.get('dateLivraison')?.hasError('required')">{{'required_field' | translate}}</span>
+            <span class="hint error" *ngIf="commandForm.get('dateLivraison')?.touched && commandForm.get('dateLivraison')?.hasError('required')">{{'required_field' | translate}}</span>
           </div>
           <div class="form-item">
             <div class="question-item" >
@@ -38,7 +38,7 @@
             </div>
           </div>
           <div class="form-item">
-            <label>{{ 'fournisseur' | translate }}</label>
+            <label>{{ 'fournisseur' | translate }}<span class="required">*</span></label>
             <ng-container *ngIf="isEnterprise">
               <div class="input-control" formGroupName="fournisseurEntreprise">
                 <select class="input-control" formControlName="id" id="fournisseurEntreprise">
@@ -47,7 +47,7 @@
                 </select>
               </div>
               <span class="hint"></span>
-              <span class="hint error" *ngIf="commandForm?.get('fournisseurEntreprise')?.get('id')?.touched && commandForm?.get('fournisseurEntreprise')?.get('id')?.hasError('required')">{{'required_field' | translate}}</span>
+              <span class="hint error" *ngIf="commandForm.get('fournisseurEntreprise')?.get('id')?.touched && commandForm.get('fournisseurEntreprise')?.get('id')?.hasError('required')">{{'required_field' | translate}}</span>
             </ng-container>
             <ng-container *ngIf="!isEnterprise">
               <div class="input-control" formGroupName="fournisseurParticulier">
@@ -57,7 +57,7 @@
                 </select>
               </div>
               <span class="hint"></span>
-              <span class="hint error" *ngIf="commandForm?.get('fournisseurParticulier')?.get('id')?.touched && commandForm?.get('fournisseurParticulier')?.get('id')?.hasError('required')">{{'required_field' | translate}}</span>
+              <span class="hint error" *ngIf="commandForm.get('fournisseurParticulier')?.get('id')?.touched && commandForm.get('fournisseurParticulier')?.get('id')?.hasError('required')">{{'required_field' | translate}}</span>
             </ng-container>
           </div>
         </form>
@@ -65,37 +65,37 @@
       <div class="col-md-6">
         <form [formGroup]="ligneCmdForm" (ngSubmit)="addLigneCommande()">
           <div class="form-item">
-            <label for="article">{{'article' | translate}}</label>
-            <div class="input-control" formGroupName="article" [class.error]="ligneCmdForm?.get('article')?.touched && ligneCmdForm?.get('article')?.hasError('required')" >
+            <label for="article">{{'article' | translate}}<span class="required">*</span></label>
+            <div class="input-control" formGroupName="article" [class.error]="ligneCmdForm.get('article')?.touched && ligneCmdForm.get('article')?.hasError('required')" >
               <select name="article" id="article" formControlName="id">
                 <option value="">Selectionner un article</option>
                 <option [value]="article.id" *ngFor="let article of articles">{{ article?.designation }}</option>
               </select>
             </div>
             <span class="hint"></span>
-            <span class="hint error" *ngIf="ligneCmdForm?.get('article')?.touched && ligneCmdForm?.get('article')?.hasError('required')">{{'required_field' | translate}}</span>
+            <span class="hint error" *ngIf="ligneCmdForm.get('article')?.touched && ligneCmdForm.get('article')?.hasError('required')">{{'required_field' | translate}}</span>
           </div>
           <div class="form-item">
-            <label for="qte">{{'qte' | translate}}</label>
-            <div class="input-control" [class.error]="ligneCmdForm?.get('qte')?.touched && ligneCmdForm?.get('qte')?.hasError('required')" >
+            <label for="qte">{{'qte' | translate}}<span class="required">*</span></label>
+            <div class="input-control" [class.error]="ligneCmdForm.get('qte')?.touched && ligneCmdForm.get('qte')?.hasError('required')" >
               <input type="text" id="qte" formControlName="qte" name="qte" >
-              <span class="input-error-image" *ngIf="ligneCmdForm?.get('qte')?.touched && ligneCmdForm?.get('qte')?.hasError('required')">
+              <span class="input-error-image" *ngIf="ligneCmdForm.get('qte')?.touched && ligneCmdForm.get('qte')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
             </div>
             <span class="hint"></span>
-            <span class="hint error" *ngIf="ligneCmdForm?.get('qte')?.touched && ligneCmdForm?.get('qte')?.hasError('required')">{{'required_field' | translate}}</span>
+            <span class="hint error" *ngIf="ligneCmdForm.get('qte')?.touched && ligneCmdForm.get('qte')?.hasError('required')">{{'required_field' | translate}}</span>
           </div>
           <div class="form-item">
-            <label for="prixUnitaire">{{'prixUnitaire' | translate}}</label>
-            <div class="input-control" [class.error]="ligneCmdForm?.get('prixUnitaire')?.touched && ligneCmdForm?.get('prixUnitaire')?.hasError('required')" >
+            <label for="prixUnitaire">{{'prixUnitaire' | translate}}<span class="required">*</span></label>
+            <div class="input-control" [class.error]="ligneCmdForm.get('prixUnitaire')?.touched && ligneCmdForm.get('prixUnitaire')?.hasError('required')" >
               <input type="text" id="prixUnitaire" formControlName="prixUnitaire" name="prixUnitaire" >
-              <span class="input-error-image" *ngIf="ligneCmdForm?.get('prixUnitaire')?.touched && ligneCmdForm?.get('prixUnitaire')?.hasError('required')">
+              <span class="input-error-image" *ngIf="ligneCmdForm.get('prixUnitaire')?.touched && ligneCmdForm.get('prixUnitaire')?.hasError('required')">
                 <i class="fa fa-ban" aria-hidden="true"></i>
               </span>
             </div>
             <span class="hint"></span>
-            <span class="hint error" *ngIf="ligneCmdForm?.get('prixUnitaire')?.touched && ligneCmdForm?.get('prixUnitaire')?.hasError('required')">{{'required_field' | translate}}</span>
+            <span class="hint error" *ngIf="ligneCmdForm.get('prixUnitaire')?.touched && ligneCmdForm.get('prixUnitaire')?.hasError('required')">{{'required_field' | translate}}</span>
           </div>
           <div class="form-item">
             <button class="btn btn-primary" [disabled]="ligneCmdForm.invalid">

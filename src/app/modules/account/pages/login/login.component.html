@@ -5,32 +5,32 @@
       <form [formGroup]="loginForm" (submit)="submit()">
         <div class="form-item">
           <label for="username">{{'username' | translate}}</label>
-          <div class="input-control" [class.error]="loginForm?.get('username')?.touched && loginForm?.get('username')?.hasError('required')" >
+          <div class="input-control" [class.error]="loginForm.get('username')?.touched && loginForm.get('username')?.hasError('required')" >
       <span class="input-image">
         <i class="fa fa-user" aria-hidden="true" ></i>
       </span>
             <input type="text" id="username" formControlName="username" name="username" >
-            <span class="input-error-image" *ngIf="loginForm?.get('username')?.touched && loginForm?.get('username')?.hasError('required')">
+            <span class="input-error-image" *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.hasError('required')">
         <i class="fa fa-ban" aria-hidden="true"></i>
       </span>
           </div>
           <span class="hint"></span>
-          <span class="hint error" *ngIf="loginForm?.get('username')?.touched && loginForm?.get('username')?.hasError('required')">{{'required_field' | translate}}</span>
+          <span class="hint error" *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.hasError('required')">{{'required_field' | translate}}</span>
         </div>
 
         <div class="form-item">
           <label for="password">{{'password' | translate}}</label>
-          <div class="input-control" [class.error]="loginForm?.get('password')?.touched && loginForm?.get('password')?.hasError('required')" >
+          <div class="input-control" [class.error]="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')" >
       <span class="input-image">
         <i class="fa fa-lock" aria-hidden="true" ></i>
       </span>
             <input type="password" id="password" formControlName="password" name="username" >
-            <span class="input-error-image" *ngIf="loginForm?.get('password')?.touched && loginForm?.get('password')?.hasError('required')">
+            <span class="input-error-image" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')">
         <i class="fa fa-ban" aria-hidden="true"></i>
       </span>
           </div>
           <span class="hint"></span>
-          <span class="hint error" *ngIf="loginForm?.get('password')?.touched && loginForm?.get('password')?.hasError('required')">{{'required_field' | translate}}</span>
+          <span class="hint error" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')">{{'required_field' | translate}}</span>
         </div>
 
         <div class="form-item">

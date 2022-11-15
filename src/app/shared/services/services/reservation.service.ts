@@ -10,7 +10,6 @@ import {ReservationModel} from "../../models/entity/reservation.model";
   providedIn: 'root'
 })
 export class ReservationService extends HttpService{
-  
 
   url = 'api/booking';
 
@@ -34,12 +33,32 @@ export class ReservationService extends HttpService{
   getStats(){
     return this.get(`${this.url}/stats`);
   }
-  
+
   findById(id: any) {
     return this.get(`${this.url}/${id}`);
   }
 
+  getPayments(id: any) {
+    return this.get(`${this.url}/${id}/payments`);
+  }
+
   addPayment(userId: number | undefined, payment: any, bookingId: number) {
     return this.patch(`${this.url}/user/${userId}/payment/add/${bookingId}`, payment);
+  }
+
+  findAllByLocal(id: number) {
+    return this.get(`${this.url}/local/${id}`);
+  }
+
+  cancelv2(id: number, data: any, userId: number | undefined) {
+    return this.patch(`${this.url}/${id}/user/${userId}/v2/cancel`, data);
+  }
+
+  occuper(occupationReq: any) {
+    return this.post(`${this.url}/${occupationReq.bookingId}/occuper`, occupationReq);
+  }
+
+  cloturer(occupationReq: any) {
+    return this.post(`${this.url}/${occupationReq.bookingId}/cloturer`, occupationReq);
   }
 }

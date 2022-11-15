@@ -1,0 +1,36 @@
+<form>
+  <span matDialogTitle>Annulation d'un contrat de reservation {{ reservation.numReservation }}</span>
+  <div matDialogContent>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-item">
+          <label>Montant de la reservation</label>
+          <span class="price">{{ reservation.totalAmount || 0 | hundredSeparator }} FCFA</span>
+        </div>
+        <div class="form-item">
+          <label>Loyé à rembourser pour {{ getEcheanceInMonths() }} jour(s) restant</label>
+        <span class="price">{{ amountToPay || 0 | hundredSeparator }} FCFA</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-item">
+      <label for="loyer_a_payer">{{'loyer_a_payer' | translate}} (FCFA)</label>
+      <div class="input-control" [class.error]="cautionError">
+        <input type="number" id="loyer_a_payer" min="0" max="100" #loyerInput (keyup)="totalAPayer(loyerInput)" name="cautionPeriod">
+        <span class="input-error-image" *ngIf="cautionError">
+          <i class="fa fa-ban" aria-hidden="true"></i>
+        </span>
+      </div>
+      <span class="hint"></span>
+      <span class="hint error" *ngIf="cautionError">Le montant à rembourser doit être inferieur ou égale au produit du nombre de jours restant et le prix du local</span>
+    </div>
+    <div class="form-item">
+      <label>{{'amount_to_pay' | translate}}</label>
+      <span class="total-amount">{{ amountToPay || 0 | hundredSeparator }} FCFA</span>
+    </div>
+  </div>
+  <div mat-dialog-actions class="dialog-actions">
+    <button class="btn btn-default" [mat-dialog-close]="false">{{ 'cancel' | translate }}</button>
+    <button class="btn btn-primary" rbButton [loading]="loading" (click)="performAction()">{{ 'save' | translate }}</button>
+  </div>
+</form>

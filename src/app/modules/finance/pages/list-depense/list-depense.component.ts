@@ -1,3 +1,7 @@
+import { DepensePaymentComponent } from './../depense-payment/depense-payment.component';
+import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { AppStore, LocalData } from './../../../../shared/utils/app-store';
 import {Component, OnInit} from '@angular/core';
 import {catchError, map, Observable, of, startWith} from "rxjs";
 import {DataStateEnum, DataStateProcessing} from "../../../../shared/utils/data-processing-state";
@@ -23,14 +27,18 @@ export class ListDepenseComponent implements OnInit {
   pagesElementSize = [32, 64, 128, 256];
   totalPage = 0;
   depense$: Observable<DataStateProcessing<PageModel<DepenseModel>>> = {} as Observable<DataStateProcessing<PageModel<DepenseModel>>>;
-
+  localData: LocalData = {} as LocalData;
   constructor(
     private dialog: MatDialog,
     private depenseService: DepenseService,
-    private notifierService: NotifierService
+    private notifierService: NotifierService,
+    private appStore: AppStore,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    this.localData = this.appStore.getData();
     this.loadData();
   }
 
@@ -47,6 +55,10 @@ export class ListDepenseComponent implements OnInit {
         this.loadData();
       }
     );
+  }
+
+  showDetails(depense: DepenseModel){
+    this.router.navigate(['../details', depense.id], {relativeTo: this.route});
   }
 
   updateDepense(depense: DepenseModel){
@@ -95,7 +107,7 @@ export class ListDepenseComponent implements OnInit {
   }
 
   validateDepense(depense: DepenseModel) {
-    this.depenseService.validate(depense).subscribe(
+    this.depenseService.validate(depense, this.localData.userDetails?.userId).subscribe(
       apiResponse => {
         if (apiResponse.code == 200){
           this.notifierService.notify(
@@ -103,6 +115,7 @@ export class ListDepenseComponent implements OnInit {
             'Succès',
             NotificationType.SUCCESS
           );
+          this.loadData();
         }else{
           this.notifierService.notify(
             apiResponse.message,
@@ -113,7 +126,7 @@ export class ListDepenseComponent implements OnInit {
       },
       error => {
         this.notifierService.notify(
-          "Erreur de communication avec le serveur",
+          "Erreur lors du traitement de la requete. Veuillez reesayer et si le probleme persite contacter l\'equipe technique",
           'Erreur',
           NotificationType.ERROR
         );
@@ -121,7 +134,48 @@ export class ListDepenseComponent implements OnInit {
     );
   }
 
-  cloturerDepense(depense: DepenseModel) {
+  getStatusStyle(depenseStatus: string | undefined){
+    if(depenseStatus){
+      switch (depenseStatus) {
+        case 'VALIDE':
+          return 'chip-success';
+        case 'CLOTURE':
+          return 'chip-danger'
+        case 'REFUSE':
+          return 'chip-blue';
+        default :
+          return 'chip-warning'
+      }
+    }else{
+      return 'chip-warning';
+    }
+  }
 
+  cloturerDepense(depense: DepenseModel) {
+    this.depenseService.cloturer(depense).subscribe(
+      apiResponse => {
+        if (apiResponse.code == 200){
+          this.notifierService.notify(
+            apiResponse.message,
+            'Succès',
+            NotificationType.SUCCESS
+          );
+          this.loadData();
+        }else{
+          this.notifierService.notify(
+            apiResponse.message,
+            'Erreur',
+            NotificationType.ERROR
+          );
+        }
+      },
+      error => {
+        this.notifierService.notify(
+          "Erreur lors du traitement de la requete. Veuillez reesayer et si le probleme persite contacter l\'equipe technique",
+          'Erreur',
+          NotificationType.ERROR
+        );
+      }
+    );
   }
 }

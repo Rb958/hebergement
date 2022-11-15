@@ -1,3 +1,7 @@
+import { LocalData, AppStore } from 'src/app/shared/utils/app-store';
+import { RembourseReservationComponent } from './../rembourse-reservation/rembourse-reservation.component';
+import { Env } from './../../../../shared/utils/Env';
+import { DomSanitizer } from '@angular/platform-browser';
 import { NewPaymentsComponent } from './../new-payments/new-payments.component';
 import {Component, OnInit} from '@angular/core';
 import {catchError, map, Observable, of, startWith} from "rxjs";
@@ -11,6 +15,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {DeleteReservationComponent} from "../../delete-reservation/delete-reservation.component";
 import {NotifierService} from "../../../../shared/components/notification/notifier.service";
 import {ChartData, ChartType} from "chart.js";
+import * as moment from 'moment';
+import { NotificationType } from 'src/app/shared/components/notification/notification-type';
 
 @Component({
   selector: 'app-reservation-list',
@@ -24,6 +30,7 @@ export class ReservationListComponent implements OnInit {
   pagesElementSize = [32, 64, 128, 256];
   reservation$: Observable<DataStateProcessing<PageModel<ReservationModel>>> = {} as Observable<DataStateProcessing<PageModel<ReservationModel>>>;
   stats = {};
+  localData: LocalData | undefined;
   // Chart
   public doughnutChartLabels: string[] = [ 'Annulés', 'Confirmé', 'Cloturé' ];
   public doughnutChartData: ChartData<'doughnut'>;
@@ -34,7 +41,9 @@ export class ReservationListComponent implements OnInit {
     private route: ActivatedRoute,
     private reservationService: ReservationService,
     private dialog: MatDialog,
-    private notifierService: NotifierService
+    private notifierService: NotifierService,
+    private sanitizer: DomSanitizer,
+    private appStore: AppStore
   ) {
     this.doughnutChartData = {
       labels: this.doughnutChartLabels,
@@ -43,17 +52,40 @@ export class ReservationListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.localData = this.appStore.getData();
     this.loadData();
     this.getStats();
   }
 
+  notEnd(bail: ReservationModel){
+    return moment(bail.validite).isAfter(moment(new Date()));
+  }
+
   cancelBooking(reservation: ReservationModel) {
-    const dialogRef = this.dialog.open(DeleteReservationComponent,{
-      width: '400px',
-      data: {
-        booking: reservation
+    let dialogRef;
+    if (this.notEnd(reservation)) {
+      if(this.localData?.userDetails?.role == 'ROLEADMIN'){
+        dialogRef = this.dialog.open(RembourseReservationComponent,{
+          width: '700px',
+          data: reservation
+        });
+      }else{
+        this.notifierService.notify(
+          "Vous n'êtes pas autorisé à effectuer: Seule un administrateur peut traiter ce cas",
+          "Annulation d'une reservation",
+          NotificationType.ERROR
+        );
+        return ;
       }
-    });
+    }else{
+      dialogRef = this.dialog.open(DeleteReservationComponent,{
+        width: '400px',
+        data: {
+          booking: reservation
+        }
+      });
+    }
+
     dialogRef.afterClosed().subscribe(
       result => {
         if (result){
@@ -98,7 +130,7 @@ export class ReservationListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       result => {
         if (result){
-          this.loadData();
+          this.ngOnInit();
         }
       }
     );
@@ -138,5 +170,44 @@ export class ReservationListComponent implements OnInit {
         }
       }
     );
+  }
+
+  getDownloadLink(reservation: ReservationModel){
+    const server = Env.getEnv().server;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(server + 'api/booking/receipt/' + reservation.id);
+  }
+
+  getBookingStatusStyle(status?: string | null){
+    if(status)
+      switch (status) {
+        case 'CONFIRME':
+          return 'chip-success';
+        case 'CLOTURER':
+          return 'chip-blue';
+        case 'ATTENTE':
+          return 'chip-warning';
+        case 'ANNULE':
+        default:
+          return 'chip-danger';
+      }
+    else
+      return 'chip-warning';
+  }
+
+  getPaymentStatusStyle(status?: string | null){
+    if(status){
+      switch (status) {
+        case 'PAYE':
+          return 'chip-success';
+        case 'IMPAYE':
+          return 'chip-danger'
+        case 'REMBOURSÉ':
+          return 'chip-blue';
+        default :
+          return 'chip-warning'
+      }
+    }else{
+      return 'chip-warning';
+    }
   }
 }

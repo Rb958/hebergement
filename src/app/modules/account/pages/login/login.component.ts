@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit , OnDestroy{
           }else{
             this.loading = false;
             this.notifier.notify(
-              response.message,
+              'Echec d\'authentification',
               'Authentification',
               NotificationType.ERROR
             );
@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit , OnDestroy{
         error => {
         this.loading =false;
           this.notifier.notify(
-            'Probleme de communication avec le serveur',
+            'Erreur lors du traitement de la requete. Veuillez reesayer et si le probleme persite contacter l\'equipe technique',
             'Authentification',
             NotificationType.ERROR
           );

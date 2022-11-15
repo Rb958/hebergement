@@ -13,15 +13,18 @@
     <div class="page-content">
       <ps-toolbar
         [toolbarTitle]="currentTitle"
-        [userAvatar]="appStore.getData()?.userDetails?.avatar || ''"
-        [username]="appStore.getData()?.userDetails?.username"
-        [userRole]="appStore.getData()?.userDetails?.role"
+        [badgeValue]="appStore.getData().notifications.length"
+        [userAvatar]="appStore.getData().userDetails?.avatar || ''"
+        [username]="appStore.getData().userDetails?.username"
+        [userRole]="appStore.getData().userDetails?.role"
         (search)="onSearch($event)"
         (handleMenu)="onMenuHandled($event)"
         (handleLogout)="logout()"
+        (showProfile)="showProfile()"
+        (showParams)="showParams()"
       ></ps-toolbar>
       <router-outlet></router-outlet>
-      <ps-version [name]="localData?.appName" [version]="localData?.appVersion"></ps-version>
+      <!-- <ps-version [name]="localData.appName" [version]="localData.appVersion"></ps-version> -->
     </div>
   </div>
 </ng-container>

@@ -5,23 +5,29 @@ import {PayementsModel} from "./payements.model";
 export class BailModel{
   public id: number;
   public dateEntre: Date;
-  public validite: string | null;
+  public validite: Date | null;
   public numReservation: string | null;
   public statut: string | null;
   public sejour: number;
-  public echeance: number;
+  public echeance: string;
   public paidAmount: number;
   public totalAmount: number;
   public restAmount: number;
   public preriodUnit: string | null;
   public paymentStatus: string | null;
+  public caution: number| null;
+  public cautionPeriod: number | null;
   public createdAt: Date;
   public lastUpdatedAt: Date;
+  public sourceInfo: string;
   public local: LocalModel;
   public locataireSociete: LocataieSociete | null;
   public locataireParticulier: LocataireParticulierModel | null;
   public payements: Array<PayementsModel>;
   public pj: string | undefined;
+  public indiceEntre: any;
+  public indiceSortie: any;
+  public moyenneConso: any;
 
   constructor() {
     this.id = 0;
@@ -30,10 +36,13 @@ export class BailModel{
     this.numReservation = null;
     this.statut = null;
     this.sejour = 0;
-    this.echeance = 0;
+    this.echeance = '';
+    this.sourceInfo = '';
     this.paidAmount = 0;
     this.totalAmount = 0;
     this.restAmount = 0;
+    this.caution = 0;
+    this.cautionPeriod = 0;
     this.preriodUnit = null;
     this.paymentStatus = null;
     this.createdAt = new Date();

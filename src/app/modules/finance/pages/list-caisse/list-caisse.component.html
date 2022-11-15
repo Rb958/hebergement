@@ -4,14 +4,6 @@
 <ng-container *ngIf="isAdmin" >
   <div class="tab-tools">
     <span class="tab-tools-title">{{'list_of_caisse' | translate}}</span>
-    <div class="tab-export-tools">
-      <button class="btn btn-default">
-        <i class="fa fa-print"></i>
-      </button>
-      <button class="btn btn-default">
-        <i class="fa fa-download"></i>
-      </button>
-    </div>
     <div>
       <button class="btn btn-primary" (click)="newCaisse()">
         <i class="fa fa-plus"></i>
@@ -34,10 +26,10 @@
                 <th>Id</th>
                 <th>{{ 'nom' | translate}}</th>
                 <th>{{ 'ref' | translate}}</th>
-                <th>{{ 'status' | translate}}</th>
                 <th>{{ 'solde' | translate}}</th>
                 <th>{{ 'createdBy' | translate}}</th>
                 <th>{{ 'date_creation' | translate}}</th>
+                <th>{{ 'status' | translate}}</th>
                 <th>Actions</th>
               </thead>
               <tbody>
@@ -45,10 +37,10 @@
                   <td>{{ caisse?.id }}</td>
                   <td>{{ caisse?.nom }}</td>
                   <td>{{ caisse?.ref }}</td>
-                  <td>{{ caisse?.status }}</td>
-                  <td>{{ caisse?.solde }} FCFA</td>
+                  <td>{{ caisse?.solde | hundredSeparator}} FCFA</td>
                   <td>{{ caisse?.user?.firstname }} {{ caisse?.user?.lastname }}</td>
                   <td>{{ caisse?.createdAt | date:'dd-MM-yyyy'}}</td>
+                  <td>{{ caisse?.status }}</td>
                   <td class="actions">
                     <div class="dropdown">
                       <button class="btn btn-table-action" type="button" id="dropdownMenuButton1"
@@ -63,20 +55,37 @@
                             {{'delete' | translate}}
                           </a>
                         </li>
-                        <li (click)="updateCaisse(caisse)">
+                        <!-- <li (click)="updateCaisse(caisse)">
                           <a class="dropdown-item">
                             <i class="fa fa-trash"></i>
                             &nbsp;
                             {{'update' | translate}}
                           </a>
-                        </li>
-                        <li (click)="validate(caisse)" *ngIf="localData.userDetails?.role?.includes('ROLEADMIN')">
-                          <a class="dropdown-item">
-                            <i class="fa fa-trash"></i>
-                            &nbsp;
-                            {{'validate' | translate}}
-                          </a>
-                        </li>
+                        </li> -->
+
+                        <ng-container *ngIf="localData.userDetails?.role?.includes('ROLEADMIN')">
+                          <li (click)="showDetails(caisse)">
+                            <a class="dropdown-item">
+                              <i class="fa fa-eye"></i>
+                              &nbsp;
+                              {{'details' | translate}}
+                            </a>
+                          </li>
+                          <li (click)="validateOpening(caisse)" *ngIf="caisse.status === 'ATTENTE_OUVERTURE'">
+                            <a class="dropdown-item">
+                              <i class="fa fa-check"></i>
+                              &nbsp;
+                              {{'validateO' | translate}}
+                            </a>
+                          </li>
+                          <li (click)="validateClosing(caisse)" *ngIf="caisse.status === 'ATTENTE_FERMETURE'">
+                            <a class="dropdown-item">
+                              <i class="fa fa-check"></i>
+                              &nbsp;
+                              {{'validateF' | translate}}
+                            </a>
+                          </li>
+                        </ng-container>
                       </ul>
                     </div>
                   </td>

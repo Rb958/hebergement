@@ -28,6 +28,7 @@ export class LocalModel {
   public typePrix : string | null;
   public contrat : string | null;
   public status: string | null;
+  public numCptEneo: string | null;
   public bookings: Array<ReservationModel>;
   public immobilisations: Array<any>;
 
@@ -59,6 +60,7 @@ export class LocalModel {
     this.typePrix = null;
     this.contrat = null;
     this.status = null;
+    this.numCptEneo = null;
     this.bookings = [];
     this.immobilisations = [];
   }

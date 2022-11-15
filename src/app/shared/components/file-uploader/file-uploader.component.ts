@@ -73,14 +73,12 @@ export class FileUploaderComponent implements OnInit {
 
       case HttpEventType.UploadProgress:
         this.uploadPercent = Math.round(100 * event.loaded / (event.total ?? 0));
-        console.log(this.uploadPercent);
         if (progress) {
           progress.style.strokeDashoffset = String(145 - (145 * this.uploadPercent) / 100);
         }
         break;
       case HttpEventType.Response:
         if (event.body.code == HttpStatusCode.Ok.valueOf()) {
-          console.dir(event.body.result);
           this.uploadFinish = true;
           this.onFinish.emit(event.body.result);
           this.uploadMessage = "Successfully Updated";
@@ -88,7 +86,7 @@ export class FileUploaderComponent implements OnInit {
           this.loading = false;
           this.onError.emit(event.body);
         }
-        
+
         break;
       default:
         break;

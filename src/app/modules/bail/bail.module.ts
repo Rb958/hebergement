@@ -9,12 +9,19 @@ import {TranslateModule} from "@ngx-translate/core";
 import {NgChartsModule} from "ng2-charts";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatExpansionModule} from "@angular/material/expansion";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { NewBailComponent } from './dialog/new-bail/new-bail.component';
 import { LocalAvailableComponent } from './local-available/local-available.component';
 import {ButtonLoaderModule} from "../../shared/components/button-loader/button-loader.module";
 import { BailDetailsPageComponent } from './pages/bail-details-page/bail-details-page.component';
 import { BailPaymentDialogComponent } from './dialog/bail-payment-dialog/bail-payment-dialog.component';
+import { EditBailComponent } from './dialog/edit-bail/edit-bail.component';
+import { CancelBailComponent } from './dialog/cancel-bail/cancel-bail.component';
+import { RembourseBailComponent } from './dialog/rembourse-bail/rembourse-bail.component';
+import { ChangeLocalComponent } from './dialog/change-local/change-local.component';
+import { OccuperLocalDialogComponent } from './dialog/occuper-local-dialog/occuper-local-dialog.component';
+import { CloturerBailComponent } from './dialog/cloturer-bail/cloturer-bail.component';
 
 
 @NgModule({
@@ -23,11 +30,18 @@ import { BailPaymentDialogComponent } from './dialog/bail-payment-dialog/bail-pa
     NewBailComponent,
     LocalAvailableComponent,
     BailDetailsPageComponent,
-    BailPaymentDialogComponent
+    BailPaymentDialogComponent,
+    EditBailComponent,
+    CancelBailComponent,
+    RembourseBailComponent,
+    ChangeLocalComponent,
+    OccuperLocalDialogComponent,
+    CloturerBailComponent
   ],
   imports: [
     CommonModule,
     BailRoutingModule,
+    MatExpansionModule,
     TranslateModule,
     NgChartsModule,
     FileUploaderModule,

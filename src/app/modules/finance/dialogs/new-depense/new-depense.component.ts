@@ -1,17 +1,18 @@
+import { FournisseurParticulierModel } from './../../../../shared/models/entity/fournisseur-particulier.model';
+import { FournisseurEntrepriseModel } from './../../../../shared/models/entity/fournisseur-entreprise.model';
 import { LocalData, AppStore } from './../../../../shared/utils/app-store';
-import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {EmployeeService} from "../../../../shared/services/services/employee.service";
-import {NotifierService} from "../../../../shared/components/notification/notifier.service";
-import {EmployeModel} from "../../../../shared/models/entity/employe.model";
-import {ApiResponseModel} from "../../../../shared/models/api-response.model";
-import {NotificationType} from "../../../../shared/components/notification/notification-type";
-import {DepenseService} from "../../../../shared/services/services/depense.service";
-import {DepenseModel} from "../../../../shared/models/entity/depense.model";
-import {LocalModel} from "../../../../shared/models/entity/local.model";
-import {LocalService} from "../../../../shared/services/services/local.service";
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { NotifierService } from "../../../../shared/components/notification/notifier.service";
+import { ApiResponseModel } from "../../../../shared/models/api-response.model";
+import { NotificationType } from "../../../../shared/components/notification/notification-type";
+import { DepenseService } from "../../../../shared/services/services/depense.service";
+import { DepenseModel } from "../../../../shared/models/entity/depense.model";
+import { LocalModel } from "../../../../shared/models/entity/local.model";
+import { LocalService } from "../../../../shared/services/services/local.service";
 import { Subscription } from 'rxjs';
+import { FournisseurService } from 'src/app/shared/services/services/fournisseur.service';
 
 @Component({
   selector: 'app-new-depense',
@@ -32,7 +33,12 @@ export class NewDepenseComponent implements OnInit {
 
   loading = false;
 
+  isEnterprise = false;
+
   uploadSubscription: Subscription | undefined;
+
+  fournisseursParticuliers: Array<FournisseurParticulierModel> = [];
+  fournisseursEntreprise: Array<FournisseurEntrepriseModel> = [];
 
   constructor(
     private dialogRef: MatDialogRef<NewDepenseComponent>,
@@ -41,6 +47,7 @@ export class NewDepenseComponent implements OnInit {
     private depenseService: DepenseService,
     private notifierService: NotifierService,
     private localService: LocalService,
+    private fournisseurService: FournisseurService,
     private appStore: AppStore
   ) {
     this.isEdition = false;
@@ -50,6 +57,7 @@ export class NewDepenseComponent implements OnInit {
   ngOnInit(): void {
     this.isEdition = this.data.edition;
     this.loadLocals();
+    this.loadFournisseurs();
     if (this.data.edition){
       this.initForm(this.data.depense);
     }else{
@@ -65,6 +73,12 @@ export class NewDepenseComponent implements OnInit {
         local: this.fb.group({
           id: [depense?.local?.id]
         }),
+        fournisseurEntreprise: this.fb.group({
+          id: [depense?.fournisseurEntreprise?.id]
+        }),
+        fournisseurParticulier: this.fb.group({
+          id: [depense?.fournisseurParticulier?.id]
+        }),
         categorie: [depense?.categorie, Validators.required],
         montant: [depense?.montant, Validators.required],
         commentaire: [depense?.commentaire],
@@ -75,6 +89,12 @@ export class NewDepenseComponent implements OnInit {
         demandeur: [this.localData.userDetails?.firstname + ' ' + this.localData.userDetails?.lastname, Validators.required],
         type: ['', Validators.required],
         local: this.fb.group({
+          id: ['']
+        }),
+        fournisseurEntreprise: this.fb.group({
+          id: ['']
+        }),
+        fournisseurParticulier: this.fb.group({
           id: ['']
         }),
         categorie: ['', Validators.required],
@@ -88,6 +108,8 @@ export class NewDepenseComponent implements OnInit {
   saveDepense() {
     this.loading = true;
     this.depenseForm.value.pieceJointe = this.uploadedFileLink;
+    this.depenseForm.value.fournisseurEntreprise = (this.depenseForm.value.fournisseurEntreprise?.id) ? this.depenseForm.value.fournisseurEntreprise : null;
+    this.depenseForm.value.fournisseurParticulier = (this.depenseForm.value.fournisseurParticulier?.id) ? this.depenseForm.value.fournisseurParticulier : null;
     this.depenseForm.value.local = this.depenseForm.value.local.id == '' ? null : {id : this.depenseForm.value.local.id}
     if (this.depenseForm.valid && this.uploadSuccess) {
       if (!this.data.edition ) {
@@ -154,7 +176,7 @@ export class NewDepenseComponent implements OnInit {
 
   private processError(error: any) {
     this.notifierService.notify(
-      'Erreur de communication avec le serveur',
+      'Erreur lors du traitement de la requete. Veuillez reesayer et si le probleme persite contacter l\'equipe technique',
       'Erreur',
       NotificationType.ERROR
     );
@@ -175,6 +197,50 @@ export class NewDepenseComponent implements OnInit {
           NotificationType.ERROR
         );
         this.dialogRef.close(false);
+      }
+    );
+  }
+
+  private loadFournisseurs() {
+    this.fournisseurService.findAllFournisseurParticulier().subscribe(
+      apiResponse => {
+        if (apiResponse.code == 200){
+          this.fournisseursParticuliers = apiResponse.result;
+        }else{
+          this.notifierService.notify(
+            'Erreur lors de la recupération de la liste des Fournisseurs',
+            'Erreur',
+            NotificationType.ERROR
+          );
+        }
+      },
+      error => {
+        this.notifierService.notify(
+          'Erreur lors de la recupération de la liste des fournisseurs',
+          'Erreur',
+          NotificationType.ERROR
+        );
+      }
+    );
+
+    this.fournisseurService.findAllFournisseurEntreprise().subscribe(
+      apiResponse => {
+        if (apiResponse.code == 200){
+          this.fournisseursEntreprise = apiResponse.result;
+        }else{
+          this.notifierService.notify(
+            'Erreur lors de la recupération de la liste des fournisseurs',
+            'Erreur',
+            NotificationType.ERROR
+          );
+        }
+      },
+      error1 => {
+        this.notifierService.notify(
+          'Erreur lors de la recupération de la liste des fournisseurs',
+          'Erreur',
+          NotificationType.ERROR
+        );
       }
     );
   }

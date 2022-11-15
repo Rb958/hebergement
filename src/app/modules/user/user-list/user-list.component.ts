@@ -6,10 +6,11 @@ import {PageModel} from "../../../shared/models/page-model";
 import {UserService} from "../../../shared/services/services/user.service";
 import {MatDialog} from "@angular/material/dialog";
 import {HttpStatusCode} from "@angular/common/http";
-import {EditParameterComponent} from "../../parameters/pages/dialogs/edit-parameter/edit-parameter.component";
 import {NewUserComponent} from "../dialog/new-user/new-user.component";
 import {EnableUserComponent} from "../dialog/enable-user/enable-user.component";
 import {DeleteUserComponent} from "../dialog/delete-user/delete-user.component";
+import {AppStore, LocalData} from "../../../shared/utils/app-store";
+import {InitPassComponent} from "../dialog/init-pass/init-pass.component";
 
 @Component({
   selector: 'app-user-list',
@@ -27,12 +28,16 @@ export class UserListComponent implements OnInit {
 
   users$: Observable<DataStateProcessing<PageModel<UserModel>>> = {} as Observable<DataStateProcessing<PageModel<UserModel>>>;
 
+  localData: LocalData = {} as LocalData;
+
   constructor(
     private dialog: MatDialog,
-    private userService: UserService
+    private userService: UserService,
+    private appStore: AppStore
   ) { }
 
   ngOnInit(): void {
+    this.localData = this.appStore.getData();
     this.loadData();
   }
 
@@ -82,6 +87,19 @@ export class UserListComponent implements OnInit {
     const dialogRef = this.dialog.open(DeleteUserComponent, {
       width: '500px',
       data: user
+    });
+  }
+
+  initUser(user: UserModel) {
+    const dialogRef = this.dialog.open(InitPassComponent, {
+      width: '400px',
+      data: user
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result){
+        this.ngOnInit();
+      }
     });
   }
 }

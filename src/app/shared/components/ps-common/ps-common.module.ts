@@ -10,6 +10,7 @@ import { PsVersionComponent } from './ps-version/ps-version.component';
   ],
   imports: [
     CommonModule
-  ]
+  ],
+  exports: [PsVersionComponent]
 })
 export class PsCommonModule { }

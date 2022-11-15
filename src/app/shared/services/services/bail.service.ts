@@ -9,8 +9,7 @@ import {HttpService} from "../http-services/http.service";
   providedIn: 'root'
 })
 export class BailService extends HttpService{
-  
-  
+
   url = 'api/bail';
 
   getAllBailPaginated(pageIndex: number, pageSize: number, queryParam: any): Observable<ApiResponseModel<PageModel<BailModel>>> {
@@ -26,6 +25,10 @@ export class BailService extends HttpService{
     return this.post(`${this.url}/${userId}`, bail);
   }
 
+  update(bail: BailModel, userId: number | undefined) {
+    return this.patch(`${this.url}/${userId}`, bail);
+  }
+
   cancelBail(id: any) {
     return this.patch(`${this.url}/${id}/cancel`, {});
   }
@@ -34,11 +37,31 @@ export class BailService extends HttpService{
     return this.get(`${this.url}/stats`);
   }
 
+  getPayments(id: string | null) {
+    return this.get(`${this.url}/${id}/payments`);
+  }
+
   findById(id: string | null) {
     return this.get(`${this.url}/${id}`);
   }
 
   addPayment(userId: number | undefined, payment: any, bailId: number) {
     return this.patch(`${this.url}/user/${userId}/payment/add/${bailId}`, payment);
+  }
+
+  cancelv2(bailId: any, data: any, userId: any) {
+    return this.patch(`${this.url}/${bailId}/user/${userId}/v2/cancel`, data);
+  }
+
+  changeLocal(data: any, bailId: any) {
+    return this.patch(`${this.url}/${bailId}/update-local`, data);
+  }
+
+  occuper(occupationReq: any) {
+    return this.post(`${this.url}/${occupationReq.bailId}/occuper`, occupationReq);
+  }
+
+  cloturer(occupationReq: any) {
+    return this.post(`${this.url}/${occupationReq.bailId}/cloturer`, occupationReq);
   }
 }

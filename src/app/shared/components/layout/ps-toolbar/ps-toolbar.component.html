@@ -16,14 +16,18 @@
     </div>
   </div>
   <div class="ps-toolbar-actions" >
-    <div class="action-item">
+    <div class="action-item" matTooltip="Notifications">
       <div class="badge" *ngIf="badgeValue">
         <span>{{badgeValue}}</span>
       </div>
       <i class="fa fa-bell-o"></i>
+      <div class="submenu"></div>
     </div>
-    <div class="action-item" matTooltip="Paramètres">
+    <div class="action-item" matTooltip="Parametres" (click)="onShowParams()">
       <i class="fa fa-cogs"></i>
+    </div>
+    <div class="action-item" matTooltip="Profile" (click)="onShowProfile()">
+      <i class="fa fa-user"></i>
     </div>
     <div class="avatar dropdown show" (click)="logout()" matTooltip="Déconnexion">
       <a id="triggerId">

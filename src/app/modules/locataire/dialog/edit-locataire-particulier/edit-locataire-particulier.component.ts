@@ -40,6 +40,7 @@ export class EditLocataireParticulierComponent implements OnInit, OnDestroy {
 
   sumbitForm() {
     if (this.locatairePartForm.valid) {
+      this.locatairePartForm.value.pjCni = this.uploadedFileLink
       if (this.data.edition) {
         this.locataireService.updateLocataireParticulier(this.data.locataire.id, this.locatairePartForm.value).subscribe(
           apiResponse => {
@@ -69,7 +70,6 @@ export class EditLocataireParticulierComponent implements OnInit, OnDestroy {
       } else {
         this.locatairePartForm.value.type = 'particulier'
         if (this.uploadedFileLink) {
-          this.locatairePartForm.value.pjCni = this.uploadedFileLink
           this.locataireService.saveLocataireParticulier(this.locatairePartForm.value).subscribe(
             apiResponse => {
               if (apiResponse.code == 200) {

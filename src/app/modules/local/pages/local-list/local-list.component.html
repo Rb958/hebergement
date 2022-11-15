@@ -1,6 +1,6 @@
 <div class="tab-tools">
   <span class="tab-tools-title">{{'list_of_locals' | translate}}</span>
-  
+
   <div>
     <button class="btn btn-primary" (click)="createLocal()">
       <i class="fa fa-plus"></i>
@@ -28,7 +28,7 @@
                 <th>{{ 'building_name' | translate}}</th>
                 <th>{{ 'category' | translate}}</th>
                 <!-- <th>{{ 'localization' | translate}}</th> -->
-                <!-- <th>{{ 'status' | translate }}</th> -->
+                <th>{{ 'status' | translate }}</th>
                 <th>Actions</th>
                 </thead>
                 <tbody>
@@ -39,7 +39,7 @@
                   <td>{{local?.immeuble}}</td>
                   <td>{{local?.categorie}}</td>
                   <!-- <td>{{local?.localisation}}</td> -->
-                  <!-- <td>{{local?.status}}</td> -->
+                  <td><span class="ps-chip" [ngClass]="getStyle(local?.status)">{{local?.status}}</span></td>
                   <td class="actions">
                     <div class="dropdown">
                       <button class="btn btn-table-action" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -48,9 +48,16 @@
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li (click)="showDetails(local)">
                           <a class="dropdown-item" >
-                            <i class="fa fa-trash"></i>
+                            <i class="fa fa-eye"></i>
                             &nbsp;
                             {{'details' | translate}}
+                          </a>
+                        </li>
+                        <li (click)="updateLocal(local)">
+                          <a class="dropdown-item" >
+                            <i class="fa fa-edit"></i>
+                            &nbsp;
+                            {{'update' | translate}}
                           </a>
                         </li>
                         <li (click)="deleteLocal(local)">
@@ -58,6 +65,13 @@
                             <i class="fa fa-trash"></i>
                             &nbsp;
                             {{'delete' | translate}}
+                          </a>
+                        </li>
+                        <li (click)="mettreHorsService(local)">
+                          <a class="dropdown-item">
+                            <i class="fa fa-ban"></i>
+                            &nbsp;
+                            {{'hors_service' | translate}}
                           </a>
                         </li>
                       </ul>

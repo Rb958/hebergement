@@ -12,7 +12,7 @@ import { NotificationType } from 'src/app/shared/components/notification/notific
   styleUrls: ['./caisse-close.component.scss']
 })
 export class CaisseCloseComponent implements OnInit {
-  
+
   loading: boolean = false;
 
   closeSubscription: Subscription = {} as Subscription;
@@ -50,7 +50,7 @@ export class CaisseCloseComponent implements OnInit {
       error => {
         this.loading = false;
         this.notifierService.notify(
-          'Probleme de communication avec le serveur',
+          'Erreur lors du traitement de la requete. Veuillez reesayer et si le probleme persite contacter l\'equipe technique',
           'Cloture de caisse',
           NotificationType.ERROR
         );

@@ -1,3 +1,4 @@
+import { LoginGuard } from './shared/guards/login.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {NotFoundComponent} from "./modules/common/not-found/not-found.component";
@@ -11,6 +12,8 @@ const routes: Routes = [
   },
   {
     path: 'account',
+    canLoad: [LoginGuard],
+    canActivateChild: [LoginGuard],
     loadChildren: () => import('./modules/account/account.module').then(m => m.AccountModule)
   },
   {

@@ -1,3 +1,5 @@
+import { DepenseModel } from 'src/app/shared/models/entity/depense.model';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {catchError, map, Observable, of, startWith} from "rxjs";
 import {DataStateEnum, DataStateProcessing} from "../../../../shared/utils/data-processing-state";
@@ -33,13 +35,19 @@ export class ListCaisseComponent implements OnInit {
     private dialog: MatDialog,
     private caisseService: CaisseService,
     private notifierService: NotifierService,
-    private appStore: AppStore
+    private appStore: AppStore,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.localData = this.appStore.getData();
     this.isAdmin = this.localData.userDetails?.role?.includes("ROLEADMIN");
     this.loadData();
+  }
+
+  showDetails(caisse: CaisseModel){
+    this.router.navigate(['../details', caisse.id], {relativeTo: this.route});
   }
 
   newCaisse() {
@@ -102,8 +110,8 @@ export class ListCaisseComponent implements OnInit {
     );
   }
 
-  validate(caisse: CaisseModel) {
-    this.caisseService.validate(caisse).subscribe(
+  validateOpening(caisse: CaisseModel) {
+    this.caisseService.validateOpenRequest(caisse).subscribe(
       apiResponse => {
         if (apiResponse.code == 200) {
           this.notifierService.notify(
@@ -111,6 +119,7 @@ export class ListCaisseComponent implements OnInit {
             'Succès',
             NotificationType.SUCCESS
           );
+          this.loadData();
         } else {
           this.notifierService.notify(
             apiResponse.message,
@@ -121,7 +130,35 @@ export class ListCaisseComponent implements OnInit {
       },
       error => {
         this.notifierService.notify(
-          'Erreur de communication avec le serveur',
+          'Erreur lors du traitement de la requete. Veuillez reesayer et si le probleme persite contacter l\'equipe technique',
+          'Erreur',
+          NotificationType.ERROR
+        );
+      }
+    );
+  }
+
+  validateClosing(caisse: CaisseModel) {
+    this.caisseService.validateCloseRequest(caisse).subscribe(
+      apiResponse => {
+        if (apiResponse.code == 200) {
+          this.notifierService.notify(
+            "Caisse fermé avec succès",
+            'Succès',
+            NotificationType.SUCCESS
+          );
+          this.loadData();
+        } else {
+          this.notifierService.notify(
+            apiResponse.message,
+            'Erreur',
+            NotificationType.ERROR
+          );
+        }
+      },
+      error => {
+        this.notifierService.notify(
+          'Erreur lors du traitement de la requete. Veuillez reesayer et si le probleme persite contacter l\'equipe technique',
           'Erreur',
           NotificationType.ERROR
         );

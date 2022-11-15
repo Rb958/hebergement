@@ -19,34 +19,34 @@
                 <option value="MAGASIN">Magasin</option>
                 <option value="BUREAU">Bureau</option>
               </select>
-              <span class="input-error-image" *ngIf="bookingSearchForm?.get('immeuble')?.touched && bookingSearchForm?.get('immeuble')?.hasError('required')">
+              <span class="input-error-image" *ngIf="bookingSearchForm.get('typeLocal')?.touched && bookingSearchForm.get('typeLocal')?.hasError('required')">
                 <i class="fa fa-ban" aria-hidden="true"></i>
               </span>
             </div>
             <span class="hint"></span>
-            <span class="hint error" *ngIf="bookingSearchForm?.get('immeuble')?.touched && bookingSearchForm?.get('immeuble')?.hasError('required')">{{'required_field' | translate}}</span>
+            <span class="hint error" *ngIf="bookingSearchForm.get('typeLocal')?.touched && bookingSearchForm.get('typeLocal')?.hasError('required')">{{'required_field' | translate}}</span>
           </div>
           <div class="form-item">
-            <label for="startDate">{{'startDate' | translate}}</label>
-            <div class="input-control"  [class.error]="bookingSearchForm?.get('startDate')?.touched && bookingSearchForm?.get('startDate')?.hasError('required')" >
+            <label for="startDate">{{'startDate' | translate}}<span class="required">*</span></label>
+            <div class="input-control"  [class.error]="bookingSearchForm.get('startDate')?.touched && bookingSearchForm.get('startDate')?.hasError('required')" >
               <input type="date" placeholder="2" id="startDate" #startDateInput formControlName="startDate" name="startDate" >
-              <span class="input-error-image" *ngIf="bookingSearchForm?.get('startDate')?.touched && bookingSearchForm?.get('startDate')?.hasError('required')">
+              <span class="input-error-image" *ngIf="bookingSearchForm.get('startDate')?.touched && bookingSearchForm.get('startDate')?.hasError('required')">
                 <i class="fa fa-ban" aria-hidden="true"></i>
               </span>
             </div>
             <span class="hint"></span>
-            <span class="hint error" *ngIf="bookingSearchForm?.get('startDate')?.touched && bookingSearchForm?.get('startDate')?.hasError('required')">{{'required_field' | translate}}</span>
+            <span class="hint error" *ngIf="bookingSearchForm.get('startDate')?.touched && bookingSearchForm.get('startDate')?.hasError('required')">{{'required_field' | translate}}</span>
           </div>
           <div class="form-item">
-            <label for="endDate">{{'endDate' | translate}}</label>
-            <div class="input-control"  [class.error]="bookingSearchForm?.get('endDate')?.touched && bookingSearchForm?.get('endDate')?.hasError('required')" >
+            <label for="endDate">{{'endDate' | translate}}<span class="required">*</span></label>
+            <div class="input-control"  [class.error]="bookingSearchForm.get('endDate')?.touched && bookingSearchForm.get('endDate')?.hasError('required')" >
               <input type="date" placeholder="2" id="endDate" #endDateInput formControlName="endDate" name="endDate" >
-              <span class="input-error-image" *ngIf="bookingSearchForm?.get('endDate')?.touched && bookingSearchForm?.get('endDate')?.hasError('required')">
+              <span class="input-error-image" *ngIf="bookingSearchForm.get('endDate')?.touched && bookingSearchForm.get('endDate')?.hasError('required')">
                 <i class="fa fa-ban" aria-hidden="true"></i>
               </span>
             </div>
             <span class="hint"></span>
-            <span class="hint error" *ngIf="bookingSearchForm?.get('endDate')?.touched && bookingSearchForm?.get('endDate')?.hasError('required')">{{'required_field' | translate}}</span>
+            <span class="hint error" *ngIf="bookingSearchForm.get('endDate')?.touched && bookingSearchForm.get('endDate')?.hasError('required')">{{'required_field' | translate}}</span>
           </div>
           <div class="form-item">
             <button rbButton [loading]="loadingSearch" class="btn btn-primary btn-block" (click)="onSearch()">

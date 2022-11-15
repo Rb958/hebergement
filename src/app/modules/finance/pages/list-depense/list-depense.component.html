@@ -1,6 +1,6 @@
 <div class="tab-tools">
   <span class="tab-tools-title">{{'list_of_depense' | translate}}</span>
-  
+
   <div>
     <button class="btn btn-primary" (click)="newDepense()">
       <i class="fa fa-plus"></i>
@@ -20,29 +20,30 @@
         <div class="table-content">
           <table>
             <thead>
-            <th>Id</th>
             <th>{{ 'demandeur' | translate}}</th>
             <th>{{ 'local' | translate}}</th>
-            <th>{{ 'categorie' | translate}}</th>
-            <th>{{ 'status' | translate}}</th>
             <th>{{ 'type' | translate}}</th>
-            <th>{{ 'montant' | translate}}</th>
+            <th>{{ 'total_amount' | translate}}</th>
+            <th>{{ 'paid_amount' | translate}}</th>
+            <th>{{ 'rest_amount' | translate}}</th>
             <th>{{ 'validated_by' | translate}}</th>
             <th>{{ 'date_creation' | translate}}</th>
+            <th>{{ 'status' | translate}}</th>
             <th>Actions</th>
             </thead>
             <tbody>
             <tr *ngFor="let depense of result?.data?.content">
-              <td>{{ depense?.id }}</td>
               <td>{{ depense?.demandeur }}</td>
               <td>{{ depense?.local?.nomLocal }} {{ depense?.local?.numeroLocal }}</td>
-              <td>{{ depense?.categorie }}</td>
-              <td>{{ depense?.status }}</td>
+              <!-- <td>{{ depense?.categorie }}</td> -->
               <td>{{ depense?.type }}</td>
-              <td>{{ depense?.montant }}</td>
+              <td>{{ depense?.montant | hundredSeparator}} FCFA</td>
+              <td>{{ depense?.paidAmount| hundredSeparator}} FCFA</td>
+              <td>{{ depense?.restAmount| hundredSeparator}} FCFA</td>
               <td>{{ depense?.validatedBy }}</td>
-              <td>{{ depense?.commentaire }}</td>
+              <!-- <td>{{ depense?.commentaire }}</td> -->
               <td>{{ depense?.createdAt | date:'dd-MM-yyyy'}}</td>
+              <td><span class="ps-chip" [ngClass]="getStatusStyle(depense.status)">{{ depense?.status }}</span></td>
               <td class="actions">
                 <div class="dropdown">
                   <button class="btn btn-table-action" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -56,24 +57,33 @@
                         {{'delete' | translate}}
                       </a>
                     </li>
+                    <li (click)="showDetails(depense)">
+                      <a class="dropdown-item">
+                        <i class="fa fa-eye"></i>
+                        &nbsp;
+                        {{'details' | translate}}
+                      </a>
+                    </li>
                     <li (click)="updateDepense(depense)">
                       <a class="dropdown-item">
-                        <i class="fa fa-trash"></i>
+                        <i class="fa fa-edit"></i>
                         &nbsp;
                         {{'update' | translate}}
                       </a>
                     </li>
-                    <li (click)="validateDepense(depense)">
-                      <a class="dropdown-item">
-                        <i class="fa fa-trash"></i>
-                        &nbsp;
-                        {{'validate' | translate}}
-                      </a>
-                    </li>
-                    <ng-container *ngIf="depense?.status != 'VALIDE'">
+                    <ng-container *ngIf="(depense?.status != 'VALIDE' && depense?.status != 'CLOTURE') && localData?.userDetails?.role?.includes('ROLEADMIN')">
+                      <li (click)="validateDepense(depense)">
+                        <a class="dropdown-item">
+                          <i class="fa fa-check"></i>
+                          &nbsp;
+                          {{'validate' | translate}}
+                        </a>
+                      </li>
+                    </ng-container>
+                    <ng-container *ngIf="(depense?.status != 'VALIDE' && depense?.status != 'CLOTURE') && localData?.userDetails?.role?.includes('ROLEADMIN')">
                       <li (click)="cloturerDepense(depense)">
                         <a class="dropdown-item">
-                          <i class="fa fa-trash"></i>
+                          <i class="fa fa-ban"></i>
                           &nbsp;
                           {{'close' | translate}}
                         </a>

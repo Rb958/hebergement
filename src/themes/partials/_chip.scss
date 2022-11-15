@@ -20,12 +20,19 @@
     background-color: #e3f9e9;
     color: #2BC155;
   }
+
   &.chip-danger{
     background-color: #fde5e8;
     color: #c12b3d;
   }
+
   &.chip-warning{
     background-color: #fcf8e3;
     color: #c1ad2b;
+  }
+
+  &.chip-blue{
+    background-color: #e5f0fd;
+    color: #387bcd;
   }
 }

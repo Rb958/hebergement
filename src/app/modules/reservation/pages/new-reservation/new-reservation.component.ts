@@ -49,13 +49,16 @@ export class NewReservationComponent implements OnInit {
         endDate: this.bookingSearchForm.value.endDate
       }
     });
+    dialog.afterClosed().subscribe(result => {
+      this.router.navigateByUrl('/reservation/reservation-list');
+    })
   }
 
   private initSearchForm() {
     this.bookingSearchForm = this.fb.group({
       startDate: [null,Validators.required],
       endDate: [null,Validators.required],
-      typeLocal: ['', Validators.required]
+      typeLocal: ['']
     });
   }
 

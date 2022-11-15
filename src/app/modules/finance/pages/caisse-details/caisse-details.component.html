@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="caisse-details.component.scss">
+<!-- <link rel="stylesheet" href="caisse-details.component.scss"> -->
 <div class="tab-tools">
     <span class="tab-tools-title">{{'journal_caisse' | translate}}</span>
   </div>
@@ -48,9 +48,9 @@
         </div>
         <div class="actions pt-5">
           <h4>Actions sur la caisse</h4>
-          <button class="btn btn-primary" (click)="closeCaisse(currentCaisse)">Fermer la caisse</button>
-          <button class="btn btn-default" (click)="print(currentCaisse)"> <i class="fa fa-print" aria-hidden="true"></i> Imprimer</button>
-          <button class="btn btn-default" (click)="transfert(currentCaisse)"> <i class="fa fa-exchange" aria-hidden="true"></i> Transferer les fonds</button>
+          <button class="btn btn-primary mx-4" (click)="closeCaisse(currentCaisse)">Fermer la caisse</button>
+          <a class="btn btn-default" [href]="print(currentCaisse)" target="_blank"> <i class="fa fa-print" aria-hidden="true"></i> Imprimer le journal</a>
+          <!-- <button class="btn btn-default" (click)="transfert(currentCaisse)"> <i class="fa fa-exchange" aria-hidden="true"></i> Transferer les fonds</button> -->
         </div>
       </div>
       <h4 class="pt-5">Résumé par moyen de paiement</h4>
@@ -68,10 +68,10 @@
               <tr *ngFor="let sousCaisse of currentCaisse.sousCaisses index as i" >
                 <td>{{ i + 1 }}</td>
                 <td>{{ sousCaisse.name }}</td>
-                <td>{{ sousCaisse.total }}</td>
-                <td>{{ sousCaisse.soldeInit }}</td>
-                <td>{{ sousCaisse.soldeFin }}</td>
-                <td>{{ sousCaisse.diff }}</td>
+                <td>{{ sousCaisse.total | hundredSeparator }} FCFA</td>
+                <td>{{ sousCaisse.soldeInit | hundredSeparator }} FCFA</td>
+                <td>{{ sousCaisse.soldeFin | hundredSeparator }} FCFA</td>
+                <td>{{ sousCaisse.diff | hundredSeparator }} FCFA</td>
               </tr>
           </tbody>
         </table>

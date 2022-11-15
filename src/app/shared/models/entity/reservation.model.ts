@@ -12,6 +12,7 @@ export class ReservationModel{
   public validite: string | null;
   public numReservation: string | null;
   public statut: string | null;
+  public sourceInfo: string | null;
   public sejour: number;
   public paidAmount: number;
   public totalAmount: number;
@@ -21,6 +22,9 @@ export class ReservationModel{
   public createdAt: Date;
   public lastUpdatedAt: Date;
   public local: LocalModel;
+  public indiceEntre: any;
+  public indiceSortie: any;
+  public moyenneConso: any;
   public locataireSociete: LocataieSociete | null;
   public locataireParticulier: LocataireParticulierModel | null;
   public payements: Array<PayementsModel>;
@@ -34,6 +38,7 @@ export class ReservationModel{
     this.telephone = null;
     this.validite = null;
     this.numReservation = null;
+    this.sourceInfo = null;
     this.statut = null;
     this.sejour = 0;
     this.paidAmount = 0;

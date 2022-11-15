@@ -1,3 +1,4 @@
+import { MatExpansionModule } from '@angular/material/expansion';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -17,6 +18,9 @@ import { CalendrierReservationComponent } from './pages/calendrier-reservation/c
 import {ButtonLoaderModule} from "../../shared/components/button-loader/button-loader.module";
 import { ReservationDetailsComponent } from './pages/reservation-details/reservation-details.component';
 import { CustomPipeModule } from 'src/app/shared/custom-pipe/custom-pipe.module';
+import { RembourseReservationComponent } from './pages/rembourse-reservation/rembourse-reservation.component';
+import { OccuperReservationComponent } from './pages/occuper-reservation/occuper-reservation.component';
+import { CloturerReservationComponent } from './pages/cloturer-reservation/cloturer-reservation.component';
 
 
 @NgModule({
@@ -28,7 +32,10 @@ import { CustomPipeModule } from 'src/app/shared/custom-pipe/custom-pipe.module'
     NewPaymentsComponent,
     BookingCalendarComponent,
     CalendrierReservationComponent,
-    ReservationDetailsComponent
+    ReservationDetailsComponent,
+    RembourseReservationComponent,
+    OccuperReservationComponent,
+    CloturerReservationComponent
   ],
     imports: [
         CommonModule,
@@ -36,6 +43,7 @@ import { CustomPipeModule } from 'src/app/shared/custom-pipe/custom-pipe.module'
         CustomPipeModule,
         TranslateModule,
         FormsModule,
+        MatExpansionModule,
         ReactiveFormsModule,
         MatDialogModule,
         MatPaginatorModule,

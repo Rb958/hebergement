@@ -24,12 +24,13 @@ export class BailPaymentDialogComponent implements OnInit {
   isLocataire: boolean = true;
   isParticulier: boolean = true;
   totalPrice : number = 0;
+  amountToPay = 0;
   discountAmount : number = 0;
   rest: number = 0;
   loading = false;
 
   localData: LocalData = {} as LocalData;
-  
+
   constructor(
     private dialogRef: MatDialogRef<ReservationFormComponent>,
     @Inject(MAT_DIALOG_DATA) public bail: BailModel,
@@ -54,21 +55,23 @@ export class BailPaymentDialogComponent implements OnInit {
     return this.totalPrice - parseInt(value) - this.discountAmount;
   }
 
-  computeTotalPrice(startDate: string, endDate: string) {
-    const start = moment(startDate);
-    const end = moment(endDate);
-    const days = end.diff(start, 'days', true) + 1;
-    this.totalPrice = this.currentLocal.prix * Math.abs(Math.ceil(days));
-    return this.totalPrice;
-  }
-
   computeDiscount(discount: string) {
     this.discountAmount = Math.ceil((this.totalPrice * parseInt(discount)) / 100);
+    this.amountToPay = this.totalPrice - this.discountAmount;
     return this.discountAmount;
   }
 
 
   performAction(){
+    if(this.totalPrice < this.paymentForm.value.amount){
+      this.loading = false;
+      this.notifier.notify(
+        'Le montant à payer doit etre inferieur au montant total',
+        'Notification',
+        NotificationType.WARNING
+      );
+      return;
+    }
     if(this.paymentForm.valid){
       this.bailService.addPayment(this.localData.userDetails?.userId, this.paymentForm.value, this.bail.id).subscribe(
         apiResponse => {
@@ -92,7 +95,7 @@ export class BailPaymentDialogComponent implements OnInit {
         error => {
           this.loading = false;
           this.notifier.notify(
-            'Probleme de communication avec le serveur',
+            'Erreur lors du traitement de la requete. Veuillez reesayer et si le probleme persite contacter l\'equipe technique',
             'Notification',
             NotificationType.ERROR
           );

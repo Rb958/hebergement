@@ -1,3 +1,4 @@
+import { PsCommonModule } from './../../shared/components/ps-common/ps-common.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -6,7 +7,6 @@ import { LoginComponent } from './pages/login/login.component';
 import { RescueComponent } from './pages/rescue/rescue.component';
 import {TranslateModule} from "@ngx-translate/core";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {PsVersionComponent} from "../../shared/components/ps-common/ps-version/ps-version.component";
 import {PsFormsModule} from "../../shared/components/ps-forms/ps-forms.module";
 import {ButtonLoaderModule} from "../../shared/components/button-loader/button-loader.module";
 
@@ -14,11 +14,7 @@ import {ButtonLoaderModule} from "../../shared/components/button-loader/button-l
 @NgModule({
     declarations: [
         LoginComponent,
-        RescueComponent,
-        PsVersionComponent
-    ],
-    exports: [
-        PsVersionComponent
+        RescueComponent
     ],
   imports: [
     CommonModule,
@@ -27,7 +23,8 @@ import {ButtonLoaderModule} from "../../shared/components/button-loader/button-l
     ReactiveFormsModule,
     TranslateModule,
     PsFormsModule,
-    ButtonLoaderModule
+    ButtonLoaderModule,
+    PsCommonModule
   ]
 })
 export class AccountModule { }

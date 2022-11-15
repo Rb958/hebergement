@@ -48,7 +48,14 @@ export class AppStore{
 
   initialize(lang: string) {
     const localData = new LocalData();
+    localData.token = null;
+    localData.sessionExists = false;
+    localData.hasCashierOpened = false;
+    localData.userDetails = null;
     localData.lang = lang;
+    localData.keepSessionAlive = false;
+    localData.isFirstUse = false;
+    localData.notifications = [];
     this.save(localData);
   }
 
@@ -75,6 +82,7 @@ export class AppStore{
     localData.sessionExists = false;
     localData.hasCashierOpened = false;
     localData.userDetails = null;
+    localData.notifications = [];
     this.save(localData);
   }
 }
@@ -139,7 +147,7 @@ export class UserDetails{
 }
 
 export class LocalData{
-  private _lang: string = 'fr';
+  private _lang: string = 'fr-FR';
   private _appVersion: string = '0.0.1';
   private _appName: string = 'LSD Gestion logement';
   private _sessionExists: boolean = false;
@@ -150,8 +158,11 @@ export class LocalData{
   private _byAuth: boolean = false;
   private _hasCashierOpened = false;
   private _userDetails: UserDetails | null = null;
+  private _notifications: Array<any> = [];
 
-  constructor() {}
+  constructor() {
+    this._notifications = new Array<any>();
+  }
 
   get hasCashierOpened(): boolean {
     return this._hasCashierOpened;
@@ -240,5 +251,13 @@ export class LocalData{
 
   set userDetails(value: UserDetails | null) {
     this._userDetails = value;
+  }
+
+  get notifications(): Array<any> {
+    return this._notifications;
+  }
+
+  set notifications(value: Array<any>) {
+    this._notifications = value;
   }
 }

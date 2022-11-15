@@ -46,7 +46,6 @@ export class CaisseService extends HttpService{
   }
 
   openCaisse(cashier: any) {
-    console.dir(cashier);
     return this.post(`${this.url}/open`, cashier);
   }
 
@@ -54,7 +53,15 @@ export class CaisseService extends HttpService{
     return this.post(`${this.url}/close-request`, cashier)
   }
 
-  validate(caisse: CaisseModel) {
-    return this.get(`${this.url}/validate/${caisse.id}`);
+  validateOpenRequest(caisse: CaisseModel) {
+    return this.patch(`${this.url}/validate/open-request`, caisse);
+  }
+
+  validateCloseRequest(caisse: CaisseModel) {
+    return this.patch(`${this.url}/validate/close-request`, caisse);
+  }
+
+  findById(caisseId: any) {
+    return this.get(`${this.url}/${caisseId}`);
   }
 }

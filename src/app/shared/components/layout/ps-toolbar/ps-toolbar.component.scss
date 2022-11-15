@@ -75,7 +75,7 @@
 
   .ps-toolbar-actions{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     width: 230px;
 
@@ -90,6 +90,7 @@
       align-items: center;
       justify-content: center;
       box-shadow: 1px 2px 6px rgba(0,0,0,0.12);
+      margin-right: 10px;
 
       &:hover{
         cursor: pointer;

@@ -1,3 +1,4 @@
+import { CustomPipeModule } from './../../shared/custom-pipe/custom-pipe.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -15,6 +16,7 @@ import {NgChartsModule} from "ng2-charts";
     CommonModule,
     DashboardRoutingModule,
     CounterWidgetModule,
+    CustomPipeModule,
     NgChartsModule
   ]
 })

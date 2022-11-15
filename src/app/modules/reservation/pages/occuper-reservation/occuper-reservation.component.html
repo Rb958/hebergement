@@ -1,0 +1,17 @@
+<span mat-dialog-title>Saisie de l'indice Eneo</span>
+<div mat-dialog-content [formGroup]="reservationForm">
+  <div class="form-item">
+    <label for="indiceEntre">{{'indiceEntre' | translate}}<span class="required">*</span></label>
+    <div class="input-control"  [class.error]="reservationForm.get('indiceEntre')?.touched && reservationForm.get('indiceEntre')?.hasError('required')" >
+      <input type="number" min="1" step="1" id="indiceEntre" formControlName="indiceEntre" name="indiceEntre" >
+      <span class="input-error-image" *ngIf="reservationForm.get('indiceEntre')?.touched && reservationForm.get('indiceEntre')?.hasError('required')">
+        <i class="fa fa-ban" aria-hidden="true"></i>
+      </span>
+    </div>
+    <span class="hint"></span>
+    <span class="hint error" *ngIf="reservationForm.get('indiceEntre')?.touched && reservationForm.get('indiceEntre')?.hasError('required')">{{'required_field' | translate}}</span>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button class="btn btn-primary" rbButton [loading]="loading" (click)="process()">Enregistrer</button>
+</div>

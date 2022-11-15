@@ -49,15 +49,7 @@ export class ListLocataireParticulierComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result){
-        this.locataireParticulier$.pipe(
-          tap(list => {
-            const index = list.data?.content.indexOf(locataire);
-            if (index!= undefined && index >= 0){
-              list.data?.content.slice(index,1);
-              list.data?.content.push(result);
-            }
-          })
-        );
+       this.loadData();
       }
     });
   }
@@ -71,14 +63,7 @@ export class ListLocataireParticulierComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result){
-        this.locataireParticulier$.pipe(
-          tap(list => {
-            const index = list.data?.content.indexOf(locataire);
-            if (index!= undefined && index >= 0){
-              list.data?.content.slice(index,1);
-            }
-          })
-        );
+        this,this.loadData();
       }
     });
   }

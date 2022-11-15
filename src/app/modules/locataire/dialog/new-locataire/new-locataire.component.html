@@ -4,114 +4,114 @@
   <div mat-dialog-content >
     <div class="form-content">
       <div class="form-item">
-        <label for="raisonSociale">{{'raisonSociale' | translate}}</label>
-        <div class="input-control" [class.error]="locataireSocForm?.get('raisonSociale')?.touched && locataireSocForm?.get('raisonSociale')?.hasError('required')" >
+        <label for="raisonSociale">{{'raisonSociale' | translate}}<span class="required">*</span></label>
+        <div class="input-control" [class.error]="locataireSocForm.get('raisonSociale')?.touched && locataireSocForm.get('raisonSociale')?.hasError('required')" >
           <input type="text" id="raisonSociale" formControlName="raisonSociale" name="raisonSociale" >
-          <span class="input-error-image" *ngIf="locataireSocForm?.get('raisonSociale')?.touched && locataireSocForm?.get('raisonSociale')?.hasError('required')">
+          <span class="input-error-image" *ngIf="locataireSocForm.get('raisonSociale')?.touched && locataireSocForm.get('raisonSociale')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
         </div>
         <span class="hint"></span>
-        <span class="hint error" *ngIf="locataireSocForm?.get('raisonSociale')?.touched && locataireSocForm?.get('raisonSociale')?.hasError('required')">{{'required_field' | translate}}</span>
+        <span class="hint error" *ngIf="locataireSocForm.get('raisonSociale')?.touched && locataireSocForm.get('raisonSociale')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
-        <label for="raisonSociale">{{'niu' | translate}}</label>
-        <div class="input-control" [class.error]="locataireSocForm?.get('niu')?.touched && locataireSocForm?.get('niu')?.hasError('required')" >
+        <label for="raisonSociale">{{'niu' | translate}}<span class="required">*</span></label>
+        <div class="input-control" [class.error]="locataireSocForm.get('niu')?.touched && locataireSocForm.get('niu')?.hasError('required')" >
           <input type="text" id="niu" formControlName="niu" name="niu" >
-          <span class="input-error-image" *ngIf="locataireSocForm?.get('niu')?.touched && locataireSocForm?.get('niu')?.hasError('required')">
+          <span class="input-error-image" *ngIf="locataireSocForm.get('niu')?.touched && locataireSocForm.get('niu')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
         </div>
         <span class="hint"></span>
-        <span class="hint error" *ngIf="locataireSocForm?.get('niu')?.touched && locataireSocForm?.get('niu')?.hasError('required')">{{'required_field' | translate}}</span>
+        <span class="hint error" *ngIf="locataireSocForm.get('niu')?.touched && locataireSocForm.get('niu')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
-        <label for="raisonSociale">{{'nomGerant' | translate}}</label>
-        <div class="input-control" [class.error]="locataireSocForm?.get('nomGerant')?.touched && locataireSocForm?.get('nomGerant')?.hasError('required')" >
+        <label for="raisonSociale">{{'nomGerant' | translate}}<span class="required">*</span></label>
+        <div class="input-control" [class.error]="locataireSocForm.get('nomGerant')?.touched && locataireSocForm.get('nomGerant')?.hasError('required')" >
           <input type="text" id="nomGerant" formControlName="nomGerant" name="nomGerant" >
-          <span class="input-error-image" *ngIf="locataireSocForm?.get('nomGerant')?.touched && locataireSocForm?.get('nomGerant')?.hasError('required')">
+          <span class="input-error-image" *ngIf="locataireSocForm.get('nomGerant')?.touched && locataireSocForm.get('nomGerant')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
         </div>
         <span class="hint"></span>
-        <span class="hint error" *ngIf="locataireSocForm?.get('nomGerant')?.touched && locataireSocForm?.get('nomGerant')?.hasError('required')">{{'required_field' | translate}}</span>
+        <span class="hint error" *ngIf="locataireSocForm.get('nomGerant')?.touched && locataireSocForm.get('nomGerant')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
-        <label for="profession">{{'profession' | translate}}</label>
-        <div class="input-control" [class.error]="locataireSocForm?.get('profession')?.touched && locataireSocForm?.get('profession')?.hasError('required')" >
+        <label for="profession">{{'profession' | translate}}<span class="required">*</span></label>
+        <div class="input-control" [class.error]="locataireSocForm.get('profession')?.touched && locataireSocForm.get('profession')?.hasError('required')" >
           <input type="text" id="profession" formControlName="profession" name="profession" >
-          <span class="input-error-image" *ngIf="locataireSocForm?.get('profession')?.touched && locataireSocForm?.get('profession')?.hasError('required')">
+          <span class="input-error-image" *ngIf="locataireSocForm.get('profession')?.touched && locataireSocForm.get('profession')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
         </div>
         <span class="hint"></span>
-        <span class="hint error" *ngIf="locataireSocForm?.get('profession')?.touched && locataireSocForm?.get('profession')?.hasError('required')">{{'required_field' | translate}}</span>
+        <span class="hint error" *ngIf="locataireSocForm.get('profession')?.touched && locataireSocForm.get('profession')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
-        <label for="persContact1">{{'persContact1' | translate}}</label>
-        <div class="input-control" [class.error]="locataireSocForm?.get('persContact1')?.touched && locataireSocForm?.get('persContact1')?.hasError('required')" >
+        <label for="persContact1">{{'persContact1' | translate}}<span class="required">*</span></label>
+        <div class="input-control" [class.error]="locataireSocForm.get('persContact1')?.touched && locataireSocForm.get('persContact1')?.hasError('required')" >
           <input type="text" id="persContact1" formControlName="persContact1" name="persContact1" >
-          <span class="input-error-image" *ngIf="locataireSocForm?.get('persContact1')?.touched && locataireSocForm?.get('persContact1')?.hasError('required')">
+          <span class="input-error-image" *ngIf="locataireSocForm.get('persContact1')?.touched && locataireSocForm.get('persContact1')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
         </div>
         <span class="hint"></span>
-        <span class="hint error" *ngIf="locataireSocForm?.get('persContact1')?.touched && locataireSocForm?.get('persContact1')?.hasError('required')">{{'required_field' | translate}}</span>
+        <span class="hint error" *ngIf="locataireSocForm.get('persContact1')?.touched && locataireSocForm.get('persContact1')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
         <label for="persTelephone1">{{'persTelephone1' | translate}}</label>
-        <div class="input-control" [class.error]="locataireSocForm?.get('persTelephone1')?.touched && locataireSocForm?.get('persTelephone1')?.hasError('required')" >
+        <div class="input-control" [class.error]="locataireSocForm.get('persTelephone1')?.touched && locataireSocForm.get('persTelephone1')?.hasError('required')" >
           <input type="text" id="persTelephone1" formControlName="persTelephone1" name="persTelephone1" >
-          <span class="input-error-image" *ngIf="locataireSocForm?.get('persTelephone1')?.touched && locataireSocForm?.get('persTelephone1')?.hasError('required')">
+          <span class="input-error-image" *ngIf="locataireSocForm.get('persTelephone1')?.touched && locataireSocForm.get('persTelephone1')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
         </div>
         <span class="hint"></span>
-        <span class="hint error" *ngIf="locataireSocForm?.get('persTelephone1')?.touched && locataireSocForm?.get('persTelephone1')?.hasError('required')">{{'required_field' | translate}}</span>
+        <span class="hint error" *ngIf="locataireSocForm.get('persTelephone1')?.touched && locataireSocForm.get('persTelephone1')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
         <label for="persEmail1">{{'persEmail1' | translate}}</label>
-        <div class="input-control" [class.error]="locataireSocForm?.get('persEmail1')?.touched && locataireSocForm?.get('persEmail1')?.hasError('required')" >
+        <div class="input-control" [class.error]="locataireSocForm.get('persEmail1')?.touched && locataireSocForm.get('persEmail1')?.hasError('required')" >
           <input type="text" id="persEmail1" formControlName="persEmail1" name="persEmail1" >
-          <span class="input-error-image" *ngIf="locataireSocForm?.get('persEmail1')?.touched && locataireSocForm?.get('persEmail1')?.hasError('required')">
+          <span class="input-error-image" *ngIf="locataireSocForm.get('persEmail1')?.touched && locataireSocForm.get('persEmail1')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
         </div>
         <span class="hint"></span>
-        <span class="hint error" *ngIf="locataireSocForm?.get('persEmail1')?.touched && locataireSocForm?.get('persEmail1')?.hasError('required')">{{'required_field' | translate}}</span>
+        <span class="hint error" *ngIf="locataireSocForm.get('persEmail1')?.touched && locataireSocForm.get('persEmail1')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
         <label for="persContacter2">{{'persContacter2' | translate}}</label>
-        <div class="input-control" [class.error]="locataireSocForm?.get('persContacter2')?.touched && locataireSocForm?.get('persContacter2')?.hasError('required')" >
+        <div class="input-control" [class.error]="locataireSocForm.get('persContacter2')?.touched && locataireSocForm.get('persContacter2')?.hasError('required')" >
           <input type="text" id="persContacter2" formControlName="persContacter2" name="persEmail1" >
-          <span class="input-error-image" *ngIf="locataireSocForm?.get('persContacter2')?.touched && locataireSocForm?.get('persContacter2')?.hasError('required')">
+          <span class="input-error-image" *ngIf="locataireSocForm.get('persContacter2')?.touched && locataireSocForm.get('persContacter2')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
         </div>
         <span class="hint"></span>
-        <span class="hint error" *ngIf="locataireSocForm?.get('persContacter2')?.touched && locataireSocForm?.get('persContacter2')?.hasError('required')">{{'required_field' | translate}}</span>
+        <span class="hint error" *ngIf="locataireSocForm.get('persContacter2')?.touched && locataireSocForm.get('persContacter2')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
         <label for="persTelephone2">{{'persTelephone2' | translate}}</label>
-        <div class="input-control" [class.error]="locataireSocForm?.get('persTelephone2')?.touched && locataireSocForm?.get('persTelephone2')?.hasError('required')" >
+        <div class="input-control" [class.error]="locataireSocForm.get('persTelephone2')?.touched && locataireSocForm.get('persTelephone2')?.hasError('required')" >
           <input type="text" id="persTelephone2" formControlName="persTelephone2" name="persTelephone2" >
-          <span class="input-error-image" *ngIf="locataireSocForm?.get('persTelephone2')?.touched && locataireSocForm?.get('persTelephone2')?.hasError('required')">
+          <span class="input-error-image" *ngIf="locataireSocForm.get('persTelephone2')?.touched && locataireSocForm.get('persTelephone2')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
         </div>
         <span class="hint"></span>
-        <span class="hint error" *ngIf="locataireSocForm?.get('persTelephone2')?.touched && locataireSocForm?.get('persTelephone2')?.hasError('required')">{{'required_field' | translate}}</span>
+        <span class="hint error" *ngIf="locataireSocForm.get('persTelephone2')?.touched && locataireSocForm.get('persTelephone2')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
         <label for="persEmail2">{{'persEmail2' | translate}}</label>
-        <div class="input-control" [class.error]="locataireSocForm?.get('persEmail2')?.touched && locataireSocForm?.get('persEmail2')?.hasError('required')" >
+        <div class="input-control" [class.error]="locataireSocForm.get('persEmail2')?.touched && locataireSocForm.get('persEmail2')?.hasError('required')" >
           <input type="text" id="persEmail2" formControlName="persEmail2" name="persEmail2" >
-          <span class="input-error-image" *ngIf="locataireSocForm?.get('persEmail2')?.touched && locataireSocForm?.get('persEmail2')?.hasError('required')">
+          <span class="input-error-image" *ngIf="locataireSocForm.get('persEmail2')?.touched && locataireSocForm.get('persEmail2')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
         </div>
         <span class="hint"></span>
-        <span class="hint error" *ngIf="locataireSocForm?.get('persEmail2')?.touched && locataireSocForm?.get('persEmail2')?.hasError('required')">{{'required_field' | translate}}</span>
+        <span class="hint error" *ngIf="locataireSocForm.get('persEmail2')?.touched && locataireSocForm.get('persEmail2')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div mat-dialog-actions class="dialog-actions">
         <button class="btn btn-default" [mat-dialog-close]="false">{{'cancel'|translate}}</button>

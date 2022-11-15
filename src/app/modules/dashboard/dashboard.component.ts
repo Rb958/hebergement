@@ -1,8 +1,10 @@
+import { StatsService } from './../../shared/services/services/stats.service';
+import { DataStateProcessing, DataStateEnum } from './../../shared/utils/data-processing-state';
 import {Component, OnInit} from '@angular/core';
 import {HttpStatusCode} from "@angular/common/http";
 import {AppStore, LocalData} from "../../shared/utils/app-store";
 import {CaisseService} from "../../shared/services/services/caisse.service";
-import {Subscription} from "rxjs";
+import {catchError, map, Observable, of, startWith, Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {NotifierService} from "../../shared/components/notification/notifier.service";
 import {NotificationType} from "../../shared/components/notification/notification-type";
@@ -69,13 +71,61 @@ export class DashboardComponent implements OnInit {
 
   public doughnutChartType: ChartType = 'doughnut';
 
+  // Source d'information
+
+  public siChartLabels: string[] = [ ];
+  public siChartData: ChartData<'doughnut'> = {} as ChartData<'doughnut'>;
+
+  statsDataState: Observable<DataStateProcessing<any>> = {} as Observable<DataStateProcessing<any>>;
+
   constructor(
     private appStore: AppStore,
     private router: Router,
+    private statsService: StatsService,
     private notifierService: NotifierService
   ) { }
 
   ngOnInit(): void {
-    console.dir(this.appStore.getData());
+    this.loadStats();
+  }
+
+  loadStats(){
+    this.statsDataState = this.statsService.getStats().pipe(
+      map(response => {
+          if(response.code == HttpStatusCode.Ok.valueOf()){
+            this.populateChart(response.result.evSa);
+            this.populateDoughnut(response.result.sourceInfo);
+            return {dataState: DataStateEnum.LOADED, message: response.message, data: response.result}
+          }else {
+            return {dataState: DataStateEnum.ERROR, message: response.message}
+          }
+      }),
+      startWith({dataState: DataStateEnum.LOADING}),
+      catchError(err => of({dataState: DataStateEnum.ERROR, message: err.message}))
+    );
+  }
+  populateDoughnut(sourceInfo: any){
+    const labels: Array<any> = [];
+    const data: Array<any> = [];
+    sourceInfo.forEach((item: any) => {
+      data.push(item[0]);
+      if (item[1] == null){
+        labels.push('Autres');
+      }else{
+        labels.push(item[1]);
+      }
+    });
+    this.siChartData.labels = labels;
+    this.siChartData.datasets = [
+        { data: data }
+      ]
+  }
+
+  populateChart(evSa: any[]) {
+    const newData = new Array<any>(12);
+    evSa.forEach(item => {
+      newData[parseInt(item[1])] = item[0];
+    });
+    this.lineChartData.datasets[0].data = newData;
   }
 }

@@ -1,0 +1,51 @@
+<form>
+  <span matDialogTitle>Annulation d'un contrat de bail {{ bail.numReservation }}</span>
+  <div matDialogContent>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-item">
+          <label>Montant du bail</label>
+          <span class="price">{{ bail.totalAmount || 0 | hundredSeparator }} FCFA</span>
+        </div>
+        <div class="form-item">
+          <label>Loyé à rembourser</label>
+        <span class="price">{{ totalLocal || 0 | hundredSeparator }} FCFA</span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-item">
+          <label>Periode de caution payé (mois)</label>
+          <span class="price">{{ bail.cautionPeriod || 0 }}</span>
+        </div>
+        <div class="form-item">
+          <label>Montant total caution</label>
+          <span class="price">{{ computTotalCaution() || 0 | hundredSeparator }} FCFA</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="col-md-6">
+
+      </div>
+    </div>
+    <div class="form-item">
+      <label for="cautionPeriod">{{'cautionPeriod' | translate}} (%)</label>
+      <div class="input-control" [class.error]="cautionError">
+        <input type="number" id="cautionPeriod" min="0" max="100" #cautionPeriod (keyup)="totalAPayer(cautionPeriod)" name="cautionPeriod">
+        <span class="input-error-image" *ngIf="cautionError">
+          <i class="fa fa-ban" aria-hidden="true"></i>
+        </span>
+      </div>
+      <span class="hint"></span>
+      <span class="hint error" *ngIf="cautionError">La caution saisie doit etre inferieur ou egale a la caution payé</span>
+    </div>
+    <div class="form-item">
+      <label>{{'amount_to_pay' | translate}}</label>
+      <span class="total-amount">{{ amountToPay || 0 | hundredSeparator }} FCFA</span>
+    </div>
+  </div>
+  <div mat-dialog-actions class="dialog-actions">
+    <button class="btn btn-default" [mat-dialog-close]="false">{{ 'cancel' | translate }}</button>
+    <button class="btn btn-primary" rbButton [loading]="loading" (click)="performAction()">{{ 'save' | translate }}</button>
+  </div>
+</form>

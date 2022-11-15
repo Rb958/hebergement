@@ -22,7 +22,7 @@ export class AppComponent implements OnInit, OnDestroy{
   hasCashierOpened:  boolean = false;
   hasCashierOpened$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  localDataSubscription: Subscription = {} as Subscription; 
+  localDataSubscription: Subscription = {} as Subscription;
 
   constructor(
     private translate: TranslateService,
@@ -30,14 +30,14 @@ export class AppComponent implements OnInit, OnDestroy{
     public appStore: AppStore
   ) {
 
-    const arrayLang = ['en', 'fr'];
-    const defaultLang = 'fr';
+    const arrayLang = ['en-EN', 'fr-FR'];
+    const defaultLang = 'fr-FR';
     const userLang = navigator.language;
     let lang =  userLang.substring(0, 2 ).toLowerCase();
 
-    if (arrayLang.lastIndexOf(lang) < 0) {
+    // if (arrayLang.lastIndexOf(lang) < 0) {
       lang = defaultLang;
-    }
+    // }
 
     if (!this.appStore.isInitialized()){
       this.appStore.initialize(lang);
@@ -50,7 +50,7 @@ export class AppComponent implements OnInit, OnDestroy{
     } else {
       translate.setDefaultLang(defaultLang);
     }
-    
+
     this.title = <string>this.localData?.appName;
 
     this.hasCashierOpened$.subscribe(value => {
@@ -60,6 +60,7 @@ export class AppComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.checkSession();
+    console.dir(this.localData)
     this.menuItems = [
       new NavItem(
         'dashboard',
@@ -219,34 +220,34 @@ export class AppComponent implements OnInit, OnDestroy{
           ),
         ]
       ),
-      new NavItem(
-        'Stock',
-        '/stock',
-        'bx bx-package',
-        'Stock',
-        false,
-        0,
-        [
-          new NavItem(
-            'Articles',
-            '/stock/article',
-            'bx bx-hard-hat',
-            'Articles',
-            false,
-            0,
-            []
-          ),
-          new NavItem(
-            'Commande',
-            '/stock/commande',
-            'bx bx-hard-hat',
-            'Commandes',
-            false,
-            0,
-            []
-          )
-        ]
-      )
+      // new NavItem(
+      //   'Stock',
+      //   '/stock',
+      //   'bx bx-package',
+      //   'Stock',
+      //   false,
+      //   0,
+      //   [
+      //     new NavItem(
+      //       'Articles',
+      //       '/stock/article',
+      //       'bx bx-hard-hat',
+      //       'Articles',
+      //       false,
+      //       0,
+      //       []
+      //     ),
+      //     new NavItem(
+      //       'Commande',
+      //       '/stock/commande',
+      //       'bx bx-hard-hat',
+      //       'Commandes',
+      //       false,
+      //       0,
+      //       []
+      //     )
+      //   ]
+      // )
     ];
   }
 
@@ -261,6 +262,14 @@ export class AppComponent implements OnInit, OnDestroy{
 
   getTitle($event: string) {
     this.currentTitle = $event;
+  }
+
+  showProfile(){
+    this.router.navigateByUrl("/user/user-profile");
+  }
+
+  showParams(){
+    this.router.navigateByUrl("/user/client");
   }
 
   checkSession(){

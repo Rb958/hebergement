@@ -27,6 +27,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (!this.appStore.getData().sessionExists){
+      this.appStore.initialize('fr-FR');
       this.router.navigate(['/account/login']);
     }
     return true;
@@ -35,6 +36,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (!this.appStore.getData().sessionExists){
+      this.appStore.initialize('fr-FR');
       this.router.navigate(['/account/login']);
     }
     return true;
@@ -43,6 +45,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     route: Route,
     segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (!this.appStore.getData().sessionExists){
+      this.appStore.initialize('fr-FR');
       this.router.navigate(['/account/login']);
     }
     return true;

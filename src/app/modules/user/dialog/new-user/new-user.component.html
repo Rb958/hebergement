@@ -3,59 +3,70 @@
   <div mat-dialog-content >
     <div class="form-content">
       <div class="form-item">
-        <label for="firstname">{{'firstname' | translate}}</label>
-        <div class="input-control" [class.error]="userForm?.get('firstname')?.touched && userForm?.get('firstname')?.hasError('required')" >
+        <label for="firstname">{{'firstname' | translate}}<span class="required">*</span></label>
+        <div class="input-control" [class.error]="userForm.get('firstname')?.touched && userForm.get('firstname')?.hasError('required')" >
           <input type="text" id="firstname" formControlName="firstname" name="firstname" >
-          <span class="input-error-image" *ngIf="userForm?.get('firstname')?.touched && userForm?.get('firstname')?.hasError('required')">
+          <span class="input-error-image" *ngIf="userForm.get('firstname')?.touched && userForm.get('firstname')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
         </div>
         <span class="hint"></span>
-        <span class="hint error" *ngIf="userForm?.get('firstname')?.touched && userForm?.get('firstname')?.hasError('required')">{{'required_field' | translate}}</span>
+        <span class="hint error" *ngIf="userForm.get('firstname')?.touched && userForm.get('firstname')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
         <label for="lastname">{{'lastname' | translate}}</label>
-        <div class="input-control" [class.error]="userForm?.get('lastname')?.touched && userForm?.get('lastname')?.hasError('required')" >
+        <div class="input-control" [class.error]="userForm.get('lastname')?.touched && userForm.get('lastname')?.hasError('required')" >
           <input type="text" id="lastname" formControlName="lastname" name="lastname" >
-          <span class="input-error-image" *ngIf="userForm?.get('lastname')?.touched && userForm?.get('lastname')?.hasError('required')">
+          <span class="input-error-image" *ngIf="userForm.get('lastname')?.touched && userForm.get('lastname')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
         </div>
         <span class="hint"></span>
-        <span class="hint error" *ngIf="userForm?.get('lastname')?.touched && userForm?.get('lastname')?.hasError('required')">{{'required_field' | translate}}</span>
+        <span class="hint error" *ngIf="userForm.get('lastname')?.touched && userForm.get('lastname')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
-        <label for="phone">{{'phone' | translate}}</label>
-        <div class="input-control" [class.error]="userForm?.get('phone')?.touched && userForm?.get('phone')?.hasError('required')" >
+        <label for="phone">{{'phone' | translate}}<span class="required">*</span></label>
+        <div class="input-control" [class.error]="userForm.get('phone')?.touched && userForm.get('phone')?.hasError('required')" >
           <input type="text" id="phone" formControlName="phone" name="phone" >
-          <span class="input-error-image" *ngIf="userForm?.get('phone')?.touched && userForm?.get('phone')?.hasError('required')">
+          <span class="input-error-image" *ngIf="userForm.get('phone')?.touched && userForm.get('phone')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
         </div>
         <span class="hint"></span>
-        <span class="hint error" *ngIf="userForm?.get('phone')?.touched && userForm?.get('phone')?.hasError('required')">{{'required_field' | translate}}</span>
+        <span class="hint error" *ngIf="userForm.get('phone')?.touched && userForm.get('phone')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
-        <label for="username">{{'username' | translate}}</label>
-        <div class="input-control" [class.error]="userForm?.get('username')?.touched && userForm?.get('username')?.hasError('required')" >
+        <label for="email">{{'email' | translate}}<span class="required">*</span></label>
+        <div class="input-control" [class.error]="userForm.get('email')?.touched && userForm.get('email')?.hasError('required')" >
+          <input type="text" id="email" formControlName="email" name="email" >
+          <span class="input-error-image" *ngIf="userForm.get('email')?.touched && userForm.get('email')?.hasError('required')">
+            <i class="fa fa-ban" aria-hidden="true"></i>
+          </span>
+        </div>
+        <span class="hint"></span>
+        <span class="hint error" *ngIf="userForm.get('email')?.touched && userForm.get('email')?.hasError('required')">{{'required_field' | translate}}</span>
+      </div>
+      <div class="form-item">
+        <label for="username">{{'username' | translate}}<span class="required">*</span></label>
+        <div class="input-control" [class.error]="userForm.get('username')?.touched && userForm.get('username')?.hasError('required')" >
           <input type="text" id="username" formControlName="username" name="username" >
-          <span class="input-error-image" *ngIf="userForm?.get('username')?.touched && userForm?.get('username')?.hasError('required')">
+          <span class="input-error-image" *ngIf="userForm.get('username')?.touched && userForm.get('username')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
         </div>
         <span class="hint"></span>
-        <span class="hint error" *ngIf="userForm?.get('username')?.touched && userForm?.get('username')?.hasError('required')">{{'required_field' | translate}}</span>
+        <span class="hint error" *ngIf="userForm.get('username')?.touched && userForm.get('username')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
       <div class="form-item">
-        <label for="password">{{'password' | translate}}</label>
-        <div class="input-control" [class.error]="userForm?.get('password')?.touched && userForm?.get('password')?.hasError('required')" >
+        <label for="password">{{'password' | translate}}<span class="required">*</span></label>
+        <div class="input-control" [class.error]="userForm.get('password')?.touched && userForm.get('password')?.hasError('required')" >
           <input type="text" id="password" formControlName="password" name="password" >
-          <span class="input-error-image" *ngIf="userForm?.get('password')?.touched && userForm?.get('password')?.hasError('required')">
+          <span class="input-error-image" *ngIf="userForm.get('password')?.touched && userForm.get('password')?.hasError('required')">
             <i class="fa fa-ban" aria-hidden="true"></i>
           </span>
         </div>
         <span class="hint"></span>
-        <span class="hint error" *ngIf="userForm?.get('password')?.touched && userForm?.get('password')?.hasError('required')">{{'required_field' | translate}}</span>
+        <span class="hint error" *ngIf="userForm.get('password')?.touched && userForm.get('password')?.hasError('required')">{{'required_field' | translate}}</span>
       </div>
     </div>
   </div>

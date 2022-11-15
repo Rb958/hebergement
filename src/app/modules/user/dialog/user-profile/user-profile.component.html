@@ -1,0 +1,122 @@
+<div class="row">
+  <div class="col-md-7">
+    <div class="ps-card">
+      <div class="ps-card-header">
+        <span class="ps-card-title">Mise à jour du profile</span>
+      </div>
+      <div class="ps-card-body">
+        <form [formGroup]="userForm" (ngSubmit)="sumbitForm()">
+          <div>
+            <div class="form-content">
+              <div class="form-item">
+                <label for="firstname">{{'firstname' | translate}}<span class="required">*</span></label>
+                <div class="input-control" [class.error]="userForm.get('firstname')?.touched && userForm.get('firstname')?.hasError('required')" >
+                  <input type="text" id="firstname" formControlName="firstname" name="firstname" >
+                  <span class="input-error-image" *ngIf="userForm.get('firstname')?.touched && userForm.get('firstname')?.hasError('required')">
+                    <i class="fa fa-ban" aria-hidden="true"></i>
+                  </span>
+                </div>
+                <span class="hint"></span>
+                <span class="hint error" *ngIf="userForm.get('firstname')?.touched && userForm.get('firstname')?.hasError('required')">{{'required_field' | translate}}</span>
+              </div>
+              <div class="form-item">
+                <label for="lastname">{{'lastname' | translate}}</label>
+                <div class="input-control" [class.error]="userForm.get('lastname')?.touched && userForm.get('lastname')?.hasError('required')" >
+                  <input type="text" id="lastname" formControlName="lastname" name="lastname" >
+                  <span class="input-error-image" *ngIf="userForm.get('lastname')?.touched && userForm.get('lastname')?.hasError('required')">
+                    <i class="fa fa-ban" aria-hidden="true"></i>
+                  </span>
+                </div>
+                <span class="hint"></span>
+                <span class="hint error" *ngIf="userForm.get('lastname')?.touched && userForm.get('lastname')?.hasError('required')">{{'required_field' | translate}}</span>
+              </div>
+              <div class="form-item">
+                <label for="phone">{{'phone' | translate}}<span class="required">*</span></label>
+                <div class="input-control" [class.error]="userForm.get('phone')?.touched && userForm.get('phone')?.hasError('required')" >
+                  <input type="text" id="phone" formControlName="phone" name="phone" >
+                  <span class="input-error-image" *ngIf="userForm.get('phone')?.touched && userForm.get('phone')?.hasError('required')">
+                    <i class="fa fa-ban" aria-hidden="true"></i>
+                  </span>
+                </div>
+                <span class="hint"></span>
+                <span class="hint error" *ngIf="userForm.get('phone')?.touched && userForm.get('phone')?.hasError('required')">{{'required_field' | translate}}</span>
+              </div>
+              <div class="form-item">
+                <label for="email">{{'email' | translate}}<span class="required">*</span></label>
+                <div class="input-control" [class.error]="userForm.get('email')?.touched && userForm.get('email')?.hasError('required')" >
+                  <input type="text" id="email" formControlName="email" name="email" >
+                  <span class="input-error-image" *ngIf="userForm.get('email')?.touched && userForm.get('email')?.hasError('required')">
+                    <i class="fa fa-ban" aria-hidden="true"></i>
+                  </span>
+                </div>
+                <span class="hint"></span>
+                <span class="hint error" *ngIf="userForm.get('email')?.touched && userForm.get('email')?.hasError('required')">{{'required_field' | translate}}</span>
+              </div>
+              <div class="form-item">
+                <label for="username">{{'username' | translate}}<span class="required">*</span></label>
+                <div class="input-control" [class.error]="userForm.get('username')?.touched && userForm.get('username')?.hasError('required')" >
+                  <input type="text" id="username" formControlName="username" name="username" >
+                  <span class="input-error-image" *ngIf="userForm.get('username')?.touched && userForm.get('username')?.hasError('required')">
+                    <i class="fa fa-ban" aria-hidden="true"></i>
+                  </span>
+                </div>
+                <span class="hint"></span>
+                <span class="hint error" *ngIf="userForm.get('username')?.touched && userForm.get('username')?.hasError('required')">{{'required_field' | translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="dialog-actions">
+            <button class="btn btn-primary" type="submit">{{'update'|translate}}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5">
+    <div class="ps-card">
+      <div class="ps-card-header">
+        <span class="ps-card-title">Mise à jour du mot de passe</span>
+      </div>
+      <div class="ps-card-body">
+        <form [formGroup]="passwordForm" (submit)="updatePassword(currentUser)">
+          <!-- <div class="form-item">
+            <label for="oldPassword">{{'old_password' | translate}}<span class="required">*</span></label>
+            <div class="input-control" [class.error]="passwordForm.get('oldPassword')?.touched && passwordForm.get('oldPassword')?.hasError('required')" >
+              <input type="text" id="oldPassword" formControlName="oldPassword" name="oldPassword" >
+              <span class="input-error-image" *ngIf="passwordForm.get('oldPassword')?.touched && passwordForm.get('oldPassword')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+            </div>
+            <span class="hint"></span>
+            <span class="hint error" *ngIf="passwordForm.get('oldPassword')?.touched && passwordForm.get('oldPassword')?.hasError('required')">{{'required_field' | translate}}</span>
+          </div> -->
+          <div class="form-item">
+            <label for="newPassword">{{'newPassword' | translate}}<span class="required">*</span></label>
+            <div class="input-control" [class.error]="passwordForm.get('newPassword')?.touched && passwordForm.get('newPassword')?.hasError('required')" >
+              <input type="password" id="newPassword" formControlName="newPassword" name="newPassword" >
+              <span class="input-error-image" *ngIf="passwordForm.get('newPassword')?.touched && passwordForm.get('newPassword')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+            </div>
+            <span class="hint"></span>
+            <span class="hint error" *ngIf="passwordForm.get('newPassword')?.touched && passwordForm.get('newPassword')?.hasError('required')">{{'required_field' | translate}}</span>
+          </div>
+          <div class="form-item">
+            <label for="confirmPassword">{{'confirmPassword' | translate}}<span class="required">*</span></label>
+            <div class="input-control" [class.error]="passwordForm.get('confirmPassword')?.touched && passwordForm.get('confirmPassword')?.hasError('required')" >
+              <input type="password" id="confirmPassword" formControlName="confirmPassword" name="confirmPassword" >
+              <span class="input-error-image" *ngIf="passwordForm.get('confirmPassword')?.touched && passwordForm.get('confirmPassword')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+            </div>
+            <span class="hint"></span>
+            <span class="hint error" *ngIf="passwordForm.get('confirmPassword')?.touched && passwordForm.get('confirmPassword')?.hasError('required')">{{'required_field' | translate}}</span>
+          </div>
+          <div class="dialog-actions">
+            <button class="btn btn-primary" type="submit">{{'update'|translate}}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

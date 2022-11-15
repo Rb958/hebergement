@@ -1,3 +1,4 @@
+import { MatExpansionModule } from '@angular/material/expansion';
 import { FileUploaderModule } from './../../shared/components/file-uploader/file-uploader.module';
 import { CustomPipeModule } from './../../shared/custom-pipe/custom-pipe.module';
 import { NgModule } from '@angular/core';
@@ -21,6 +22,9 @@ import { OpenCaissePageComponent } from './pages/open-caisse-page/open-caisse-pa
 import {ButtonLoaderModule} from "../../shared/components/button-loader/button-loader.module";
 import { CaisseDetailsComponent } from './pages/caisse-details/caisse-details.component';
 import { CaisseCloseComponent } from './pages/caisse-close/caisse-close.component';
+import { DepenseDetailsComponent } from './pages/depense-details/depense-details.component';
+import { DepensePaymentComponent } from './pages/depense-payment/depense-payment.component';
+import { CaisseDetailsAdminComponent } from './pages/caisse-details-admin/caisse-details-admin.component';
 
 
 @NgModule({
@@ -36,7 +40,10 @@ import { CaisseCloseComponent } from './pages/caisse-close/caisse-close.componen
     DeleteTransfertComponent,
     OpenCaissePageComponent,
     CaisseDetailsComponent,
-    CaisseCloseComponent
+    CaisseCloseComponent,
+    DepenseDetailsComponent,
+    DepensePaymentComponent,
+    CaisseDetailsAdminComponent
   ],
     imports: [
         CommonModule,
@@ -44,6 +51,7 @@ import { CaisseCloseComponent } from './pages/caisse-close/caisse-close.componen
         FinanceRoutingModule,
         MatDialogModule,
         ButtonLoaderModule,
+        MatExpansionModule,
         FormsModule,
         FileUploaderModule,
         ReactiveFormsModule,

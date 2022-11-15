@@ -1,0 +1,39 @@
+<span mat-dialog-title>Réinitialisation du mot de passe</span>
+<form mat-dialog-content [formGroup]="passwordForm" (submit)="updatePassword(currentUser)">
+  <!-- <div class="form-item">
+    <label for="oldPassword">{{'old_password' | translate}}<span class="required">*</span></label>
+    <div class="input-control" [class.error]="passwordForm.get('oldPassword')?.touched && passwordForm.get('oldPassword')?.hasError('required')" >
+      <input type="text" id="oldPassword" formControlName="oldPassword" name="oldPassword" >
+      <span class="input-error-image" *ngIf="passwordForm.get('oldPassword')?.touched && passwordForm.get('oldPassword')?.hasError('required')">
+        <i class="fa fa-ban" aria-hidden="true"></i>
+      </span>
+    </div>
+    <span class="hint"></span>
+    <span class="hint error" *ngIf="passwordForm.get('oldPassword')?.touched && passwordForm.get('oldPassword')?.hasError('required')">{{'required_field' | translate}}</span>
+  </div> -->
+  <div class="form-item">
+    <label for="newPassword">{{'newPassword' | translate}}<span class="required">*</span></label>
+    <div class="input-control" [class.error]="passwordForm.get('newPassword')?.touched && passwordForm.get('newPassword')?.hasError('required')" >
+      <input type="password" id="newPassword" formControlName="newPassword" name="newPassword" >
+      <span class="input-error-image" *ngIf="passwordForm.get('newPassword')?.touched && passwordForm.get('newPassword')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+    </div>
+    <span class="hint"></span>
+    <span class="hint error" *ngIf="passwordForm.get('newPassword')?.touched && passwordForm.get('newPassword')?.hasError('required')">{{'required_field' | translate}}</span>
+  </div>
+  <div class="form-item">
+    <label for="confirmPassword">{{'confirmPassword' | translate}}<span class="required">*</span></label>
+    <div class="input-control" [class.error]="passwordForm.get('confirmPassword')?.touched && passwordForm.get('confirmPassword')?.hasError('required')" >
+      <input type="password" id="confirmPassword" formControlName="confirmPassword" name="confirmPassword" >
+      <span class="input-error-image" *ngIf="passwordForm.get('confirmPassword')?.touched && passwordForm.get('confirmPassword')?.hasError('required')">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+              </span>
+    </div>
+    <span class="hint"></span>
+    <span class="hint error" *ngIf="passwordForm.get('confirmPassword')?.touched && passwordForm.get('confirmPassword')?.hasError('required')">{{'required_field' | translate}}</span>
+  </div>
+</form>
+<div class="dialog-actions" mat-dialog-actions>
+  <button class="btn btn-primary" type="button" (click)="updatePassword(currentUser)">{{'update'|translate}}</button>
+</div>

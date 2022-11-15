@@ -122,23 +122,25 @@
                         </div>
                     </div>
                 </div>
-                <span class="local-info mt-4">Imobilisations du local</span>
-                <div class="row table-content">
-                    <table>
-                        <thead>
-                          <th>Designation</th>
-                          <th>Quantité</th>
-                          <th>Prix</th>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let immo of data.data?.immobilisations">
-                            <td>{{ immo.designation }}</td>
-                            <td>{{ immo.qte }}</td>
-                            <td>{{ immo.prix }}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                </div>
+                <ng-container *ngIf="data.data?.categorie === 'MEUBLÉ'">
+                  <span class="local-info mt-4">Imobilisations du local</span>
+                  <div class="row table-content">
+                      <table>
+                          <thead>
+                            <th>Designation</th>
+                            <th>Quantité</th>
+                            <th>Prix</th>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let immo of data.data?.immobilisations">
+                              <td>{{ immo.designation }}</td>
+                              <td>{{ immo.qte }}</td>
+                              <td>{{ immo.prix }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                  </div>
+                </ng-container>
             </div>
         </div>
     </ng-container>
